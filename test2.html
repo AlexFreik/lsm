@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="join-audio-container__btn muted" aria-label="unmute">Muted</button>
+
+    <script>
+        // Get the button element
+        const button = document.querySelector('.join-audio-container__btn');
+
+        // Add click event listener
+        button.addEventListener('click', function() {
+            // Toggle between "muted" and "unmuted" classes on the button
+            this.classList.toggle('muted');
+            this.classList.toggle('unmuted');
+
+            this.textContent = this.classList.contains('muted') ? 'Muted' : 'Unmuted';
+            this.ariaLabel = this.classList.contains('muted') ? 'unmute' : 'mute';
+        });
+    </script>
+</body>
+</html>

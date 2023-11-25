@@ -5,7 +5,7 @@ function loadStyles() {
     const linkElement = document.createElement('link');
     linkElement.rel = 'stylesheet';
     linkElement.type = 'text/css';
-    linkElement.href = 'https://raw.githubusercontent.com/alexfreik/zam/master/styles.css';
+    linkElement.href = 'https://alexfreik.github.io/zam/styles.css';
     document.head.appendChild(linkElement);
 }
 
