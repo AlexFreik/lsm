@@ -1,4 +1,6 @@
 
+const MONITORING_INTERVAL = 5000;
+
 function loadStyles() {
     const linkElement = document.createElement('link');
     linkElement.rel = 'stylesheet';
@@ -7,10 +9,18 @@ function loadStyles() {
     document.head.appendChild(linkElement);
 }
 
+function getAudioButton() {
+    return document.getElementsByClassName("join-audio-container__btn")[0];
+}
+
+function isMuted() {
+    return getAudioButton().ariaLabel.includes("unmute");
+}
+
 function unmute() {
-    const btn = document.getElementsByClassName("join-audio-container__btn")[0];
-    if (btn.ariaLabel.includes("unmute")) {
-        btn.click();
+    if (isMuted()) {
+        getAudioButton().click();
+        logMessage('Clicked unmute btn', 'success');
     }
 }
 
@@ -45,9 +55,23 @@ function addDragging() {
 }
 
 function logCurrentStatus() {
-
-
+    const currentDate = new Date();
+    const currentTimeString = currentDate.toLocaleTimeString();
+    audioStatus = 'I am ' + (isMuted() ? 'muted' : 'unmuted');
+    let type = '';
+    if (isMuted()) type = 'attention';
+    logMessage(currentTimeString + ': ' + audioStatus, type);
 }
+
+function logMessage(message, type) {
+    const logs = document.getElementById('zam-logs');
+    const status = document.createElement('div');
+    status.className = 'zam-log-message ' + type;
+    status.textContent = message;
+
+    logs.insertBefore(status, logs.firstChild);
+}
+
 
 function appendWindow() {
     // Create the window container
@@ -78,5 +102,11 @@ function appendWindow() {
     });
 }
 
+function checkAndFix() {
+    logCurrentStatus();
+    unmute();
+}
+
 loadStyles();
 appendWindow();
+setInterval(checkAndFix, MONITORING_INTERVAL);

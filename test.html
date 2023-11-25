@@ -14,8 +14,7 @@
 </head>
 <body>
 
-    <button class="join-audio-container__btn muted">Muted</button>
-
+    <button class="join-audio-container__btn muted" aria-label="unmute">Muted</button>
 
     <script>
         // Get the button element
@@ -28,7 +27,7 @@
             this.classList.toggle('unmuted');
 
             this.textContent = this.classList.contains('muted') ? 'Muted' : 'Unmuted';
-            this.ariaLabel = this.classList.contains('muted') ? 'mute' : 'unmute';
+            this.ariaLabel = this.classList.contains('muted') ? 'unmute' : 'mute';
         });
     </script>
 </body>

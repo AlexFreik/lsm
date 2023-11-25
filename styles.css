@@ -17,3 +17,19 @@
     border-bottom: 1px solid #ccc;
     cursor: grab;
 }
+
+.zam-logs {
+    height: 70px;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+}
+
+.zam-log-message.attention {
+    color: #fff;
+    background-color: #ff0000;
+}
+
+.zam-log-message.success {
+    color: #fff;
+    background-color: #00ff00;
+}
