@@ -10,7 +10,7 @@ function loadStyles() {
 }
 
 function getAudioButton() {
-    return document.getElementsByClassName("join-audio-container__btn")[0];
+    return document.getElementById('webclient').contentWindow.document.getElementsByClassName("join-audio-container__btn")[0];
 }
 
 function isMuted() {
