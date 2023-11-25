@@ -78,7 +78,7 @@ function appendWindow() {
     const zamWindow = document.createElement('div');
     zamWindow.id = 'zam-window';
     zamWindow.className = 'zam-draggable-window';
-    document.body.appendChild(zamWindow);
+    document.body.insertBefore(zamWindow, document.body.firstChild);
 
     // Create the title bar
     const zamWindowTitle = document.createElement('div');
