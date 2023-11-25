@@ -14,7 +14,22 @@
 </head>
 <body>
 
-<script></script>
+    <button class="join-audio-container__btn muted">Muted</button>
 
+
+    <script>
+        // Get the button element
+        const button = document.querySelector('.join-audio-container__btn');
+
+        // Add click event listener
+        button.addEventListener('click', function() {
+            // Toggle between "muted" and "unmuted" classes on the button
+            this.classList.toggle('muted');
+            this.classList.toggle('unmuted');
+
+            this.textContent = this.classList.contains('muted') ? 'Muted' : 'Unmuted';
+            this.ariaLabel = this.classList.contains('muted') ? 'mute' : 'unmute';
+        });
+    </script>
 </body>
 </html>

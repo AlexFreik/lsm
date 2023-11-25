@@ -9,33 +9,23 @@ function loadStyles() {
 
 function unmute() {
     const btn = document.getElementsByClassName("join-audio-container__btn")[0];
-    if (btn.ariaLabel.contains("unmute")) {
+    if (btn.ariaLabel.includes("unmute")) {
         btn.click();
     }
 }
 
-function appendWindow() {
-    // Create the window container
-    const monitoringWindow = document.createElement('div');
-    monitoringWindow.className = 'draggable-window';
-    document.body.appendChild(monitoringWindow);
-
-    // Create the title bar
-    const monitoringWindowTitle = document.createElement('div');
-    monitoringWindowTitle.className = 'window-title';
-    monitoringWindowTitle.textContent = 'Monitoring';
-    monitoringWindow.appendChild(monitoringWindowTitle);
-
-    // Initialize variables for dragging
+function addDragging() {
     let isDragging = false;
     let offsetX, offsetY;
 
-    // Event listeners for dragging
-    monitoringWindowTitle.addEventListener('mousedown', (e) => {
+    const zamWindow = document.getElementById('zam-window');
+    const zamWindowTitle = document.getElementById('zam-window-title');
+
+    zamWindowTitle.addEventListener('mousedown', (e) => {
         isDragging = true;
-        offsetX = e.clientX - monitoringWindow.getBoundingClientRect().left;
-        offsetY = e.clientY - monitoringWindow.getBoundingClientRect().top;
-        monitoringWindow.style.cursor = 'grabbing';
+        offsetX = e.clientX - zamWindow.getBoundingClientRect().left;
+        offsetY = e.clientY - zamWindow.getBoundingClientRect().top;
+        zamWindow.style.cursor = 'grabbing';
     });
 
     document.addEventListener('mousemove', (e) => {
@@ -44,18 +34,47 @@ function appendWindow() {
         const x = e.clientX - offsetX;
         const y = e.clientY - offsetY;
 
-        monitoringWindow.style.left = x + 'px';
-        monitoringWindow.style.top = y + 'px';
+        zamWindow.style.left = x + 'px';
+        zamWindow.style.top = y + 'px';
     });
 
     document.addEventListener('mouseup', () => {
         isDragging = false;
-        monitoringWindow.style.cursor = 'grab';
+        zamWindow.style.cursor = 'grab';
     });
+}
+
+function logCurrentStatus() {
+
+
+}
+
+function appendWindow() {
+    // Create the window container
+    const zamWindow = document.createElement('div');
+    zamWindow.id = 'zam-window';
+    zamWindow.className = 'zam-draggable-window';
+    document.body.appendChild(zamWindow);
+
+    // Create the title bar
+    const zamWindowTitle = document.createElement('div');
+    zamWindowTitle.id = 'zam-window-title';
+    zamWindowTitle.className = 'zam-window-title';
+    zamWindowTitle.textContent = 'Zoom Auto Monitoring';
+    zamWindow.appendChild(zamWindowTitle);
+    
+    // Create the logs
+    const zamLogs = document.createElement('div');
+    zamLogs.id = 'zam-logs';
+    zamLogs.className = 'zam-logs';
+    zamWindow.appendChild(zamLogs);
+
+    addDragging();
 
     // Event listener for collapsing/expanding
-    monitoringWindowTitle.addEventListener('dblclick', () => {
-        monitoringWindow.classList.toggle('collapsed');
+    zamWindowTitle.addEventListener('dblclick', () => {
+        zamWindow.classList.toggle('collapsed');
+        console.log("a")
     });
 }
 

@@ -1,15 +1,15 @@
-.draggable-window {
+.zam-draggable-window {
     position: absolute;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
     cursor: grab;
 }
 
-.draggable-window.collapsed {
+.zam-draggable-window.collapsed {
     height: 40px;
 }
 
-.window-title {
+.zam-window-title {
     height: 40px;
     line-height: 40px;
     padding: 0 10px;
