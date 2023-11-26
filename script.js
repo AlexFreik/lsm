@@ -47,7 +47,7 @@ function addDragging() {
 }
 
 function clickAutoUnmuteBtn() {
-    const btn = document.getElementById('auto-unmute-btn');
+    const btn = document.getElementById('zam-auto-unmute-btn');
     btn.classList.toggle('off');
 
     if (btn.classList.contains('off')) {
