@@ -1,29 +1,20 @@
 
 const MONITORING_INTERVAL = 5000;
+const GITHUB_URL = 'https://alexfreik.github.io/zam';
 
+// ========== Styles ==========
 function loadStyles() {
     const linkElement = document.createElement('link');
     linkElement.rel = 'stylesheet';
     linkElement.type = 'text/css';
-    linkElement.href = 'https://alexfreik.github.io/zam/styles.css';
+    const hostname = window.location.hostname;
+    linkElement.href = hostname === '' ? './styles.css' : GITHUB_URL + '/styles.css';
     document.head.appendChild(linkElement);
 }
+// ====================
 
-function getAudioButton() {
-    return document.getElementById('webclient').contentWindow.document.getElementsByClassName("join-audio-container__btn")[0];
-}
 
-function isMuted() {
-    return getAudioButton().ariaLabel.includes("unmute");
-}
-
-function unmute() {
-    if (isMuted()) {
-        getAudioButton().click();
-        logMessage('Clicked unmute btn', 'success');
-    }
-}
-
+// ========== ZAM Window UI ==========
 function addDragging() {
     let isDragging = false;
     let offsetX, offsetY;
@@ -54,24 +45,16 @@ function addDragging() {
     });
 }
 
-function logCurrentStatus() {
-    const currentDate = new Date();
-    const currentTimeString = currentDate.toLocaleTimeString();
-    audioStatus = 'I am ' + (isMuted() ? 'muted' : 'unmuted');
-    let type = '';
-    if (isMuted()) type = 'attention';
-    logMessage(currentTimeString + ': ' + audioStatus, type);
+function clickAutoUnmuteBtn() {
+    const btn = document.getElementById('auto-unmute-btn');
+    btn.classList.toggle('off');
+
+    if (btn.classList.contains('off')) {
+        btn.textContent = 'OFF';
+    } else {
+        btn.textContent = 'ON';
+    }
 }
-
-function logMessage(message, type) {
-    const logs = document.getElementById('zam-logs');
-    const status = document.createElement('div');
-    status.className = 'zam-log-message ' + type;
-    status.textContent = message;
-
-    logs.insertBefore(status, logs.firstChild);
-}
-
 
 function appendWindow() {
     // Create the window container
@@ -88,10 +71,21 @@ function appendWindow() {
     zamWindow.appendChild(zamWindowTitle);
     
     // Create the logs
-    const zamLogs = document.createElement('div');
-    zamLogs.id = 'zam-logs';
-    zamLogs.className = 'zam-logs';
-    zamWindow.appendChild(zamLogs);
+    const logs = document.createElement('div');
+    logs.id = 'zam-logs';
+    logs.className = 'zam-logs';
+    zamWindow.appendChild(logs);
+
+    const autoMuteContainer = document.createElement('div');
+    autoMuteContainer.id = 'auto-unmute-container';
+    autoMuteContainer.textContent = 'Auto unmute: ';
+    zamWindow.appendChild(autoMuteContainer);
+
+    const autoUnmuteBtn = document.createElement('button');
+    autoUnmuteBtn.id = 'auto-unmute-btn';
+    autoUnmuteBtn.textContent = 'ON';
+    autoUnmuteBtn.addEventListener('click', clickAutoUnmuteBtn);
+    autoMuteContainer.appendChild(autoUnmuteBtn);
 
     addDragging();
 
@@ -101,12 +95,58 @@ function appendWindow() {
         console.log("a")
     });
 }
+// ====================
+
 
 function checkAndFix() {
-    logCurrentStatus();
+    logAudioStatus();
     unmute();
+}
+
+function getAudioButton() {
+    return document.getElementsByClassName("join-audio-container__btn")[0];
+}
+
+function isAutoUnmute() {
+    return document.getElementById('auto-unmute-btn').textContent === 'ON';
+}
+
+function isMuted() {
+    return getAudioButton().ariaLabel.includes("unmute");
+}
+
+function unmute() {
+    if (isMuted() && isAutoUnmute()) {
+        getAudioButton().click();
+        logMessage('Clicked unmute btn');
+    }
+}
+
+
+function logAudioStatus() {
+    const audioStatus = 'I am ' + (isMuted() ? 'muted' : 'unmuted');
+    let type = '';
+    if (isMuted()) type = 'attention';
+    logMessage(audioStatus, type);
+}
+
+function logMessage(message, type) {
+    const currentDate = new Date();
+    const currentTimeString = currentDate.toLocaleTimeString();
+
+    const logs = document.getElementById('zam-logs');
+    const logMsg = document.createElement('div');
+    logMsg.className = 'zam-log-message ' + type;
+    logMsg.textContent = currentTimeString + ': ' + message;
+
+    logs.insertBefore(logMsg, logs.firstChild);
+}
+
+function stopChecking() {
+    clearInterval(intervalId);
+    console.log('Checking stopped.');
 }
 
 loadStyles();
 appendWindow();
-setInterval(checkAndFix, MONITORING_INTERVAL);
+const intervalId = setInterval(checkAndFix, MONITORING_INTERVAL);

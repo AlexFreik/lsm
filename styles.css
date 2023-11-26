@@ -1,4 +1,6 @@
 .zam-draggable-window {
+    border-radius: 10px;
+    width: 250px;
     position: absolute;
     background-color: #f0f0f0;
     border: 1px solid #ccc;
@@ -11,6 +13,8 @@
 }
 
 .zam-window-title {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
     height: 40px;
     line-height: 40px;
     padding: 0 10px;
@@ -32,4 +36,24 @@
 
 .zam-log-message.success {
     background-color: #00ff00;
+}
+
+#auto-unmute-container {
+    margin: 5px;
+    padding: 0 10px;
+}
+
+#auto-unmute-btn {
+    width: 40px;
+    border-radius: 5px;
+    border: 1px solid #555;
+    background-color: white;
+    color: black;
+    font-size: 12px;
+}
+
+#auto-unmute-btn.off {
+    border: 1px solid red;
+    background-color: red;
+    color: white;
 }
