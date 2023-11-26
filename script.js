@@ -1,5 +1,6 @@
 
 const MONITORING_INTERVAL = 5000;
+const monitoringIntervalId = -1;
 const GITHUB_URL = 'https://alexfreik.github.io/zam';
 
 // ========== Styles ==========
@@ -76,16 +77,28 @@ function appendWindow() {
     logs.className = 'zam-logs';
     zamWindow.appendChild(logs);
 
+    // Auto unmute enable / disable
     const autoMuteContainer = document.createElement('div');
-    autoMuteContainer.id = 'auto-unmute-container';
+    autoMuteContainer.id = 'zam-auto-unmute-container';
     autoMuteContainer.textContent = 'Auto unmute: ';
     zamWindow.appendChild(autoMuteContainer);
 
     const autoUnmuteBtn = document.createElement('button');
-    autoUnmuteBtn.id = 'auto-unmute-btn';
+    autoUnmuteBtn.id = 'zam-auto-unmute-btn';
     autoUnmuteBtn.textContent = 'ON';
     autoUnmuteBtn.addEventListener('click', clickAutoUnmuteBtn);
     autoMuteContainer.appendChild(autoUnmuteBtn);
+
+    // close btn
+    const closeBtn = document.createElement('div');
+    closeBtn.id = 'zam-close-btn';
+    zamWindow.appendChild(closeBtn);
+
+    closeBtn.addEventListener('click', function() {
+        stopChecking();
+        zamWindow.parentNode.removeChild(zamWindow);
+    });
+
 
     addDragging();
 
@@ -108,7 +121,7 @@ function getAudioButton() {
 }
 
 function isAutoUnmute() {
-    return document.getElementById('auto-unmute-btn').textContent === 'ON';
+    return document.getElementById('zam-auto-unmute-btn').textContent === 'ON';
 }
 
 function isMuted() {
@@ -121,7 +134,6 @@ function unmute() {
         logMessage('Clicked unmute btn');
     }
 }
-
 
 function logAudioStatus() {
     const audioStatus = 'I am ' + (isMuted() ? 'muted' : 'unmuted');
@@ -143,10 +155,12 @@ function logMessage(message, type) {
 }
 
 function stopChecking() {
+    if (intervalId === -1) return;
     clearInterval(intervalId);
+    intervalId = -1;
     console.log('Checking stopped.');
 }
 
 loadStyles();
 appendWindow();
-const intervalId = setInterval(checkAndFix, MONITORING_INTERVAL);
+intervalId = setInterval(checkAndFix, MONITORING_INTERVAL);

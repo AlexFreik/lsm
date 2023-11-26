@@ -43,7 +43,7 @@
     padding: 0 10px;
 }
 
-#auto-unmute-btn {
+#zam-auto-unmute-btn {
     width: 40px;
     border-radius: 5px;
     border: 1px solid #555;
@@ -52,8 +52,41 @@
     font-size: 12px;
 }
 
-#auto-unmute-btn.off {
+#zam-auto-unmute-btn.off {
     border: 1px solid red;
     background-color: red;
     color: white;
+}
+
+#zam-close-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    outline: none;
+}
+
+#zam-close-btn::before,
+#zam-close-btn::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 8px;
+    background-color: #f0f0f0;
+}
+
+#zam-close-btn::before {
+    transform: rotate(45deg);
+}
+
+#zam-close-btn::after {
+    transform: rotate(-45deg);
 }
