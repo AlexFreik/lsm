@@ -1,10 +1,10 @@
 # ZAM: Zoom Auto Monitoring
 
 ## Table of Contents
-- [Problem](#problem)
-- [ZAM solution](zam-solution)
-- [How to Use](#how-to-use)
-- [Testing](#testing)
+1. [Problem](#problem)
+1. [ZAM solution](#zam-solution)
+1. [How to Use](#how-to-use)
+1. [Testing](#testing)
   
 ## Problem
 
