@@ -1,5 +1,11 @@
 # ZAM: Zoom Auto Monitoring
 
+## Table of Contents
+- [Problem](#problem)
+- [ZAM solution](zam-solution)
+- [How to Use](#how-to-use)
+- [Testing](#testing)
+  
 ## Problem
 
 We often host big Zoom sessions and stream to zoom via OBS. Therefore
@@ -10,7 +16,7 @@ As a result a few minutes of program get lost, until we notice it and unmute our
 The simmilar issue we have with spotlight. We must be always spotlighted, but co-host sometimes remove this spotlight.
 
 
-## Solution
+## ZAM Solution
 
 We tried to fix this using `Zoom REST API`, but it doesn't give any way to unmute someone (even yourself). So we are creating
 a `js` script (ZAM) that can be run in [Zoom Web Client](https://app.zoom.us/wc) and automatically monitor meeting and fix it when co-hosts
