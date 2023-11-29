@@ -35,11 +35,11 @@ So we want to to join both Zoom Desctop and Web on the same laptop:
 ## Features
 
 User should be able to set:
-- Monitoring intervalas (`5s` is default).
-- Primary name in Zoom (`Isha Foundation` is default).
-- Auto unmute backup whenever it is muted (`disabled` by default).
-- Auto unmute backup when primary is muted and mute backup when primary unmuted (`enabled` by default).
-- Spotlight primary if it is not (`enabled` by default).
+- !!! Monitoring intervalas (`5s` is default).
+- !!! Primary name in Zoom (`Isha Foundation` is default).
+- ! Auto unmute backup whenever it is muted (`disabled` by default).
+- !!! Auto unmute backup when primary is muted and mute backup when primary unmuted (`enabled` by default).
+- !! Spotlight primary if it is not (`enabled` by default).
 
 And also we are planning to have `presets` in ZAM. Now ech time when we create a meeting we need to 
 disallow participant to unmute themselves and disable chat. So it would be convinient if ZAM could
