@@ -41,6 +41,8 @@ User should be able to set:
 - Auto unmute backup when primary is muted and mute backup when primary unmuted (`enabled` by default).
 - Spotlight primary if it is not (`enabled` by default).
 
+Zam window should be draggable, and user should be able to collapse it.
+
 Also it would be nice to add "Set Focus Mode Configurations" button. During practices 
 we need to set several meeting configs:
 - Focus Mode: partcipants can't see other participants
