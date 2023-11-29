@@ -1,4 +1,6 @@
 .zam-draggable-window {
+    top: 50px;
+    left: 50px;
     border-radius: 10px;
     width: 250px;
     position: absolute;
