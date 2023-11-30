@@ -3,6 +3,9 @@ const monitoringIntervalId = -1;
 const GITHUB_URL = 'https://alexfreik.github.io/zam';
 
 // ========== Styles ==========
+/**
+ * Dynamically loads a stylesheet into the document's head.
+ */
 function loadStyles() {
     const linkElement = document.createElement('link');
     linkElement.rel = 'stylesheet';
@@ -15,6 +18,9 @@ function loadStyles() {
 // ====================
 
 // ========== ZAM Window UI ==========
+/**
+ * Adds dragging functionality to ZAM Window.
+ */
 function addDragging() {
     let isDragging = false;
     let offsetX, offsetY;
@@ -56,6 +62,9 @@ function clickAutoUnmuteBtn() {
     }
 }
 
+/**
+ * Dynamically creates and append ZAM Window to the document body.
+ */
 function appendWindow() {
     // Create the window container
     const zamWindow = document.createElement('div');
@@ -139,6 +148,18 @@ function logAudioStatus() {
     logMessage(audioStatus, type);
 }
 
+
+/**
+ * Logs a message with a specified type to the designated logs container.
+ *
+ * @param {string} message - The message to be logged.
+ * @param {string} type - The type of the log message (e.g., 'info', 'warning', 'error').
+ * @returns {void}
+ *
+ * @example
+ * // Example usage:
+ * logMessage('This is an informational message.', 'error');
+ */
 function logMessage(message, type) {
     const currentDate = new Date();
     const currentTimeString = currentDate.toLocaleTimeString();
@@ -158,6 +179,7 @@ function stopChecking() {
     console.log('Checking stopped.');
 }
 
+// ===== execute ZAM script =====
 loadStyles();
 appendWindow();
 intervalId = setInterval(checkAndFix, MONITORING_INTERVAL);
