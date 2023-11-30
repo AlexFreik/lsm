@@ -1,4 +1,3 @@
-
 const MONITORING_INTERVAL = 5000;
 const monitoringIntervalId = -1;
 const GITHUB_URL = 'https://alexfreik.github.io/zam';
@@ -9,11 +8,11 @@ function loadStyles() {
     linkElement.rel = 'stylesheet';
     linkElement.type = 'text/css';
     const hostname = window.location.hostname;
-    linkElement.href = hostname === '' ? './styles.css' : GITHUB_URL + '/styles.css';
+    linkElement.href =
+        hostname === '' ? './styles.css' : GITHUB_URL + '/styles.css';
     document.head.appendChild(linkElement);
 }
 // ====================
-
 
 // ========== ZAM Window UI ==========
 function addDragging() {
@@ -70,7 +69,7 @@ function appendWindow() {
     zamWindowTitle.className = 'zam-window-title';
     zamWindowTitle.textContent = 'Zoom Auto Monitoring';
     zamWindow.appendChild(zamWindowTitle);
-    
+
     // Create the logs
     const logs = document.createElement('div');
     logs.id = 'zam-logs';
@@ -94,22 +93,20 @@ function appendWindow() {
     closeBtn.id = 'zam-close-btn';
     zamWindow.appendChild(closeBtn);
 
-    closeBtn.addEventListener('click', function() {
+    closeBtn.addEventListener('click', function () {
         stopChecking();
         zamWindow.parentNode.removeChild(zamWindow);
     });
-
 
     addDragging();
 
     // Event listener for collapsing/expanding
     zamWindowTitle.addEventListener('dblclick', () => {
         zamWindow.classList.toggle('collapsed');
-        console.log("a")
+        console.log('a');
     });
 }
 // ====================
-
 
 function checkAndFix() {
     logAudioStatus();
@@ -117,7 +114,7 @@ function checkAndFix() {
 }
 
 function getAudioButton() {
-    return document.getElementsByClassName("join-audio-container__btn")[0];
+    return document.getElementsByClassName('join-audio-container__btn')[0];
 }
 
 function isAutoUnmute() {
@@ -125,7 +122,7 @@ function isAutoUnmute() {
 }
 
 function isMuted() {
-    return getAudioButton().ariaLabel.includes("unmute");
+    return getAudioButton().ariaLabel.includes('unmute');
 }
 
 function unmute() {
