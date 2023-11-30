@@ -66,7 +66,7 @@ document
 
 The user should be able to set:
 
--   Monitoring intervals (`5s`` is the default).
+-   Monitoring intervals (`5s` is the default).
 -   Primary name in Zoom (`Isha Foundation` is default).
 -   Auto unmute backup whenever it is muted (`disabled` by default).
 -   Auto unmute backup when the primary is muted and mute backup when the primary is unmuted (`enabled`` by default).
@@ -98,4 +98,4 @@ Start the server. You can access it at [http://localhost:3000](http://localhost:
 make start
 ```
 
-Now you can go to any of the test `HTML` pages. ZAM window and Zoom Elements mocks will pop up. Just can check that everything works.
+Now you can go to any of the test `HTML` pages. ZAM window and Zoom Elements mocks will pop up. Just check that everything works.
