@@ -33,7 +33,7 @@ So we want to join both Zoom Desktop and Web on the same laptop:
 - Zoom Desktop will be **"primary"** and we will be streaming video and audio as usual.
 - Zoom Web will be **"backup"**. ZAM will automatically detect if the **primary** is muted and will unmute backup in this case
    (we will use the same mic as a source). This way the audio may be less good for a minute, but still it is better than no audio :)
-And when the primary is finally unmuted ZAM should mute backup automatically.
+- And when the primary is finally unmuted ZAM should mute backup automatically.
 
 ## How to Use
 
