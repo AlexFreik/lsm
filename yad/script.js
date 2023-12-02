@@ -59,7 +59,10 @@ function isVideoCurrentTimeGood() {
     if (perfectTime === 0) {
         console.error('Invalid perfect time:', perfectTime);
     }
-    return (currentTime - perfectTime) < DELAY_MARGIN && (currentTime - perfectTime) > -DELAY_MARGIN;
+    return (
+        currentTime - perfectTime < DELAY_MARGIN &&
+        currentTime - perfectTime > -DELAY_MARGIN
+    );
 }
 
 function onPlayerStateChange(event) {
@@ -67,25 +70,38 @@ function onPlayerStateChange(event) {
         isPlayerReady = true;
         systemTimeWhenStarted = getSystemCurrentTime();
         // for live streams player.getDuration() gives a much bigger time than actual duration
-        durationWhenStarted = player.getDuration() - 3600;  
+        durationWhenStarted = player.getDuration() - 3600;
 
-        console.log(calculateVideoDelayedTime(), player.getCurrentTime(), !isVideoCurrentTimeGood());
+        console.log(
+            calculateVideoDelayedTime(),
+            player.getCurrentTime(),
+            !isVideoCurrentTimeGood(),
+        );
     }
 }
 
 function calculateVideoDelayedTime() {
     if (!(durationWhenStarted > 0) || !(systemTimeWhenStarted > 0)) {
-        console.error('Invalid duration:', durationWhenStarted, 'or time:', systemTimeWhenStarted);
+        console.error(
+            'Invalid duration:',
+            durationWhenStarted,
+            'or time:',
+            systemTimeWhenStarted,
+        );
         return 0;
     }
-    return (getSystemCurrentTime() - systemTimeWhenStarted) + (durationWhenStarted - delay);
+    return (
+        getSystemCurrentTime() -
+        systemTimeWhenStarted +
+        (durationWhenStarted - delay)
+    );
 }
 
 var player;
-// duration of video when it started playing in seconds 
+// duration of video when it started playing in seconds
 // (it doesn't get auto updated for live streams)
-var durationWhenStarted;  
-var systemTimeWhenStarted;  // current time when video started in seconds
+var durationWhenStarted;
+var systemTimeWhenStarted; // current time when video started in seconds
 var intervalId = -1;
 var videoId = getParameterByName(VIDEO_ID_PARAM_NAME);
 var delay = getParameterByName(DELAY_PARAM_NAME);
