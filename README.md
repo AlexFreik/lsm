@@ -42,25 +42,23 @@ You will need to do the following:
 
 1. Open Zoom Web Client [app.zoom.us/wc](https://app.zoom.us/wc):
 
-  <img width="500" alt="Zoom Web Client" src="https://github.com/AlexFreik/zam/assets/61039123/f0c15a18-6ae3-4272-ac18-86de2e4bb901">
+ <img width="500" alt="Zoom Web Client" src="https://github.com/AlexFreik/zam/assets/61039123/f0c15a18-6ae3-4272-ac18-86de2e4bb901">
 
-3. Open a meeting and join the audio.
+2. Open a meeting and join the audio.
 
-4. Open the developer Console in Chrome browser and execute this line (press F12):
+3. Open the developer Console in Chrome browser and execute this line (press F12):
 
 ```js
-document
-    .getElementById('webclient')
-    .contentWindow.document.body.appendChild(
-        Object.assign(document.createElement('script'), {
-            src: 'https://alexfreik.github.io/zam/script.js',
-        }),
-    );
+document.getElementById('webclient').contentWindow.document.body.appendChild(
+    Object.assign(document.createElement('script'), {
+        src: 'https://alexfreik.github.io/zam/script.js',
+    }),
+);
 ```
 
-5. If a new ZAM window appears it means you are done!
+4. If a new ZAM window appears it means you are done!
 
-    <img width="500" alt="Screenshot 2023-11-29 at 12 54 35" src="https://github.com/AlexFreik/zam/assets/61039123/43a91dfb-d221-4a3b-bfc2-7fc810d93954">
+ <img width="500" alt="Screenshot 2023-11-29 at 12 54 35" src="https://github.com/AlexFreik/zam/assets/61039123/43a91dfb-d221-4a3b-bfc2-7fc810d93954">
 
 ## Features
 

@@ -148,7 +148,6 @@ function logAudioStatus() {
     logMessage(audioStatus, type);
 }
 
-
 /**
  * Logs a message with a specified type to the designated logs container.
  *
