@@ -15,10 +15,19 @@
 
         <div id="explanation">
             <p>
-                This website allows you to configure the delay for a YouTube
-                Live Stream. The YouTube player will always keep the delay
-                fixed. If the current delay differs by more than 60 seconds from
-                the configured delay, it will automatically be reset back.
+                This website allows you to
+                <strong>configure the delay for a YouTube Live Stream</strong>.
+                The YouTube player will always keep the delay fixed. <br />
+
+                If the current delay become shorter than the perfect by over
+                <strong>1min</strong>, it will automatically be reset back. And
+                if delay becomes longer than the configured by over
+                <strong>1h</strong>, it will also be reset back.<br /><br />
+
+                <strong>Example:</strong> So if perfect delay is 900s (15min)
+                and the current delay is 13min 59s, it will be reset back to
+                15min. And if the current delay is 1h 15min 1s, it will be also
+                reset back to 15min.
             </p>
         </div>
 
@@ -30,7 +39,7 @@
                 placeholder="Enter Video ID"
                 value="jfKfPfyJRdk" />
 
-            <label for="delay">Delay (in seconds):</label>
+            <label for="delay">Perfect Delay (in seconds):</label>
             <input
                 type="number"
                 id="delay"

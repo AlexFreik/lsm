@@ -1,6 +1,11 @@
-DELAY_PARAM_NAME = 'delay';
-VIDEO_ID_PARAM_NAME = 'videoId';
-DELAY_MARGIN = 60;
+DELAY_PARAM_NAME = 'd';
+VIDEO_ID_PARAM_NAME = 'v';
+MINIMAL_DELAY_MARGIN = 60;
+MAXIMAL_DELAY_MARGIN = 3600;
+LIVESTREAM_DURATION_CORRECTION = 3600;
+
+DEFAULT_VIDEO_ID = 'jfKfPfyJRdk';
+DEFAULT_DELAY = 900;
 
 function getParameterByName(name) {
     var urlParams = new URLSearchParams(window.location.search);
@@ -8,10 +13,10 @@ function getParameterByName(name) {
 }
 
 function setInputsFromUrlParams() {
-    videoIdParam = getParameterByName(VIDEO_ID_PARAM_NAME) || 'jfKfPfyJRdk';
+    videoIdParam = getParameterByName(VIDEO_ID_PARAM_NAME) || DEFAULT_VIDEO_ID;
     document.getElementById('videoId').value = videoIdParam;
 
-    delayParam = getParameterByName(DELAY_PARAM_NAME) || '900';
+    delayParam = getParameterByName(DELAY_PARAM_NAME) || DEFAULT_DELAY;
     document.getElementById('delay').value = delayParam;
 }
 
@@ -24,7 +29,7 @@ async function configurePlayer() {
     var stateObj = { videoId: videoId, delay: delay };
     var newUrl =
         window.location.href.split('?')[0] +
-        `?videoId=${videoId}&delay=${delay}`;
+        `?${VIDEO_ID_PARAM_NAME}=${videoId}&${DELAY_PARAM_NAME}=${delay}`;
     history.pushState(stateObj, '', newUrl);
 }
 
@@ -52,56 +57,82 @@ function onPlayerReady(event) {
 function getSystemCurrentTime() {
     return Math.floor(new Date().getTime() / 1000);
 }
-
+/**
+ * Checks if current video time is close enough to the perfect time.
+ *
+ * If perfect time is not set returns true.
+ *
+ * @returns {boolean} true if video is playing at the right time
+ */
 function isVideoCurrentTimeGood() {
     var currentTime = Math.floor(player.getCurrentTime());
-    var perfectTime = calculateVideoDelayedTime();
+    var perfectTime = getPerfectTime();
     if (perfectTime === 0) {
         console.error('Invalid perfect time:', perfectTime);
+        return true;
     }
     return (
-        currentTime - perfectTime < DELAY_MARGIN &&
-        currentTime - perfectTime > -DELAY_MARGIN
+        -MAXIMAL_DELAY_MARGIN < currentTime - perfectTime &&
+        currentTime - perfectTime < MINIMAL_DELAY_MARGIN
     );
 }
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
         isPlayerReady = true;
-        systemTimeWhenStarted = getSystemCurrentTime();
-        // for live streams player.getDuration() gives a much bigger time than actual duration
-        durationWhenStarted = player.getDuration() - 3600;
+        duration =
+            Math.floor(player.getDuration()) - LIVESTREAM_DURATION_CORRECTION;
+        // if duration is the same as current one, it means
+        // that player wasn't reloaded, so we don't need to update timings
+        console.log(
+            systemTimeWhenStarted,
+            durationWhenStarted,
+            duration,
+            !(Math.abs(duration - durationWhenStarted) < 1),
+        );
+        if (!(Math.abs(duration - durationWhenStarted) < 1)) {
+            systemTimeWhenStarted = getSystemCurrentTime();
+            durationWhenStarted = duration;
+        }
 
         console.log(
-            calculateVideoDelayedTime(),
-            player.getCurrentTime(),
-            !isVideoCurrentTimeGood(),
+            'Player started. Duration:',
+            durationWhenStarted,
+            ', system time:',
+            systemTimeWhenStarted,
+            ', isGood:',
+            isVideoCurrentTimeGood(),
         );
     }
 }
 
-function calculateVideoDelayedTime() {
-    if (!(durationWhenStarted > 0) || !(systemTimeWhenStarted > 0)) {
-        console.error(
-            'Invalid duration:',
-            durationWhenStarted,
-            'or time:',
-            systemTimeWhenStarted,
-        );
+function getActualDuration() {
+    if (!(durationWhenStarted > 0)) {
+        console.error('Invalid duration:', durationWhenStarted);
         return 0;
     }
-    return (
-        getSystemCurrentTime() -
-        systemTimeWhenStarted +
-        (durationWhenStarted - delay)
-    );
+    if (!(systemTimeWhenStarted > 0)) {
+        console.error('Invalid time:', systemTimeWhenStarted);
+        return 0;
+    }
+    return getSystemCurrentTime() - systemTimeWhenStarted + durationWhenStarted;
+}
+
+function getPerfectTime() {
+    const actualDuration = getActualDuration();
+    if (actualDuration === 0) {
+        console.error('Invalid actual duration:', actualDuration);
+        return 0;
+    }
+    return getActualDuration() - delay;
 }
 
 var player;
-// duration of video when it started playing in seconds
+// duration of video when it was loaded in player
 // (it doesn't get auto updated for live streams)
 var durationWhenStarted;
-var systemTimeWhenStarted; // current time when video started in seconds
+// system timestamp when duration was set ()
+var systemTimeWhenStarted;
 var intervalId = -1;
 var videoId = getParameterByName(VIDEO_ID_PARAM_NAME);
 var delay = getParameterByName(DELAY_PARAM_NAME);
@@ -112,7 +143,7 @@ loadPlayerAPI();
 
 intervalId = setInterval(() => {
     if (isPlayerReady && !isVideoCurrentTimeGood()) {
-        var perfectTime = calculateVideoDelayedTime();
+        var perfectTime = getPerfectTime();
         console.log('Seeking to:', perfectTime);
         player.seekTo(perfectTime);
         isPlayerReady = false;
