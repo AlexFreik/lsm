@@ -2,14 +2,14 @@
 
 ## Table of Contents
 
-- [ZAM: Zoom Auto Monitoring](#zam-zoom-auto-monitoring)
-  - [Table of Contents](#table-of-contents)
-  - [Problem](#problem)
-  - [ZAM Solution](#zam-solution)
-  - [How to Use](#how-to-use)
-  - [Features](#features)
-  - [Development](#development)
-  - [Testing](#testing)
+-   [ZAM: Zoom Auto Monitoring](#zam-zoom-auto-monitoring)
+    -   [Table of Contents](#table-of-contents)
+    -   [Problem](#problem)
+    -   [ZAM Solution](#zam-solution)
+    -   [How to Use](#how-to-use)
+    -   [Features](#features)
+    -   [Development](#development)
+    -   [Testing](#testing)
 
 ## Problem
 
