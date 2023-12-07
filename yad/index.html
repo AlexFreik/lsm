@@ -19,10 +19,10 @@
                 <strong>configure the delay for a YouTube Live Stream</strong>.
                 The YouTube player will always keep the delay fixed. <br />
 
-                If the current delay become shorter than the perfect by over
-                <strong>1min</strong>, it will automatically be reset back. And
-                if delay becomes longer than the configured by over
-                <strong>1h</strong>, it will also be reset back.<br /><br />
+                If the current delay becomes bad: shorter than the perfect by
+                over
+                <strong>1min</strong> or longer than the configured by over
+                <strong>1h</strong>, it will automatically be reset back.<br /><br />
 
                 <strong>Example:</strong> So if configured delay is 900s (15min)
                 and the current delay is 13min 59s, it will be reset back to
@@ -30,18 +30,20 @@
                 reset back to 15min.<br /><br />
 
                 To account for possible network issues that may increase the
-                delay, we save the current delay and if skipping happens (which
-                means delay becomes less then 60s) we will return back to the
-                saved delay, and also increase delay by 5s.<br />
+                delay, script will save the current delay and if skipping
+                happens (which means delay becomes less then 60s) script will
+                return player to the saved delay, and also increase delay by
+                5s.<br />
 
-                But if delay becomes bad, but more than 60s it means it wasn't
-                skipping but someone manually changed the timeline. In this case
-                we will go to the configured delay (not saved one).<br /><br />
+                But if delay becomes bad, but more than 1min (which means it
+                wasn't YT skipping but someone manually changed the timeline)
+                script will go to the configured delay (not saved one).<br /><br />
 
-                <strong>Example:</strong> Lets say configured delay is 900s
-                (15min), but due to network issues the current delay is 960s
-                (16min). Now YT skips and delay becomes 0s. In this case we will
-                reset delay back to 16min 5s.
+                <strong>Example:</strong> If the configured delay is 15min, and
+                due to network issues the delay now is 16min. Now YT skips and
+                delay becomes 0s. In this case script will reset delay back to
+                16min 5s. After this user manually try to set delay to 2h. Then
+                the script will completely reset it to 15min.
             </p>
         </div>
 
