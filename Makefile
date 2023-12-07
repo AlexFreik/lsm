@@ -7,4 +7,4 @@ pretty:
 	npx prettier --write .
 
 start-zam:
-	npm start-zam
+	npm start

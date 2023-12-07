@@ -2,6 +2,8 @@ DELAY_PARAM_NAME = 'd';
 VIDEO_ID_PARAM_NAME = 'v';
 MINIMAL_DELAY_MARGIN = 60;
 MAXIMAL_DELAY_MARGIN = 3600;
+SKIP_MARGIN = 60;
+SKIP_CORRECTION = 5;
 LIVESTREAM_DURATION_CORRECTION = 3600;
 
 DEFAULT_VIDEO_ID = 'jfKfPfyJRdk';
@@ -65,16 +67,14 @@ function getSystemCurrentTime() {
  * @returns {boolean} true if video is playing at the right time
  */
 function isVideoCurrentTimeGood() {
-    var currentTime = Math.floor(player.getCurrentTime());
-    var perfectTime = getPerfectTime();
+    const currentTime = Math.floor(player.getCurrentTime());
+    const perfectTime = getDelayedTime(delay);
     if (perfectTime === 0) {
         console.error('Invalid perfect time:', perfectTime);
         return true;
     }
-    return (
-        -MAXIMAL_DELAY_MARGIN < currentTime - perfectTime &&
-        currentTime - perfectTime < MINIMAL_DELAY_MARGIN
-    );
+    const diff = currentTime - perfectTime;
+    return -MAXIMAL_DELAY_MARGIN < diff && diff < MINIMAL_DELAY_MARGIN;
 }
 
 function onPlayerStateChange(event) {
@@ -93,16 +93,10 @@ function onPlayerStateChange(event) {
         if (!(Math.abs(duration - durationWhenStarted) < 1)) {
             systemTimeWhenStarted = getSystemCurrentTime();
             durationWhenStarted = duration;
+            console.log('Player started. Duration:', durationWhenStarted);
         }
 
-        console.log(
-            'Player started. Duration:',
-            durationWhenStarted,
-            ', system time:',
-            systemTimeWhenStarted,
-            ', isGood:',
-            isVideoCurrentTimeGood(),
-        );
+        console.log('Is delay good:', isVideoCurrentTimeGood());
     }
 }
 
@@ -118,7 +112,11 @@ function getActualDuration() {
     return getSystemCurrentTime() - systemTimeWhenStarted + durationWhenStarted;
 }
 
-function getPerfectTime() {
+function getCurrentDelay() {
+    return getActualDuration() - Math.floor(player.getCurrentTime());
+}
+
+function getDelayedTime(delay) {
     const actualDuration = getActualDuration();
     if (actualDuration === 0) {
         console.error('Invalid actual duration:', actualDuration);
@@ -135,17 +133,38 @@ var durationWhenStarted;
 var systemTimeWhenStarted;
 var intervalId = -1;
 var videoId = getParameterByName(VIDEO_ID_PARAM_NAME);
-var delay = getParameterByName(DELAY_PARAM_NAME);
+var delay = parseInt(getParameterByName(DELAY_PARAM_NAME));
+var savedDelay = delay - SKIP_CORRECTION;
 var isPlayerReady = false;
 setInputsFromUrlParams();
 
 loadPlayerAPI();
 
 intervalId = setInterval(() => {
-    if (isPlayerReady && !isVideoCurrentTimeGood()) {
-        var perfectTime = getPerfectTime();
-        console.log('Seeking to:', perfectTime);
-        player.seekTo(perfectTime);
-        isPlayerReady = false;
+    if (!isPlayerReady || getActualDuration() < delay) {
+        return;
     }
+    const currentDelay = getCurrentDelay();
+    if (isVideoCurrentTimeGood()) {
+        console.log('New saved delay:', currentDelay);
+        savedDelay = currentDelay;
+        return;
+    }
+    console.log('Bad current delay:', currentDelay);
+    if (currentDelay < SKIP_MARGIN) {
+        const correctedDelay = savedDelay + SKIP_CORRECTION;
+        const newTime = getDelayedTime(correctedDelay);
+        console.log(
+            'Skipping to saved delay:',
+            correctedDelay,
+            ', at time:',
+            newTime,
+        );
+        player.seekTo(newTime);
+    } else {
+        const newTime = getDelayedTime(delay);
+        console.log('Seeking to perfect delay:', delay, ', at time:', newTime);
+        player.seekTo(newTime);
+    }
+    isPlayerReady = false;
 }, 1000);

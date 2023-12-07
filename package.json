@@ -1,6 +1,6 @@
 {
     "scripts": {
-        "start-zam": "npx nodemon zam/server.js"
+        "start": "npx nodemon zam/server.js"
     },
     "devDependencies": {
         "express": "^4.18.2",
