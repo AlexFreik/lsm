@@ -58,7 +58,7 @@ button:hover {
     background-color: #555;
 }
 
-#explanation {
+.explanation {
     max-width: 750px;
     margin: 20px auto;
     padding: 20px;
@@ -67,11 +67,11 @@ button:hover {
     border-radius: 8px;
 }
 
-#explanation h2 {
+.explanation h2 {
     color: #333;
 }
 
-#explanation p {
+.explanation p {
     color: #666;
     line-height: 1.5;
 }

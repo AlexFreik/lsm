@@ -13,36 +13,21 @@
             <h1>YAD: YouTube Auto Delay</h1>
         </header>
 
-        <div id="explanation">
+        <div class="explanation">
             <p>
                 This website allows you to
-                <strong>configure the delay for a YouTube Live Stream</strong>.
-                The YouTube player will always keep the delay fixed. <br />
+                <strong>configure the delay for a YouTube Live Stream</strong>
+                to have a fixed delay.<br /><br />
 
-                If the current delay becomes bad: shorter than the perfect by
-                over
-                <strong>1min</strong> or longer than the configured by over
-                <strong>1h</strong>, it will automatically be reset back.<br /><br />
-
-                <strong>Example:</strong> So if configured delay is 900s (15min)
+                <strong>Example:</strong> If configured delay is 900s (15min)
                 and the current delay is 13min 59s, it will be reset back to
                 15min. And if the current delay is 1h 15min 1s, it will be also
                 reset back to 15min.<br /><br />
 
-                To account for possible network issues that may increase the
-                delay, script will save the current delay and if skipping
-                happens (which means delay becomes less then 60s) script will
-                return player to the saved delay, and also increase delay by
-                5s.<br />
-
-                But if delay becomes bad, but more than 1min (which means it
-                wasn't YT skipping but someone manually changed the timeline)
-                script will go to the configured delay (not saved one).<br /><br />
-
                 <strong>Example:</strong> If the configured delay is 15min, and
-                due to network issues the delay now is 16min. Now YT skips and
+                due to network issues the delay now is 20min. Now YT skips and
                 delay becomes 0s. In this case script will reset delay back to
-                16min 5s. After this user manually try to set delay to 2h. Then
+                20min 5s. After this user manually try to set delay to 2h. Then
                 the script will completely reset it to 15min.
             </p>
         </div>
@@ -75,6 +60,14 @@
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen></iframe>
+        </div>
+
+        <div class="explanation">
+            <p>
+                In short the script will do the following:<br />
+
+                <script src="https://gist.github.com/AlexFreik/544d7996b607781c1c01313d9bffc3f0.js"></script>
+            </p>
         </div>
     </body>
 </html>
