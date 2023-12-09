@@ -10,37 +10,46 @@
     </head>
     <body>
         <header>
-            <h1>YAD: YouTube Auto Delay</h1>
+            <div class="title-container">
+                <h1>YAD: YouTube Auto Delay</h1>
+            </div>
+            <div class="github-link">
+                <a
+                    href="https://github.com/AlexFreik/lsm/tree/master/yad"
+                    target="_blank"
+                    >GitHub</a
+                >
+            </div>
         </header>
 
         <div class="explanation">
             <p>
                 This website allows you to
                 <strong>configure the delay for a YouTube Live Stream</strong>
-                to have a fixed delay.<br /><br />
+                to have a fixed delay. Please check the bottom of this page for
+                more details.<br /><br />
 
-                <strong>Example:</strong> If configured delay is 900s (15min)
-                and the current delay is 13min 59s, it will be reset back to
-                15min. And if the current delay is 1h 15min 1s, it will be also
-                reset back to 15min.<br /><br />
+                <strong>Example 1:</strong> The configured delay is 15min and
+                the current delay is 13min 59s, it will be reset back to 15min.
+                And if the current delay is 1h 15min 1s, it will be also reset
+                back to 15min.<br /><br />
 
-                <strong>Example:</strong> If the configured delay is 15min, and
-                due to network issues the delay now is 20min. Now YT skips and
-                delay becomes 0s. In this case script will reset delay back to
-                20min 5s. After this user manually try to set delay to 2h. Then
-                the script will completely reset it to 15min.
+                <strong>Example 2:</strong> The configured delay is 15min, but
+                due to network issues the delay slowly become is 20min. Now if
+                YT skips and delay becomes 0s the script will reset delay back
+                to 20min 5s.
             </p>
         </div>
 
         <section>
-            <label for="videoId">Video ID:</label>
+            <label for="videoId">YouTube Stream ID:</label>
             <input
                 type="text"
                 id="videoId"
                 placeholder="Enter Video ID"
                 value="jfKfPfyJRdk" />
 
-            <label for="delay">Perfect Delay (in seconds):</label>
+            <label for="delay">Delay (in seconds):</label>
             <input
                 type="number"
                 id="delay"
