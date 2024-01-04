@@ -6,5 +6,5 @@ install:
 pretty:
 	npx prettier --write .
 
-start-zam:
+start:
 	npm start

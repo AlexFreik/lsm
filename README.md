@@ -12,3 +12,7 @@ Webpage where you can configure a delay for any YouTube
 stream, and it will automatically maintain it. It solves the
 skipping problem when because of network lag a stream with delay
 goes to LIVE, and as a result, participants miss this skipped fragment.
+
+## [YouTube Gallery View](https://alexfreik.github.io/lsm/gallery/)
+
+Here you can monitor multiple YouTube streams simultaneously.
