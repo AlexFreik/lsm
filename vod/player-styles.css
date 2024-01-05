@@ -1,0 +1,5 @@
+.ytp-show-cards-title,
+.ytp-youtube-button,
+.ytp-watermark {
+    display: none !important;
+}
