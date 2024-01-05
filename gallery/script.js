@@ -21,10 +21,9 @@ function updateUrlParameters() {
 
 getUrlParameters().forEach((param) => {
     addItem(param.key, param.value);
-
 });
 
-function addItem(name = 'Name', videoId = null) {
+function addItem(name = 'Name', videoId = '') {
     const gallery = document.getElementById('gallery');
     gallery.insertBefore(getContainer(name, videoId), gallery.lastElementChild);
 }
@@ -37,27 +36,30 @@ function getContainer(name, videoId) {
                 style="font-size: 18px; font-weight: bold;"
                     ><input
                         type="text"
-                        onInput="this.parentNode.dataset.value = this.value"
+                        onInput="this.parentNode.dataset.value = this.value;"
+                        onblur="updateUrlParameters();"
                         size="5"
                         placeholder="Name"
                         value="${name}"
-                        style="font-size: 18px; font-weight: bold;"
                         class="video-name"/></label>
                 -
                 <label class="input-sizer"><input
                         type="text"
-                        onInput="this.parentNode.dataset.value = this.value; updateUrlParameters();"
+                        onInput="this.parentNode.dataset.value = this.value;"
+                        onblur="updateUrlParameters();"
                         size="10"
                         placeholder="Video ID"
                         value="${videoId}"
                         class="video-id"/></label></div><div class="embed-container"></div>`;
     const parent1 = container.firstChild.firstChild;
-    const input1 = parent1.firstChild; 
+    const input1 = parent1.firstChild;
     const parent2 = container.firstChild.firstChild;
-    const input2 = parent2.lastChild; 
+    const input2 = parent2.lastChild;
     parent1.dataset.value = input1.value;
     parent2.dataset.value = input2.value;
-    container.children[1].appendChild(getYouTubePlayer(videoId));
+    if (videoId) {
+        container.children[1].appendChild(getYouTubePlayer(videoId));
+    }
     return container;
 }
 
@@ -67,8 +69,9 @@ function getYouTubePlayer(videoId) {
     iframe.height = '315';
     iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&iv_load_policy=3`;
     iframe.title = 'YouTube video player';
-    iframe.frameborder = '0';
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.frameBorder = '0';
+    iframe.allow =
+        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
     iframe.allowfullscreen = true;
     return iframe;
 }
