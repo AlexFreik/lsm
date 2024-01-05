@@ -54,8 +54,8 @@ function getBox(name, videoId) {
                         </div>`;
     const parent1 = box.firstChild.firstChild;
     const input1 = parent1.firstChild;
-    const parent2 = box.firstChild.firstChild;
-    const input2 = parent2.lastChild;
+    const parent2 = box.firstChild.lastChild;
+    const input2 = parent2.firstChild;
     parent1.dataset.value = input1.value;
     parent2.dataset.value = input2.value;
     if (videoId) {
