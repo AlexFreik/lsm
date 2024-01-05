@@ -104,3 +104,26 @@ input {
     font-size: 20px;
     font-weight: 300;
 }
+
+.top-btn {
+    width: 50px;
+    height: 20px;
+    font-size: 10px;
+    position: absolute;
+    top: 5px;
+    padding: 0px 0px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    z-index: 1; /* Ensure buttons appear above other content */
+    color: white;
+}
+.refresh-btn {
+    right: 60px; /* Adjust the right position to prevent overlap */
+    background-color: #444;
+}
+
+.close-btn {
+    right: 5px;
+    background-color: darkred;
+}

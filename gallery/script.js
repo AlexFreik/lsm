@@ -50,7 +50,10 @@ function getContainer(name, videoId) {
                         size="10"
                         placeholder="Video ID"
                         value="${videoId}"
-                        class="video-id"/></label></div><div class="embed-container"></div>`;
+                        class="video-id"/></label></div><div class="embed-container">
+						<button class="top-btn refresh-btn" onclick="refreshVideo(this)">Refresh</button>
+						<button class="top-btn close-btn" onclick="removeVideo(this)">Close</button>
+                        </div>`;
     const parent1 = container.firstChild.firstChild;
     const input1 = parent1.firstChild;
     const parent2 = container.firstChild.firstChild;
@@ -61,6 +64,13 @@ function getContainer(name, videoId) {
         container.children[1].appendChild(getYouTubePlayer(videoId));
     }
     return container;
+}
+
+function refreshVideo() {}
+function removeVideo(removeBtn) {
+    const item = removeBtn.parentNode.parentNode;
+    item.parentNode.removeChild(item);
+    updateUrlParameters();
 }
 
 function getYouTubePlayer(videoId) {
