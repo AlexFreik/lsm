@@ -10,38 +10,36 @@ function getUrlParameters() {
 
 function updateUrlParameters() {
     const newParams = new URLSearchParams();
-    document.querySelectorAll('.video-header').forEach((h5, index) => {
-        const key = h5.firstChild.firstChild.value;
-        const value = h5.lastChild.firstChild.value;
-        newParams.append(key, value);
+    document.querySelectorAll('.box').forEach((box) => {
+        newParams.append(getVideoName(box), getVideoId(box));
     });
     const paramString = newParams.toString();
     window.history.pushState({}, '', `?${paramString}`);
 }
 
 getUrlParameters().forEach((param) => {
-    addItem(param.key, param.value);
+    addBox(param.key, param.value);
 });
 
-function addItem(name = 'Name', videoId = '') {
+function addBox(name = 'Name', videoId = '') {
     const gallery = document.getElementById('gallery');
-    gallery.insertBefore(getContainer(name, videoId), gallery.lastElementChild);
+    gallery.insertBefore(getBox(name, videoId), gallery.lastElementChild);
 }
 
-function getContainer(name, videoId) {
-    const container = document.createElement('div');
-    container.className = 'col-lg-3 col-md-6 col-sm-12 mb-3';
-    container.innerHTML = `<div class="video-header"><label 
-                class="input-sizer"
-                style="font-size: 18px; font-weight: bold;"
-                    ><input
-                        type="text"
-                        onInput="this.parentNode.dataset.value = this.value;"
-                        onblur="updateUrlParameters();"
-                        size="5"
-                        placeholder="Name"
-                        value="${name}"
-                        class="video-name"/></label>
+function getBox(name, videoId) {
+    const box = document.createElement('div');
+    box.className = 'box col-lg-3 col-md-6 col-sm-12 mb-3';
+    box.innerHTML = `<div class="video-header"><label 
+            class="input-sizer"
+            style="font-size: 18px; font-weight: bold;"
+                ><input
+                    type="text"
+                    onInput="this.parentNode.dataset.value = this.value;"
+                    onblur="updateUrlParameters();"
+                    size="5"
+                    placeholder="Name"
+                    value="${name}"
+                    class="video-name"/></label>
                 -
                 <label class="input-sizer"><input
                         type="text"
@@ -54,23 +52,36 @@ function getContainer(name, videoId) {
 						<button class="top-btn refresh-btn" onclick="refreshVideo(this)">Refresh</button>
 						<button class="top-btn close-btn" onclick="removeVideo(this)">Close</button>
                         </div>`;
-    const parent1 = container.firstChild.firstChild;
+    const parent1 = box.firstChild.firstChild;
     const input1 = parent1.firstChild;
-    const parent2 = container.firstChild.firstChild;
+    const parent2 = box.firstChild.firstChild;
     const input2 = parent2.lastChild;
     parent1.dataset.value = input1.value;
     parent2.dataset.value = input2.value;
     if (videoId) {
-        container.children[1].appendChild(getYouTubePlayer(videoId));
+        box.lastChild.appendChild(getYouTubePlayer(videoId));
     }
-    return container;
+    return box;
 }
 
-function refreshVideo() {}
-function removeVideo(removeBtn) {
-    const item = removeBtn.parentNode.parentNode;
-    item.parentNode.removeChild(item);
+function refreshVideo(btn) {
+    const box = btn.parentNode.parentNode;
+    const videoId = getVideoId(box);
+    box.lastChild.removeChild(box.lastChild.lastChild);
+    box.lastChild.appendChild(getYouTubePlayer(videoId));
+}
+function removeVideo(btn) {
+    const box = btn.parentNode.parentNode;
+    box.parentNode.removeChild(box);
     updateUrlParameters();
+}
+
+function getVideoName(box) {
+    return box.firstChild.firstChild.firstChild.value;
+}
+
+function getVideoId(box) {
+    return box.firstChild.lastChild.firstChild.value;
 }
 
 function getYouTubePlayer(videoId) {
