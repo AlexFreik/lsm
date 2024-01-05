@@ -10,7 +10,7 @@ DEFAULT_VIDEO_ID = 'jfKfPfyJRdk';
 DEFAULT_DELAY = 900;
 
 function getParameterByName(name) {
-    var urlParams = new URLSearchParams(window.location.search);
+    const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
 }
 
