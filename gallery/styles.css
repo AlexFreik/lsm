@@ -66,11 +66,15 @@ h4 {
     background-color: #45a049; /* Light green color on hover */
 }
 
-input {
+.video-header {
     color: white;
+    margin-bottom: -7px;
 }
 .input-sizer {
     display: inline-grid;
+}
+input {
+    color: white;
 }
 .input-sizer.stacked::after,
 .input-sizer.stacked input,

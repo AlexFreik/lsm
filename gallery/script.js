@@ -29,29 +29,37 @@ function addBox(name = 'Name', videoId = '') {
 function getBox(name, videoId) {
     const box = document.createElement('div');
     box.className = 'box col-lg-3 col-md-6 col-sm-12 mb-3';
-    box.innerHTML = `<div class="video-header"><label 
+    box.innerHTML = `<div class="video-header"
+        ><label 
             class="input-sizer"
             style="font-size: 18px; font-weight: bold;"
-                ><input
-                    type="text"
-                    onInput="this.parentNode.dataset.value = this.value;"
-                    onblur="updateUrlParameters();"
-                    size="5"
-                    placeholder="Name"
-                    value="${name}"
-                    class="video-name"/></label>
-                -
-                <label class="input-sizer"><input
-                        type="text"
-                        onInput="this.parentNode.dataset.value = this.value;"
-                        onblur="updateUrlParameters();"
-                        size="10"
-                        placeholder="Video ID"
-                        value="${videoId}"
-                        class="video-id"/></label></div><div class="embed-container">
-						<button class="top-btn refresh-btn" onclick="refreshVideo(this)">Refresh</button>
-						<button class="top-btn close-btn" onclick="removeVideo(this)">Close</button>
-                        </div>`;
+            ><input
+                type="text"
+                onInput="this.parentNode.dataset.value = this.value;"
+                onblur="updateUrlParameters();"
+                size="5"
+                placeholder="Name"
+                value="${name}"
+                class="video-name"
+        /></label>
+        -
+        <label 
+            class="input-sizer"
+            style="font-size: 10px;"
+            ><input
+                type="text"
+                onInput="this.parentNode.dataset.value = this.value;"
+                onblur="updateUrlParameters();"
+                size="10"
+                placeholder="Video ID"
+                value="${videoId}"
+                class="video-id"
+        /></label
+    ></div
+    ><div class="embed-container"
+        ><button class="top-btn refresh-btn" onclick="refreshVideo(this)">Refresh</button
+        ><button class="top-btn close-btn" onclick="removeVideo(this)">Close</button
+    ></div>`;
     const parent1 = box.firstChild.firstChild;
     const input1 = parent1.firstChild;
     const parent2 = box.firstChild.lastChild;
