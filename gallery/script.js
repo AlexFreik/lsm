@@ -28,7 +28,7 @@ function addBox(name = 'Name', videoId = '') {
 
 function getBox(name, videoId) {
     const box = document.createElement('div');
-    box.className = 'box col-lg-3 col-md-6 col-sm-12 mb-3';
+    box.className = 'box';
     box.innerHTML = `<div class="video-header"
         ><label 
             class="input-sizer"
