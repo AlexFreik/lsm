@@ -45,7 +45,7 @@ function getBox(name, videoId) {
         -
         <label 
             class="input-sizer"
-            style="font-size: 10px;"
+            style="font-size: 14px;"
             ><input
                 type="text"
                 onInput="this.parentNode.dataset.value = this.value;"
