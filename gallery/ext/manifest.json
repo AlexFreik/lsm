@@ -14,7 +14,7 @@
     "content_scripts": [
         {
             "matches": ["https://*.youtube-nocookie.com/embed/*"],
-            "js": ["Tone.js", "yt-iframe.js"],
+            "js": ["yt-iframe.js"],
             "all_frames": true
         },
         {

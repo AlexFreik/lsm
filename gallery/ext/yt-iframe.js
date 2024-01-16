@@ -1,7 +1,7 @@
 console.log('Hi from YT Iframe');
 
 const canvas = document.createElement('canvas');
-canvas.id = 'audio-meter';
+canvas.id = 'audio-meter'
 canvas.width = 100;
 canvas.height = 100;
 canvas.style.position = 'fixed';
@@ -9,7 +9,6 @@ canvas.style.top = '0';
 canvas.style.right = '0';
 canvas.style.width = '30px';
 canvas.style.height = '100vh';
-
 document.body.appendChild(canvas);
 
 window.context = new AudioContext();
@@ -42,13 +41,3 @@ function draw() {
     requestAnimationFrame(draw);
 }
 draw();
-
-// const meter = new Tone.Meter();
-// const stream = video.captureStream();
-// const audioTrack = new MediaStream(stream.getAudioTracks());
-// const speaker = Tone.context.createMediaElementSource(audioTrack);
-
-// speaker.connect(meter);
-// // the current level of the mic
-// setInterval(() => console.log(meter.getValue()), 1000);
-// setInterval(() => console.log(meter.getLevel()), 1000);
