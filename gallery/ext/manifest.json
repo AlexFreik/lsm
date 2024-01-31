@@ -15,6 +15,7 @@
         {
             "matches": ["https://*.youtube-nocookie.com/embed/*"],
             "js": ["yt-iframe.js"],
+            "css": ["yt-styles.css"],
             "all_frames": true
         },
         {
@@ -25,12 +26,14 @@
     "web_accessible_resources": [
         {
             "resources": [
+                "assets/headset.png",
+                "assets/headset-cross.png",
                 "assets/bookmark.png",
                 "assets/play.png",
                 "assets/delete.png",
                 "assets/save.png"
             ],
-            "matches": ["https://*.youtube.com/*"]
+            "matches": ["https://*.youtube-nocookie.com/*"]
         }
     ],
     "action": {
