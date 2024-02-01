@@ -3,6 +3,7 @@ function getUrlParameters() {
     const searchParams = new URLSearchParams(new URL(url).search);
     const params = [];
     searchParams.forEach(function (value, key) {
+        if (key === '') return;
         params.push({ key: key, value: value });
     });
     return params;
@@ -11,7 +12,10 @@ function getUrlParameters() {
 function updateUrlParameters() {
     const newParams = new URLSearchParams();
     document.querySelectorAll('.box').forEach((box) => {
-        newParams.append(getVideoName(box), getVideoId(box));
+        const key = getVideoName(box);
+        const val = getVideoId(box);
+        if (key === '') return;
+        newParams.append(key, val);
     });
     const paramString = newParams.toString();
     window.history.pushState({}, '', `?${paramString}`);
@@ -21,51 +25,49 @@ getUrlParameters().forEach((param) => {
     addBox(param.key, param.value);
 });
 
-function addBox(name = 'Name', videoId = '') {
+function addBox(name = '', videoId = '') {
     const gallery = document.getElementById('gallery');
-    gallery.insertBefore(getBox(name, videoId), gallery.lastElementChild);
+    gallery.insertBefore(createBox(name, videoId), gallery.lastElementChild);
 }
 
-function getBox(name, videoId) {
+function createBox(name, videoId) {
     const box = document.createElement('div');
     box.className = 'box';
-    box.innerHTML = `<div class="video-header"
-        ><label 
-            class="input-sizer"
-            style="font-size: 18px; font-weight: bold;"
-            ><input
-                type="text"
-                onInput="this.parentNode.dataset.value = this.value;"
-                onblur="updateUrlParameters();"
-                size="5"
-                placeholder="Name"
-                value="${name}"
-                class="video-name"
-        /></label>
-        -
-        <label 
-            class="input-sizer"
-            style="font-size: 14px;"
-            ><input
-                type="text"
-                onInput="this.parentNode.dataset.value = this.value;"
-                onblur="updateUrlParameters();"
-                size="10"
-                placeholder="Video ID"
-                value="${videoId}"
-                class="video-id"
-        /></label
-    ></div
-    ><div class="embed-container"
-        ><button class="top-btn refresh-btn" onclick="refreshVideo(this)">Refresh</button
-        ><button class="top-btn close-btn" onclick="removeVideo(this)">Close</button
-    ></div>`;
-    const parent1 = box.firstChild.firstChild;
-    const input1 = parent1.firstChild;
-    const parent2 = box.firstChild.lastChild;
-    const input2 = parent2.firstChild;
-    parent1.dataset.value = input1.value;
-    parent2.dataset.value = input2.value;
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.onblur = () => updateUrlParameters();
+    nameInput.size = '10';
+    nameInput.placeholder = 'Name';
+    nameInput.value = name;
+    nameInput.className = 'video-name';
+    box.appendChild(nameInput);
+
+    const videoIdInput = document.createElement('input');
+    videoIdInput.type = 'text';
+    videoIdInput.onblur = () => updateUrlParameters();
+    videoIdInput.size = '15';
+    videoIdInput.placeholder = 'Video ID';
+    videoIdInput.value = videoId;
+    videoIdInput.className = 'video-id';
+    box.appendChild(videoIdInput);
+
+    const embedContainer = document.createElement('div');
+    embedContainer.className = 'embed-container';
+    box.appendChild(embedContainer);
+
+    const refreshBtn = document.createElement('button');
+    refreshBtn.className = 'top-btn refresh-btn';
+    refreshBtn.onclick = () => refreshVideo(refreshBtn);
+    refreshBtn.appendChild(document.createTextNode('Refresh'));
+    embedContainer.appendChild(refreshBtn);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'top-btn close-btn';
+    closeBtn.onclick = () => removeVideo(closeBtn);
+    closeBtn.appendChild(document.createTextNode('Close'));
+    embedContainer.appendChild(closeBtn);
+
     if (videoId) {
         box.lastChild.appendChild(getYouTubePlayer(videoId));
     }
@@ -74,9 +76,17 @@ function getBox(name, videoId) {
 
 function refreshVideo(btn) {
     const box = btn.parentNode.parentNode;
+    const embedContainer = box.lastChild;
+    const iframe = embedContainer.lastChild;
+    if (iframe.tagName === 'IFRAME') {
+        // case when videoId is empty
+        embedContainer.removeChild(iframe);
+    }
+
     const videoId = getVideoId(box);
-    box.lastChild.removeChild(box.lastChild.lastChild);
-    box.lastChild.appendChild(getYouTubePlayer(videoId));
+    if (videoId !== '') {
+        embedContainer.appendChild(getYouTubePlayer(videoId));
+    }
 }
 function removeVideo(btn) {
     const box = btn.parentNode.parentNode;
@@ -85,17 +95,19 @@ function removeVideo(btn) {
 }
 
 function getVideoName(box) {
-    return box.firstChild.firstChild.firstChild.value;
+    console.assert(box.classList.contains('box'));
+    return box.firstChild.value;
 }
 
 function getVideoId(box) {
-    return box.firstChild.lastChild.firstChild.value;
+    console.assert(box.classList.contains('box'));
+    return box.children[1].value;
 }
 
 function getYouTubePlayer(videoId) {
     const iframe = document.createElement('iframe');
-    iframe.width = '560';
-    iframe.height = '315';
+    iframe.width = '290';
+    iframe.height = '150';
     iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&iv_load_policy=3`;
     iframe.title = 'YouTube video player';
     iframe.frameBorder = '0';
@@ -104,15 +116,3 @@ function getYouTubePlayer(videoId) {
     iframe.allowfullscreen = true;
     return iframe;
 }
-
-function toggleEditable() {
-    const inputs = document.querySelectorAll('.editable-input');
-
-    inputs.forEach((input) => {
-        input.readOnly = !input.readOnly;
-    });
-}
-
-// Add a click event listener to the parent div to toggle editable state on click
-const rowElement = document.querySelector('.row');
-rowElement.addEventListener('click', toggleEditable);

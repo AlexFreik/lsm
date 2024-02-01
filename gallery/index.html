@@ -5,25 +5,43 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Gallery View</title>
         <link rel="icon" type="image/png" href="./isha-logo.png" />
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
-            crossorigin="anonymous" />
-        <link rel="stylesheet" href="./styles.css" />
+        <link rel="stylesheet" href="./output.css" />
         <script src="./script.js" defer></script>
-    </head>
-    <body>
-        <div class="container">
-            <div class="row" id="gallery">
-                <div class="header-box">
-                    <h4 style="text-align: center">YouTube Gallery View</h4>
-                </div>
+        <style>
+            /* Customize your video container if needed */
+            .video-container {
+                width: 290px;
+                height: 150px;
+                animation: fadeInRight 0.5s ease-out; /* Adjust animation duration and easing if needed */
+            }
 
-                <div class="add-box">
-                    <div class="add-container">
-                        <button onclick="addBox()">+</button>
-                    </div>
+            /* Keyframe for fadeInRight animation */
+            @keyframes fadeInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+            .box {
+                width: 290px;
+                height: 180px;
+                animation: fadeInRight 0.5s ease-out; /* Adjust animation duration and easing if needed */
+            }
+        </style>
+    </head>
+    <body class="bg-slate-900 text-slate-50">
+        <div class="flex h-screen flex-col items-center">
+            <div class="m-2 w-screen text-center">
+                <h1 class="text-4xl font-bold">YouTube Gallery View</h1>
+            </div>
+
+            <div class="flex w-screen flex-wrap p-2" id="gallery">
+                <div class="add-container">
+                    <button onclick="addBox()">+</button>
                 </div>
             </div>
         </div>
