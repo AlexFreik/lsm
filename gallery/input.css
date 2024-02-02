@@ -2,17 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .box {
     @apply m-2;
+    width: 290px;
+    height: 180px;
+    animation: fadeInRight 1s ease-out; /* Adjust animation duration and easing if needed */
 }
 
 input {
-    @apply m-1 bg-transparent text-slate-50;
+    @apply m-1 bg-transparent text-sm text-slate-50;
 }
 
-.video-id {
-    @apply text-sm;
-}
 iframe {
     @apply absolute left-0 top-0 h-full w-full;
 }

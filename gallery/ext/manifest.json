@@ -6,6 +6,7 @@
     "host_permissions": [
         "https://*.youtube.com/*",
         "https://*.youtube-nocookie.com/*",
+        "http://alexfreik.github.io/lsm/gallery/*",
         "http://localhost:3000/gallery/*"
     ],
     "background": {
@@ -25,22 +26,15 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": [
-                "assets/headset.png",
-                "assets/headset-cross.png",
-                "assets/bookmark.png",
-                "assets/play.png",
-                "assets/delete.png",
-                "assets/save.png"
-            ],
+            "resources": ["assets/headset.png", "assets/headset-cross.png"],
             "matches": ["https://*.youtube-nocookie.com/*"]
         }
     ],
     "action": {
         "default_icon": {
-            "16": "assets/ext-icon.png",
-            "24": "assets/ext-icon.png",
-            "32": "assets/ext-icon.png"
+            "16": "assets/headset.png",
+            "24": "assets/headset.png",
+            "32": "assets/headset.png"
         },
         "default_title": "YT Gallery Audio",
         "default_popup": "popup.html"

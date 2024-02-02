@@ -46,7 +46,7 @@ function createBox(name, videoId) {
     const videoIdInput = document.createElement('input');
     videoIdInput.type = 'text';
     videoIdInput.onblur = () => updateUrlParameters();
-    videoIdInput.size = '15';
+    videoIdInput.size = '14';
     videoIdInput.placeholder = 'Video ID';
     videoIdInput.value = videoId;
     videoIdInput.className = 'video-id';
@@ -68,9 +68,7 @@ function createBox(name, videoId) {
     closeBtn.appendChild(document.createTextNode('Close'));
     embedContainer.appendChild(closeBtn);
 
-    if (videoId) {
-        box.lastChild.appendChild(getYouTubePlayer(videoId));
-    }
+    embedContainer.appendChild(getYouTubePlayer(videoId));
     return box;
 }
 
@@ -78,15 +76,12 @@ function refreshVideo(btn) {
     const box = btn.parentNode.parentNode;
     const embedContainer = box.lastChild;
     const iframe = embedContainer.lastChild;
-    if (iframe.tagName === 'IFRAME') {
-        // case when videoId is empty
-        embedContainer.removeChild(iframe);
-    }
+
+    console.assert(iframe.tagName === 'IFRAME');
+    embedContainer.removeChild(iframe);
 
     const videoId = getVideoId(box);
-    if (videoId !== '') {
-        embedContainer.appendChild(getYouTubePlayer(videoId));
-    }
+    embedContainer.appendChild(getYouTubePlayer(videoId));
 }
 function removeVideo(btn) {
     const box = btn.parentNode.parentNode;
@@ -109,6 +104,9 @@ function getYouTubePlayer(videoId) {
     iframe.width = '290';
     iframe.height = '150';
     iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&iv_load_policy=3`;
+    if (videoId === '') {
+        iframe.src = '';
+    }
     iframe.title = 'YouTube video player';
     iframe.frameBorder = '0';
     iframe.allow =

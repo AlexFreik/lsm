@@ -1,14 +1,3 @@
-// adding a new bookmark row to the popup
-const addNewBookmark = () => {};
-
-const viewBookmarks = () => {};
-
-const onPlay = (e) => {};
-
-const onDelete = (e) => {};
-
-const setBookmarkAttributes = () => {};
-
 export async function getActiveTabURL() {
     const tabs = await chrome.tabs.query({
         currentWindow: true,
@@ -23,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log(activeTab.url);
 
     if (activeTab.url.includes('http://localhost:3000/gallery')) {
-        console.log('hi from popup');
     } else {
         const container = document.getElementsByClassName('container')[0];
         container.innerHTML =
