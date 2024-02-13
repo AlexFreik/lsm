@@ -15,9 +15,9 @@
 
 .box {
     @apply m-2;
-    width: 290px;
+    width: 287px;
     height: 180px;
-    animation: fadeInRight 1s ease-out; /* Adjust animation duration and easing if needed */
+    animation: fadeInRight 1s ease-out;
 }
 
 input {

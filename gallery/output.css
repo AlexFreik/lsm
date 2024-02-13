@@ -613,10 +613,9 @@ video {
 
 .box {
   margin: 0.5rem;
-  width: 290px;
+  width: 287px;
   height: 180px;
   animation: fadeInRight 1s ease-out;
-  /* Adjust animation duration and easing if needed */
 }
 
 input {

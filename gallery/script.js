@@ -101,8 +101,6 @@ function getVideoId(box) {
 
 function getYouTubePlayer(videoId) {
     const iframe = document.createElement('iframe');
-    iframe.width = '1280';
-    iframe.height = '720';
     iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&enablejsapi=1&iv_load_policy=3`;
     if (videoId === '') {
         iframe.src = '';
