@@ -8,14 +8,15 @@
     canvas.style.position = 'fixed';
     canvas.style.top = '0';
     canvas.style.right = '0';
-    canvas.style.width = '30px';
+    canvas.style.width = '20px';
     canvas.style.height = '100vh';
     document.body.appendChild(canvas);
 
     window.audioCtx = new AudioContext();
     const videoElem = document.getElementsByClassName('video-stream')[0];
+    console.assert(videoElem != undefined);
+    console.log(videoElem.style);
     const video = audioCtx.createMediaElementSource(videoElem);
-    console.log(video);
     analyser = audioCtx.createAnalyser();
     analyser.smoothingTimeConstant = 0.9;
     analyser.fftSize = 32; //the total samples are half the fft size.
@@ -75,4 +76,10 @@
         }, 500);
     }
     draw();
+
+    const adjustSettings = () => {
+        videoElem.style['left'] = '0';
+    };
+
+    setInterval(adjustSettings, 5000);
 })();
