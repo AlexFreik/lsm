@@ -1,56 +1,3 @@
-let sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-async function waitForVideo() {
-    let video = document.querySelector('video');
-    while (!video) {
-        console.log('waiting for video');
-        await sleep(200);
-        video = document.querySelector('video');
-    }
-}
-
-/**
- * Sets the quality
- * options are: "Highest" and the options available in the menu ("720p", "480p", etc.)
- */
-async function setQuality(quality) {
-    await waitForVideo();
-    await sleep(1000);
-
-    let settingsButton = document.getElementsByClassName('ytp-settings-button')[0];
-    settingsButton.click();
-    await sleep(500);
-
-    let qualityMenu = document.getElementsByClassName('ytp-panel-menu')[0].lastChild;
-    qualityMenu.click();
-    await sleep(500);
-
-    let qualityOptions = [...document.getElementsByClassName('ytp-quality-menu')];
-    let selection;
-    if (quality == 'Highest') selection = qualityOptions[0];
-    else selection = qualityOptions.filter((el) => el.innerText == quality)[0];
-
-    if (!selection) {
-        let qualityTexts = qualityOptions.map((el) => el.innerText).join('\n');
-        console.log('"' + quality + '" not found. Options are: \n\nHighest\n' + qualityTexts);
-        settingsButton.click(); // click menu button to close
-        return;
-    }
-
-    if (selection.attributes['aria-checked'] === undefined) {
-        // not checked
-        selection.click();
-    } else settingsButton.click(); // click menu button to close
-}
-
-function getMax(array) {
-    let max = -60;
-    for (let i = 0; i < array.length; i++) {
-        max = Math.max(max, array[i]);
-    }
-    return ((max + 60) * 5) / 3;
-}
-
 (async () => {
     console.log('Hi from YT Iframe');
 
@@ -87,21 +34,20 @@ function getMax(array) {
     splitter.connect(analyserR, 1);
 
     const merger = audioCtx.createChannelMerger(2);
+    merger.connect(audioCtx.destination);
 
+    // Add monitor button so we can mute / unmute the audio
+    // When I mute using regular YT button the VU meter stops receiving the audio
     const clickMonitorBtn = () => {
         const monitorBtn = document.getElementsByClassName('monitor-btn')[0];
         const iconImg = monitorBtn.firstChild;
         if (monitorBtn.classList.contains('off')) {
             analyserL.connect(merger, 0, 0);
             analyserR.connect(merger, 0, 1);
-            merger.connect(audioCtx.destination);
-            monitorBtn.title = 'Mute monitor';
             iconImg.src = chrome.runtime.getURL('assets/headset.png');
         } else {
             analyserL.disconnect();
             analyserR.disconnect();
-            merger.disconnect();
-            monitorBtn.title = 'Unmute monitor';
             iconImg.src = chrome.runtime.getURL('assets/headset-cross.png');
         }
         monitorBtn.classList.toggle('off');
@@ -122,8 +68,8 @@ function getMax(array) {
         clickMonitorBtn();
     })();
 
+    // Draw the VU meter
     window.ctx = document.getElementById('audio-meter').getContext('2d');
-
     function draw() {
         const arrayL = new Float32Array(buffSize);
         const arrayR = new Float32Array(buffSize);
@@ -144,9 +90,9 @@ function getMax(array) {
     }
     draw();
 
+    // Adjust settings like quality, LIVE, etc.
     const adjustSettings = () => {
         videoElem.style['left'] = '0';
     };
-
     setInterval(adjustSettings, 5000);
 })();
