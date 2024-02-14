@@ -25,7 +25,8 @@ input {
 }
 
 iframe {
-    @apply absolute left-0 top-0 h-full w-full bg-black;
+    @apply absolute left-0 top-0 h-full w-full bg-neutral;
+    color-scheme: light;
 }
 
 .embed-container {
