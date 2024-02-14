@@ -9,9 +9,7 @@ function createAudioBtnMock(doc) {
         // Toggle between "muted" and "unmuted" classes on the button
         this.classList.toggle('muted');
 
-        this.textContent = this.classList.contains('muted')
-            ? 'Muted'
-            : 'Unmuted';
+        this.textContent = this.classList.contains('muted') ? 'Muted' : 'Unmuted';
         this.ariaLabel = this.classList.contains('muted') ? 'unmute' : 'mute';
     });
 }

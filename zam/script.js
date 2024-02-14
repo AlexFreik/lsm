@@ -11,8 +11,7 @@ function loadStyles() {
     linkElement.rel = 'stylesheet';
     linkElement.type = 'text/css';
     const hostname = window.location.hostname;
-    linkElement.href =
-        hostname === '' ? './styles.css' : GITHUB_URL + '/styles.css';
+    linkElement.href = hostname === '' ? './styles.css' : GITHUB_URL + '/styles.css';
     document.head.appendChild(linkElement);
 }
 // ====================

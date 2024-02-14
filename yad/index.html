@@ -14,9 +14,7 @@
                 <h1>YAD: YouTube Auto Delay</h1>
             </div>
             <div class="github-link">
-                <a
-                    href="https://github.com/AlexFreik/lsm/tree/master/yad"
-                    target="_blank"
+                <a href="https://github.com/AlexFreik/lsm/tree/master/yad" target="_blank"
                     >GitHub</a
                 >
             </div>
@@ -26,35 +24,24 @@
             <p>
                 This website allows you to
                 <strong>configure the delay for a YouTube Live Stream</strong>
-                to have a fixed delay. Please check the bottom of this page for
-                more details.<br /><br />
+                to have a fixed delay. Please check the bottom of this page for more details.<br /><br />
 
-                <strong>Example 1:</strong> The configured delay is 15min and
-                the current delay is 13min 59s, it will be reset back to 15min.
-                And if the current delay is 1h 15min 1s, it will be also reset
-                back to 15min.<br /><br />
+                <strong>Example 1:</strong> The configured delay is 15min and the current delay is
+                13min 59s, it will be reset back to 15min. And if the current delay is 1h 15min 1s,
+                it will be also reset back to 15min.<br /><br />
 
-                <strong>Example 2:</strong> The configured delay is 15min, but
-                due to network issues the delay slowly become is 20min. Now if
-                YT skips and delay becomes 0s the script will reset delay back
-                to 20min 5s.
+                <strong>Example 2:</strong> The configured delay is 15min, but due to network issues
+                the delay slowly become is 20min. Now if YT skips and delay becomes 0s the script
+                will reset delay back to 20min 5s.
             </p>
         </div>
 
         <section>
             <label for="videoId">YouTube Stream ID:</label>
-            <input
-                type="text"
-                id="videoId"
-                placeholder="Enter Video ID"
-                value="jfKfPfyJRdk" />
+            <input type="text" id="videoId" placeholder="Enter Video ID" value="jfKfPfyJRdk" />
 
             <label for="delay">Delay (in seconds):</label>
-            <input
-                type="number"
-                id="delay"
-                placeholder="Enter Delay"
-                value="900" />
+            <input type="number" id="delay" placeholder="Enter Delay" value="900" />
 
             <button onclick="configurePlayer()">Update</button>
         </section>

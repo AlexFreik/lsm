@@ -80,8 +80,7 @@ function isVideoCurrentTimeGood() {
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
         isPlayerReady = true;
-        duration =
-            Math.floor(player.getDuration()) - LIVESTREAM_DURATION_CORRECTION;
+        duration = Math.floor(player.getDuration()) - LIVESTREAM_DURATION_CORRECTION;
         // if duration is the same as current one, it means
         // that player wasn't reloaded, so we don't need to update timings
         console.log(
@@ -154,12 +153,7 @@ intervalId = setInterval(() => {
     if (currentDelay < SKIP_MARGIN) {
         const correctedDelay = savedDelay + SKIP_CORRECTION;
         const newTime = getDelayedTime(correctedDelay);
-        console.log(
-            'Skipping to saved delay:',
-            correctedDelay,
-            ', at time:',
-            newTime,
-        );
+        console.log('Skipping to saved delay:', correctedDelay, ', at time:', newTime);
         player.seekTo(newTime);
     } else {
         const newTime = getDelayedTime(delay);

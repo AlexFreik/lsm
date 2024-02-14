@@ -15,8 +15,7 @@
         <iframe id="webclient" width="600" height="400"></iframe>
 
         <script>
-            const iframe =
-                document.getElementById('webclient').contentWindow.document;
+            const iframe = document.getElementById('webclient').contentWindow.document;
             createAudioBtnMock(iframe);
             iframe.body.appendChild(
                 Object.assign(document.createElement('script'), {
