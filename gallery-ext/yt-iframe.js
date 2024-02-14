@@ -68,6 +68,12 @@
         clickMonitorBtn();
     })();
 
+    // Style player
+    (async () => {
+        const ytBtn = document.getElementsByClassName('ytp-youtube-button')[0];
+        ytBtn.parentNode.removeChild(ytBtn);
+    })();
+
     // Draw the VU meter
     window.ctx = document.getElementById('audio-meter').getContext('2d');
     function draw() {
@@ -96,3 +102,9 @@
     };
     setInterval(adjustSettings, 5000);
 })();
+
+chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === 'SET_QUALITY') {
+        setQualityYT('min');
+    }
+});

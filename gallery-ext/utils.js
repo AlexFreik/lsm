@@ -13,9 +13,9 @@ async function waitForVideo() {
 
 /**
  * Sets the quality
- * options are: "Highest" and the options available in the menu ("720p", "480p", etc.)
+ * options are: "max", "min" and the options available in the menu ("720p", "480p", etc.)
  */
-async function setQuality(quality) {
+async function setQualityYT(quality) {
     await waitForVideo();
     await sleep(1000);
 
@@ -27,22 +27,20 @@ async function setQuality(quality) {
     qualityMenu.click();
     await sleep(500);
 
-    let qualityOptions = [...document.getElementsByClassName('ytp-quality-menu')];
+    let qualityOptions = [...document.getElementsByClassName('ytp-menuitem')];
     let selection;
-    if (quality == 'Highest') selection = qualityOptions[0];
+    if (quality === 'max') selection = qualityOptions[0];
+    if (quality === 'min') selection = qualityOptions[qualityOptions.length - 2];
     else selection = qualityOptions.filter((el) => el.innerText == quality)[0];
 
     if (!selection) {
         let qualityTexts = qualityOptions.map((el) => el.innerText).join('\n');
-        console.log('"' + quality + '" not found. Options are: \n\nHighest\n' + qualityTexts);
+        console.log('"' + quality + '" not found. Options are: \n\nmax\nmin\n' + qualityTexts);
         settingsButton.click(); // click menu button to close
         return;
     }
 
-    if (selection.attributes['aria-checked'] === undefined) {
-        // not checked
-        selection.click();
-    } else settingsButton.click(); // click menu button to close
+    selection.click();
 }
 
 function getMax(array) {

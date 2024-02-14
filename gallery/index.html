@@ -16,7 +16,8 @@
             <div class="flex-none">
                 <ul class="menu menu-horizontal px-1">
                     <li><a href="/lsm/yad/">YAD</a></li>
-                    <li><a href="">Extension</a></li>
+                    <li><a href="" target="_blank">Extension</a></li>
+                    <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
                 </ul>
             </div>
         </div>
@@ -28,10 +29,10 @@
                 </div>
             </div>
         </div>
-        <div class="w-screen px-5">
+        <div class="hidden w-screen px-5" id="controls">
             <div>
                 <label class="relative inline-flex cursor-pointer items-center">
-                    <input type="checkbox" class="toggle toggle-secondary" checked />
+                    <input type="checkbox" id="auto-live" class="toggle toggle-secondary" checked />
                     <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
                         >Automatically switch to LIVE</span
                     >
@@ -41,7 +42,8 @@
                 <label class="relative inline-flex cursor-pointer items-center">
                     <button
                         type="button"
-                        class="btn btn-outline btn-xs btn-secondary">
+                        id="set-quality"
+                        class="btn btn-outline btn-secondary btn-xs">
                         Lowest Quality
                     </button>
                     <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
