@@ -1,7 +1,7 @@
 {
-    "name": "Gallery",
+    "name": "Live Streaming Gallery",
     "version": "0.1.0",
-    "description": "Add audio meters to YT Gallery",
+    "description": "Miscellaneous features for Live Streaming Gallery",
     "permissions": ["storage", "tabs"],
     "host_permissions": [
         "https://*.youtube.com/*",
@@ -32,11 +32,12 @@
     ],
     "action": {
         "default_icon": {
-            "16": "assets/headset.png",
-            "24": "assets/headset.png",
-            "32": "assets/headset.png"
+            "16": "assets/16.png",
+            "32": "assets/32.png",
+            "48": "assets/48.png",
+            "128": "assets/128.png"
         },
-        "default_title": "YT Gallery Audio",
+        "default_title": "Live Streaming Gallery",
         "default_popup": "popup.html"
     },
     "manifest_version": 3

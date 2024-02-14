@@ -25,7 +25,7 @@ input {
 }
 
 iframe {
-    @apply absolute left-0 top-0 h-full w-full;
+    @apply absolute left-0 top-0 h-full w-full bg-black;
 }
 
 .embed-container {
@@ -37,18 +37,12 @@ iframe {
 .top-btn {
     @apply absolute top-1 z-10 h-5 w-12 cursor-pointer rounded-md border-none text-xs text-slate-50;
 }
+
 .refresh-btn {
-    @apply right-14 bg-slate-600;
+    @apply right-14 bg-secondary;
 }
 
 .close-btn {
     @apply right-1 bg-red-900;
 }
 
-.add-container {
-    @apply mx-0 flex min-w-full flex-col items-center px-10 py-10;
-}
-
-.add-container button {
-    @apply h-12 w-12 rounded-lg bg-slate-700 px-4 py-2 text-2xl text-white hover:bg-slate-600;
-}
