@@ -68,12 +68,6 @@
         clickMonitorBtn();
     })();
 
-    // Style player
-    (async () => {
-        const ytBtn = document.getElementsByClassName('ytp-youtube-button')[0];
-        ytBtn.parentNode.removeChild(ytBtn);
-    })();
-
     // Draw the VU meter
     window.ctx = document.getElementById('audio-meter').getContext('2d');
     function draw() {
@@ -96,15 +90,34 @@
     }
     draw();
 
-    // Adjust settings like quality, LIVE, etc.
     const adjustSettings = () => {
+        // move video lo the left so there is a space for VU meter
         videoElem.style['left'] = '0';
+
+        // remove YouTube button
+        const ytBtn = document.getElementsByClassName('ytp-youtube-button')[0];
+        ytBtn?.parentNode.removeChild(ytBtn);
+
+        // Do not hide LIVE button
+        const liveDiv = document.getElementsByClassName('ytp-time-display')[0];
+        liveDiv.style['display'] = '';
+
+        const liveBtn = document.getElementsByClassName('ytp-live-badge')[0];
+        console.log(autoLive);
+        if (autoLive) {
+            liveBtn.click();
+        }
     };
     setInterval(adjustSettings, 5000);
 })();
 
+let autoLive = true;
+
 chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === 'SET_QUALITY') {
         setQualityYT('min');
+    } else if (msg.type === 'AUTO_LIVE') {
+        console.log(autoLive);
+        autoLive = msg.value;
     }
 });

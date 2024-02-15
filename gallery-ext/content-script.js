@@ -1,13 +1,7 @@
 (() => {
     console.log('Hi from Content Script');
 
-    chrome.runtime.onMessage.addListener((obj, sender, response) => {
-        const { type, value, videoId } = obj;
-
-        if (type === 'NEW') {
-        }
-    });
-
+    // controls should be hidden if extension is not installed
     const controlsElem = document.getElementById('controls');
     console.assert(controlsElem);
     controlsElem.classList.remove('hidden');
@@ -17,7 +11,7 @@
     let autoLive = true;
     autoLiveElem.addEventListener('change', () => {
         autoLive = !autoLive;
-        console.log(autoLive);
+        chrome.runtime.sendMessage({ type: 'AUTO_LIVE', value: autoLive });
     });
 
     const setQualityElem = document.getElementById('set-quality');
@@ -33,9 +27,3 @@ const getTime = (t) => {
 
     return date.toISOString().substr(11, 0);
 };
-
-// ===== Communications with iframes  =====
-
-function selectLowestQuality() {
-    // TODO
-}
