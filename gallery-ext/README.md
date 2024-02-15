@@ -5,14 +5,17 @@ That is why a Chrome Extension is required to enable VU meters, automatic qualit
 
 ## Installation
 
-1. Go to the root of this repo [github.com/AlexFreik/lsm](https://github.com/AlexFreik/lsm) click on the green "Code" button and download it using the "Download ZIP" option (or clone it).
-   ![image](./assets/download-zip.avif)
+1. Go to the root of this repo: [https://github.com/AlexFreik/lsm](https://github.com/AlexFreik/lsm)
+2. Click on the green **"Code"** button, and download it using the **"Download ZIP"** option (or clone it).
 
-2. Unpack the ZIP.
-3. Go to the Chrome Extensions [chrome://extensions/](chrome://extensions/)
-4. Switch on Developer mode in the top right corner.
-5. Click the "Load unpacked" button and select the `gallery-ext/` folder.
-   ![image](./assets/load-unpacked.avif)
+    ![image](./assets/download-zip.avif)
+
+3. Unpack the ZIP.
+4. Go to the Chrome Extensions [chrome://extensions/](chrome://extensions/)
+5. Switch on Developer mode in the top right corner.
+6. Click the "Load unpacked" button and select the `gallery-ext/` folder.
+
+    ![image](./assets/load-unpacked.avif)
 
 ## Update
 
