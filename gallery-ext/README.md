@@ -18,7 +18,7 @@ That is why a Chrome Extension is required to enable VU meters, automatic qualit
 
 To update the extension you can remove it and install it again.
 
-<img src="./assets/remove-or-reload.avif" width="400">
-
 If you know how to use Git you can `git pull` the changes and just click
 the refresh button.
+
+<img src="./assets/remove-or-reload.avif" width="400">
