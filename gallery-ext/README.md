@@ -12,7 +12,7 @@ That is why a Chrome Extension is required to enable VU meters, automatic qualit
 
 3. Unpack the ZIP.
 4. Go to the Chrome Extensions [chrome://extensions/](chrome://extensions/)
-5. Switch on **"Developer mode"** in the top right corner.
+5. Switch on the **"Developer mode"** in the top right corner.
 6. Click the **"Load unpacked"** button and select the `gallery-ext/` folder.
 
     ![image](./assets/load-unpacked.avif)

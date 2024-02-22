@@ -1,84 +1,69 @@
 <!doctype html>
 <html lang="en" data-theme="night">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Gallery</title>
-        <link rel="icon" type="image/png" href="./isha-logo.png" />
-        <link rel="stylesheet" href="./output.css" />
-        <script src="./script.js" defer></script>
-    </head>
-    <body class="bg-base-100 text-base-content">
-        <div class="navbar bg-base-100">
-            <div class="flex-1">
-                <a class="btn btn-ghost text-xl" href="/lsm/">Live Streaming Gallery</a>
-            </div>
-            <div class="flex-none">
-                <ul class="menu menu-horizontal px-1">
-                    <li><a href="/lsm/yad/">YAD</a></li>
-                    <li>
-                        <a href="/lsm/gallery-ext/" target="_blank" t>Extension</a>
-                    </li>
-                    <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
-                </ul>
-            </div>
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery</title>
+    <link rel="icon" type="image/png" href="./isha-logo.png" />
+    <link rel="stylesheet" href="./output.css" />
+    <script src="./script.js" defer></script>
+  </head>
+  <body class="bg-base-100 text-base-content">
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/lsm/">Live Streaming Gallery</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/lsm/yad/">YAD</a></li>
+          <li>
+            <a href="/lsm/gallery-ext/" target="_blank" t>Extension</a>
+          </li>
+          <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
 
-        <div class="flex flex-col items-center">
-            <div class="flex w-screen flex-wrap p-2" id="gallery">
-                <div class="flex min-w-full flex-col items-center px-10 py-10">
-                    <button onclick="addBox()" class="btn btn-outline btn-secondary">+</button>
-                </div>
-            </div>
+    <div class="flex flex-col items-center">
+      <div class="flex w-screen flex-wrap p-2" id="gallery">
+        <div class="flex min-w-full flex-col items-center px-10 py-10">
+          <button onclick="addBox()" class="btn btn-outline btn-secondary">+</button>
         </div>
-        <div class="hidden w-screen px-5" id="controls">
-            <div>
-                <label class="relative inline-flex cursor-pointer items-center">
-                    <input type="checkbox" id="auto-live" class="toggle toggle-secondary" checked />
-                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >Automatically switch to LIVE</span
-                    >
-                </label>
-            </div>
-            <div>
-                <label class="relative inline-flex cursor-pointer items-center">
-                    <button
-                        type="button"
-                        id="set-quality"
-                        class="btn btn-outline btn-secondary btn-xs">
-                        Lowest Quality
-                    </button>
-                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
-                        >Select lowest quality (resolution) for all videos</span
-                    >
-                </label>
-            </div>
-        </div>
+      </div>
+    </div>
+    <div class="hidden w-screen px-5" id="controls">
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input type="checkbox" id="auto-live" class="toggle toggle-secondary" checked />
+          <span class="text-md ms-3">Automatically switch to LIVE</span>
+        </label>
+      </div>
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <button type="button" id="set-quality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
+          <span class="text-md ms-3">Select lowest quality (resolution) for all videos</span>
+        </label>
+      </div>
+    </div>
 
-        <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">
-            <div class="card-body">
-                <h2 class="card-title text-2xl text-secondary">Chrome Extension</h2>
-                <p>
-                    Because of the CORS policy, we can't access the videos with JavaScript directly.
-                    <br />
-                    That is why a Chrome Extension is required to enable VU meters, automatic
-                    quality adjustment, always staying on LIVE and other features.
-                </p>
-                <div class="card-actions justify-end">
-                    <a
-                        class="btn btn-outline btn-secondary"
-                        href="/lsm/gallery-ext/"
-                        target="_blank"
-                        >Install</a
-                    >
-                </div>
-            </div>
+    <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl text-secondary">Chrome Extension</h2>
+        <p>
+          Because of the CORS policy, we can't access the videos with JavaScript directly.
+          <br />
+          That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE and other features.
+        </p>
+        <div class="card-actions justify-end">
+          <a class="btn btn-outline btn-secondary" href="/lsm/gallery-ext/" target="_blank">Install</a>
         </div>
+      </div>
+    </div>
 
-        <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
-            <aside>
-                <p>Copyright © 2024 - All right reserved by LSM</p>
-            </aside>
-        </footer>
-    </body>
+    <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
+      <aside>
+        <p>Copyright © 2024 - All right reserved by LSM</p>
+      </aside>
+    </footer>
+  </body>
 </html>

@@ -8,5 +8,13 @@ module.exports = {
     arrowParens: 'always',
     bracketSameLine: true,
     plugins: ['prettier-plugin-tailwindcss'],
-    overrides: [],
+    overrides: [
+        {
+            files: '*.html',
+            options: {
+                tabWidth: 2,
+                printWidth: 150,
+            },
+        },
+    ],
 };
