@@ -103,7 +103,6 @@
         liveDiv.style['display'] = '';
 
         const liveBtn = document.getElementsByClassName('ytp-live-badge')[0];
-        console.log(autoLive);
         if (autoLive) {
             liveBtn.click();
         }
