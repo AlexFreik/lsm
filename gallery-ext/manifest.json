@@ -6,6 +6,7 @@
     "host_permissions": [
         "https://*.youtube-nocookie.com/*",
         "https://*.youtube.com/*",
+        "https://*.facebook.com/v3.2/plugins/*",
         "http://alexfreik.github.io/lsm/gallery/*",
         "http://localhost:3000/gallery/*"
     ],
@@ -20,6 +21,12 @@
             "all_frames": true
         },
         {
+            "matches": ["https://*.facebook.com/v3.2/plugins/*"],
+            "js": ["utils.js", "fb-iframe.js"],
+            "css": ["fb-styles.css"],
+            "all_frames": true
+        },
+        {
             "matches": [
                 "https://alexfreik.github.io/lsm/gallery/*",
                 "http://localhost:3000/gallery/*"
@@ -30,7 +37,11 @@
     "web_accessible_resources": [
         {
             "resources": ["assets/headset.png", "assets/headset-cross.png"],
-            "matches": ["https://*.youtube-nocookie.com/*", "https://*.youtube.com/*"]
+            "matches": [
+                "https://*.youtube-nocookie.com/*",
+                "https://*.youtube.com/*",
+                "https://*.facebook.com/*"
+            ]
         }
     ],
     "action": {

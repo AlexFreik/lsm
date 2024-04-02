@@ -9,6 +9,20 @@
     <script src="./script.js" defer></script>
   </head>
   <body class="bg-base-100 text-base-content">
+    <div id="fb-root"></div>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+
+    <!-- <iframe
+      src="https://www.facebook.com/plugins/video.php?height=314&href=https%3A%2F%2Fwww.facebook.com%2FMGRNEWS1%2Fvideos%2F918275346408259%2F&show_text=false&width=560&t=0"
+      width="560"
+      height="314"
+      style="border: none; overflow: hidden"
+      scrolling="no"
+      frameborder="0"
+      allowfullscreen="true"
+      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+      allowfullscreen="true"></iframe> -->
+
     <div class="navbar bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">Live Streaming Gallery</a>
@@ -31,10 +45,11 @@
         </div>
       </div>
     </div>
+
     <div class="hidden w-screen px-5" id="controls">
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" id="auto-live" class="toggle toggle-secondary" checked />
+          <input type="checkbox" id="auto-live" class="toggle toggle-secondary m-0" checked />
           <span class="text-md ms-3">Automatically switch to LIVE</span>
         </label>
       </div>
@@ -44,6 +59,10 @@
           <span class="text-md ms-3">Select lowest quality (resolution) for all videos</span>
         </label>
       </div>
+    </div>
+
+    <div class="my-8 px-5">
+      <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
     </div>
 
     <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">

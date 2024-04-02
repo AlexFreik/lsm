@@ -15,7 +15,7 @@
 
 .box {
     @apply m-2;
-    width: 287px;
+    width: 277px;
     height: 180px;
     animation: fadeInRight 1s ease-out;
 }
