@@ -21,10 +21,6 @@ function updateUrlParameters() {
     window.history.pushState({}, '', `?${paramString}`);
 }
 
-getUrlParameters().forEach((param) => {
-    addBox(param.key, param.value.substring(0, 2), param.value.substring(2));
-});
-
 function addBox(name = '', type = '', videoId = '') {
     const gallery = document.getElementById('gallery');
     gallery.insertBefore(createBox(name, type, videoId), gallery.lastElementChild);
@@ -194,3 +190,15 @@ function getInstagramPlayer(videoId) {
     player.setAttribute('data-href', videoId);
     return player;
 }
+
+function initBoxes() {
+    const urlParams = getUrlParameters();
+    if (urlParams.length === 0) {
+        addBox('', 'YN', '');
+    }
+    urlParams.forEach((param) => {
+        addBox(param.key, param.value.substring(0, 2), param.value.substring(2));
+    });
+}
+
+initBoxes();
