@@ -14,7 +14,7 @@ canvas.height = 100;
 canvas.style.position = 'fixed';
 canvas.style.top = '0';
 canvas.style.right = '0';
-canvas.style.width = '10px';
+canvas.style.width = '20px';
 canvas.style.height = '100vh';
 document.body.appendChild(canvas);
 

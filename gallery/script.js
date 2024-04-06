@@ -41,7 +41,7 @@ function createBox(name, type, videoId) {
     const typeInput = document.createElement('select');
     typeInput.onblur = () => updateUrlParameters();
     typeInput.className = 'video-type select select-xs select-bordered w-16 max-w-xs ';
-    const options = Array(5)
+    const options = Array(6)
         .fill(null)
         .map((_) => document.createElement('option'));
     options.forEach((o) => typeInput.append(o));
@@ -66,9 +66,9 @@ function createBox(name, type, videoId) {
     options[4].text = 'IG (Instagram)';
     options[4].selected = type === 'IG';
 
-    options[4].value = 'ZO';
-    options[4].text = 'ZO (Zoom)';
-    options[4].selected = type === 'IG';
+    options[5].value = 'ZO';
+    options[5].text = 'ZO (Zoom)';
+    options[5].selected = type === 'ZO';
 
     box.appendChild(typeInput);
 
@@ -90,6 +90,12 @@ function createBox(name, type, videoId) {
     refreshBtn.appendChild(document.createTextNode('Refresh'));
     embedContainer.appendChild(refreshBtn);
 
+    const expandBtn = document.createElement('button');
+    expandBtn.className = 'top-btn expand-btn';
+    expandBtn.onclick = () => expandVideo(expandBtn);
+    expandBtn.appendChild(document.createTextNode('Expand'));
+    embedContainer.appendChild(expandBtn);
+
     const closeBtn = document.createElement('button');
     closeBtn.className = 'top-btn close-btn';
     closeBtn.onclick = () => removeVideo(closeBtn);
@@ -101,8 +107,7 @@ function createBox(name, type, videoId) {
 }
 
 function refreshVideo(btn) {
-    const box = btn.parentNode.parentNode;
-    const embedContainer = box.lastChild;
+    const embedContainer = btn.parentNode;
     const player = embedContainer.lastChild;
 
     embedContainer.removeChild(player);
@@ -111,6 +116,26 @@ function refreshVideo(btn) {
     const videoId = getVideoId(box);
     embedContainer.appendChild(getPlayer(type, videoId));
 }
+
+function refreshVideo(btn) {
+    const box = btn.parentNode.parentNode;
+    const embedContainer = btn.parentNode;
+    const player = embedContainer.lastChild;
+
+    embedContainer.removeChild(player);
+    embedContainer.appendChild(getPlayer(getType(box), getVideoId(box)));
+}
+
+function expandVideo(btn) {
+    const embedContainer = btn.parentNode;
+    embedContainer.classList.toggle('expanded');
+    if (embedContainer.classList.contains('expanded')) {
+        btn.innerHTML = 'Hide';
+    } else {
+        btn.innerHTML = 'Expand';
+    }
+}
+
 function removeVideo(btn) {
     const box = btn.parentNode.parentNode;
     box.parentNode.removeChild(box);
@@ -143,6 +168,8 @@ function getPlayer(type, videoId) {
         return getFacebookPlayer(videoId);
     } else if (type === 'IG') {
         return getInstagramPlayer(videoId);
+    } else if (type === 'ZO') {
+        return getZoomPlayer(videoId);
     } else {
         console.error('Unknown player type: ' + type);
         return getCustomPlayer('');
@@ -182,6 +209,18 @@ function getFacebookPlayer(videoId) {
     player.setAttribute('data-href', 'https://www.facebook.com/facebook/videos/' + videoId);
     player.setAttribute('data-allowfullscreen', 'true');
     return player;
+}
+
+function getZoomPlayer(videoId) {
+    const iframe = document.createElement('iframe');
+
+    iframe.src = `../zoom-sdk`;
+    if (videoId === '') {
+        iframe.src = '';
+    }
+    iframe.title = 'Zoom Web SDK Client';
+    iframe.allow = 'camera; microphone;';
+    return iframe;
 }
 
 function getInstagramPlayer(videoId) {
