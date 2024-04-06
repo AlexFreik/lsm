@@ -1,6 +1,8 @@
 export { initBoxes };
+
+import { expandVideo, refreshVideo, removeVideo } from './box-controls.js';
 import { getPlayer } from './players.js';
-import { getUrlParameters } from './tools.js';
+import { getUrlParameters, capitalizeFirst } from './tools.js';
 
 function initBoxes() {
     const urlParams = getUrlParameters();
@@ -75,24 +77,18 @@ function createBox(name, type, videoId) {
     embedContainer.className = 'embed-container';
     box.appendChild(embedContainer);
 
-    const refreshBtn = document.createElement('button');
-    refreshBtn.className = 'top-btn refresh-btn';
-    refreshBtn.onclick = () => refreshVideo(refreshBtn);
-    refreshBtn.appendChild(document.createTextNode('Refresh'));
-    embedContainer.appendChild(refreshBtn);
-
-    const expandBtn = document.createElement('button');
-    expandBtn.className = 'top-btn expand-btn';
-    expandBtn.onclick = () => expandVideo(expandBtn);
-    expandBtn.appendChild(document.createTextNode('Expand'));
-    embedContainer.appendChild(expandBtn);
-
-    const closeBtn = document.createElement('button');
-    closeBtn.className = 'top-btn close-btn';
-    closeBtn.onclick = () => removeVideo(closeBtn);
-    closeBtn.appendChild(document.createTextNode('Close'));
-    embedContainer.appendChild(closeBtn);
+    embedContainer.appendChild(createTopBtn('expand', expandVideo));
+    embedContainer.appendChild(createTopBtn('refresh', refreshVideo));
+    embedContainer.appendChild(createTopBtn('remove', removeVideo));
 
     embedContainer.appendChild(getPlayer(type, videoId));
     return box;
+}
+
+function createTopBtn(name, onclick) {
+    const btn = document.createElement('button');
+    btn.className = 'top-btn ' + name + '-btn';
+    btn.onclick = () => onclick(btn);
+    btn.appendChild(document.createTextNode(capitalizeFirst(name)));
+    return btn;
 }

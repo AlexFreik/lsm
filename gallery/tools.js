@@ -1,4 +1,4 @@
-export { getUrlParameters, updateUrlParameters };
+export { getUrlParameters, updateUrlParameters, capitalizeFirst };
 import { getVideoName, getVideoId, getType } from './box-controls.js';
 
 function getUrlParameters() {
@@ -22,4 +22,8 @@ function updateUrlParameters() {
     });
     const paramString = newParams.toString();
     window.history.pushState({}, '', `?${paramString}`);
+}
+
+function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
 }

@@ -42,22 +42,19 @@ iframe {
 }
 
 .top-btn {
-    @apply absolute top-1 z-10 h-5 w-12 cursor-pointer rounded-md border-none text-xs text-slate-50;
+    @apply absolute top-1 z-10 h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
 }
 
 .expand-btn {
-    @apply bg-secondary;
-    right: 109px;
+    @apply right-[115px] bg-secondary;
 }
 
 .refresh-btn {
-    @apply bg-secondary;
-    right: 57px;
+    @apply right-[60px] bg-secondary;
 }
 
-.close-btn {
-    @apply bg-red-900;
-    right: 5px;
+.remove-btn {
+    @apply right-[5px] bg-red-900;
 }
 
 .expanded {
