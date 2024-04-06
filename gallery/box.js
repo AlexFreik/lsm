@@ -1,0 +1,98 @@
+export { initBoxes };
+import { getPlayer } from './players.js';
+import { getUrlParameters } from './tools.js';
+
+function initBoxes() {
+    const urlParams = getUrlParameters();
+    if (urlParams.length === 0) {
+        addBox('', 'YN', '');
+    }
+    urlParams.forEach((param) => {
+        addBox(param.key, param.value.substring(0, 2), param.value.substring(2));
+    });
+}
+
+function addBox(name = '', type = '', videoId = '') {
+    const gallery = document.getElementById('gallery');
+    gallery.insertBefore(createBox(name, type, videoId), gallery.lastElementChild);
+}
+
+function createBox(name, type, videoId) {
+    const box = document.createElement('div');
+    box.className = 'box';
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.onblur = () => updateUrlParameters();
+    nameInput.placeholder = 'Name';
+    nameInput.value = name;
+    nameInput.className = 'video-name input input-bordered input-xs w-20 max-w-xs';
+    box.appendChild(nameInput);
+
+    const typeInput = document.createElement('select');
+    typeInput.onblur = () => updateUrlParameters();
+    typeInput.className = 'video-type select select-xs select-bordered w-16 max-w-xs ';
+    const options = Array(6)
+        .fill(null)
+        .map((_) => document.createElement('option'));
+    options.forEach((o) => typeInput.append(o));
+
+    options[0].value = 'CU';
+    options[0].text = 'CU (Custom)';
+    options[0].selected = type === 'CU' || type === '';
+
+    options[1].value = 'YT';
+    options[1].text = 'YT (YouTube)';
+    options[1].selected = type === 'YT';
+
+    options[2].value = 'YN';
+    options[2].text = 'YN (YouTube with enhanced privacy)';
+    options[2].selected = type === 'YN';
+
+    options[3].value = 'FB';
+    options[3].text = 'FB (Facebook)';
+    options[3].selected = type === 'FB';
+
+    options[4].value = 'IG';
+    options[4].text = 'IG (Instagram)';
+    options[4].selected = type === 'IG';
+
+    options[5].value = 'ZO';
+    options[5].text = 'ZO (Zoom)';
+    options[5].selected = type === 'ZO';
+
+    box.appendChild(typeInput);
+
+    const videoIdInput = document.createElement('input');
+    videoIdInput.type = 'text';
+    videoIdInput.onblur = () => updateUrlParameters();
+    videoIdInput.placeholder = 'Video ID';
+    videoIdInput.value = videoId;
+    videoIdInput.className = 'video-id input input-bordered input-xs w-24 max-w-xs';
+    box.appendChild(videoIdInput);
+
+    const embedContainer = document.createElement('div');
+    embedContainer.className = 'embed-container';
+    box.appendChild(embedContainer);
+
+    const refreshBtn = document.createElement('button');
+    refreshBtn.className = 'top-btn refresh-btn';
+    refreshBtn.onclick = () => refreshVideo(refreshBtn);
+    refreshBtn.appendChild(document.createTextNode('Refresh'));
+    embedContainer.appendChild(refreshBtn);
+
+    const expandBtn = document.createElement('button');
+    expandBtn.className = 'top-btn expand-btn';
+    expandBtn.onclick = () => expandVideo(expandBtn);
+    expandBtn.appendChild(document.createTextNode('Expand'));
+    embedContainer.appendChild(expandBtn);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'top-btn close-btn';
+    closeBtn.onclick = () => removeVideo(closeBtn);
+    closeBtn.appendChild(document.createTextNode('Close'));
+    embedContainer.appendChild(closeBtn);
+
+    embedContainer.appendChild(getPlayer(type, videoId));
+    return box;
+}
