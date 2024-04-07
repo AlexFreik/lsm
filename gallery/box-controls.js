@@ -1,4 +1,5 @@
 import { getPlayer } from './players.js';
+import { updateUrlParameters } from './tools.js';
 
 // ===== Box Data =====
 function getVideoName(box) {
