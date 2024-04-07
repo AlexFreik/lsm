@@ -1,8 +1,6 @@
-export { initBoxes };
-
 import { expandVideo, refreshVideo, removeVideo } from './box-controls.js';
 import { getPlayer } from './players.js';
-import { getUrlParameters, capitalizeFirst } from './tools.js';
+import { getUrlParameters, updateUrlParameters, capitalizeFirst } from './tools.js';
 
 function initBoxes() {
     const urlParams = getUrlParameters();
@@ -92,3 +90,5 @@ function createTopBtn(name, onclick) {
     btn.appendChild(document.createTextNode(capitalizeFirst(name)));
     return btn;
 }
+
+export { initBoxes };

@@ -1,5 +1,3 @@
-export { getPlayer };
-
 function getPlayer(type, videoId) {
     if (type === 'CU' || type === '') {
         return getCustomPlayer(videoId);
@@ -14,8 +12,7 @@ function getPlayer(type, videoId) {
     } else if (type === 'ZO') {
         return getZoomPlayer(videoId);
     } else {
-        console.error('Unknown player type: ' + type);
-        return getCustomPlayer('');
+        return getCustomPlayer('./404.html?description=Invalid video type');
     }
 }
 
@@ -57,7 +54,8 @@ function getFacebookPlayer(videoId) {
 function getZoomPlayer(videoId) {
     const iframe = document.createElement('iframe');
 
-    iframe.src = `../zoom-sdk`;
+    const [id, pwd] = videoId.split('&');
+    iframe.src = `../zoom-sdk?id=` + id + '&pwd=' + pwd;
     if (videoId === '') {
         iframe.src = '';
     }
@@ -72,3 +70,5 @@ function getInstagramPlayer(videoId) {
     player.setAttribute('data-href', videoId);
     return player;
 }
+
+export { getPlayer };

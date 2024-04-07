@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 Error</title>
+    <link rel="icon" type="image/png" href="./isha-logo.png" />
+    <link rel="stylesheet" href="./output.css" />
+  </head>
+  <body class="bg-base-100 text-base-content">
+    <div class="hero min-h-screen bg-base-200">
+      <div class="hero-content text-center">
+        <div class="max-w-md">
+          <h1 class="text-5xl font-bold">404 Error</h1>
+          <p class="py-6 text-2xl" id="description"></p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      document.getElementById('description').innerHTML = urlParams.get('description');
+    </script>
+  </body>
+</html>

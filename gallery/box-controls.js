@@ -1,5 +1,3 @@
-export { getVideoName, getVideoId, getType, expandVideo, refreshVideo, removeVideo };
-
 // ===== Box Data =====
 function getVideoName(box) {
     console.assert(box.classList.contains('box'));
@@ -41,3 +39,5 @@ function removeVideo(btn) {
     box.parentNode.removeChild(box);
     updateUrlParameters();
 }
+
+export { getVideoName, getVideoId, getType, expandVideo, refreshVideo, removeVideo };
