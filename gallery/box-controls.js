@@ -1,3 +1,5 @@
+import { getPlayer } from './players.js';
+
 // ===== Box Data =====
 function getVideoName(box) {
     console.assert(box.classList.contains('box'));
