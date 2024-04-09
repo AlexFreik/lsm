@@ -6,9 +6,12 @@
     <title>Gallery</title>
     <link rel="icon" type="image/png" href="./isha-logo.png" />
     <link rel="stylesheet" href="./output.css" />
-    <script src="./script.js" defer></script>
+    <script type="module" src="./script.js" defer></script>
   </head>
   <body class="bg-base-100 text-base-content">
+    <div id="fb-root"></div>
+    <script async defer src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.2"></script>
+
     <div class="navbar bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">Live Streaming Gallery</a>
@@ -31,10 +34,11 @@
         </div>
       </div>
     </div>
+
     <div class="hidden w-screen px-5" id="controls">
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" id="auto-live" class="toggle toggle-secondary" checked />
+          <input type="checkbox" id="auto-live" class="toggle toggle-secondary m-0" checked />
           <span class="text-md ms-3">Automatically switch to LIVE</span>
         </label>
       </div>
@@ -44,6 +48,10 @@
           <span class="text-md ms-3">Select lowest quality (resolution) for all videos</span>
         </label>
       </div>
+    </div>
+
+    <div class="my-8 px-5">
+      <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
     </div>
 
     <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">

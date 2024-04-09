@@ -1,69 +1,65 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>YAD: YouTube Auto Delay</title>
-        <script src="./script.js" defer></script>
-        <link rel="stylesheet" href="./styles.css" />
-        <link rel="icon" type="image/png" href="./isha-logo.png" />
-    </head>
-    <body>
-        <header>
-            <div class="title-container">
-                <h1>YAD: YouTube Auto Delay</h1>
-            </div>
-            <div class="github-link">
-                <a href="https://github.com/AlexFreik/lsm/tree/master/yad" target="_blank"
-                    >GitHub</a
-                >
-            </div>
-        </header>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YAD: YouTube Auto Delay</title>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="icon" type="image/png" href="./isha-logo.png" />
+  </head>
+  <body>
+    <div class="iframe-container">
+      <iframe
+        id="player"
+        width="560"
+        height="315"
+        src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1&enablejsapi=1&iv_load_policy=3"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen></iframe>
+    </div>
 
-        <div class="explanation">
-            <p>
-                This website allows you to
-                <strong>configure the delay for a YouTube Live Stream</strong>
-                to have a fixed delay. Please check the bottom of this page for more details.<br /><br />
+    <header>
+      <div class="title-container">
+        <h1>YAD: YouTube Auto Delay</h1>
+      </div>
+      <div class="github-link">
+        <a href="https://github.com/AlexFreik/lsm/tree/master/yad" target="_blank">GitHub</a>
+      </div>
+    </header>
 
-                <strong>Example 1:</strong> The configured delay is 15min and the current delay is
-                13min 59s, it will be reset back to 15min. And if the current delay is 1h 15min 1s,
-                it will be also reset back to 15min.<br /><br />
+    <div class="explanation">
+      <p>
+        This website allows you to
+        <strong>configure the delay for a YouTube Live Stream</strong>
+        to have a fixed delay. Please check the bottom of this page for more details.<br /><br />
 
-                <strong>Example 2:</strong> The configured delay is 15min, but due to network issues
-                the delay slowly become is 20min. Now if YT skips and delay becomes 0s the script
-                will reset delay back to 20min 5s.
-            </p>
-        </div>
+        <strong>Example 1:</strong> The configured delay is 15min and the current delay is 13min 59s, it will be reset back to 15min. And if the
+        current delay is 1h 15min 1s, it will be also reset back to 15min.<br /><br />
 
-        <section>
-            <label for="videoId">YouTube Stream ID:</label>
-            <input type="text" id="videoId" placeholder="Enter Video ID" value="jfKfPfyJRdk" />
+        <strong>Example 2:</strong> The configured delay is 15min, but due to network issues the delay slowly become is 20min. Now if YT skips and
+        delay becomes 0s the script will reset delay back to 20min 5s.
+      </p>
+    </div>
 
-            <label for="delay">Delay (in seconds):</label>
-            <input type="number" id="delay" placeholder="Enter Delay" value="900" />
+    <section>
+      <label for="videoId">YouTube Stream ID:</label>
+      <input type="text" id="videoId" placeholder="Enter Video ID" value="jfKfPfyJRdk" />
 
-            <button onclick="configurePlayer()">Update</button>
-        </section>
+      <label for="delay">Delay (in seconds):</label>
+      <input type="number" id="delay" placeholder="Enter Delay" value="900" />
 
-        <div class="iframe-container">
-            <iframe
-                id="player"
-                width="560"
-                height="315"
-                src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1&enablejsapi=1&iv_load_policy=3"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen></iframe>
-        </div>
+      <button onclick="configurePlayer()">Update</button>
+    </section>
 
-        <div class="explanation">
-            <p>
-                In short the script will do the following:<br />
+    <div class="explanation">
+      <p>
+        In short the script will do the following:<br />
 
-                <script src="https://gist.github.com/AlexFreik/544d7996b607781c1c01313d9bffc3f0.js"></script>
-            </p>
-        </div>
-    </body>
+        <script src="https://gist.github.com/AlexFreik/544d7996b607781c1c01313d9bffc3f0.js"></script>
+      </p>
+    </div>
+  </body>
 </html>

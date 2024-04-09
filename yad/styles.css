@@ -104,7 +104,7 @@ button:hover {
 }
 
 .iframe-container {
-    margin: 50px auto;
+    margin: 0 auto;
     position: relative;
     overflow: hidden;
     width: 100%;

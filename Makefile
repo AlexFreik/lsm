@@ -1,5 +1,8 @@
 .PHONY: *
 
+all:
+	make start
+
 install:
 	npm install
 

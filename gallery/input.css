@@ -15,7 +15,7 @@
 
 .box {
     @apply m-2;
-    width: 287px;
+    width: 279px;
     height: 180px;
     animation: fadeInRight 1s ease-out;
 }
@@ -27,6 +27,12 @@ input {
 iframe {
     @apply absolute left-0 top-0 h-full w-full bg-neutral;
     color-scheme: light;
+    width: 160% !important;
+    height: 160% !important;
+    -webkit-transform: scale(0.625);
+    transform: scale(0.625);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
 }
 
 .embed-container {
@@ -36,13 +42,21 @@ iframe {
 }
 
 .top-btn {
-    @apply absolute top-1 z-10 h-5 w-12 cursor-pointer rounded-md border-none text-xs text-slate-50;
+    @apply absolute top-1 z-10 h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
+}
+
+.expand-btn {
+    @apply right-[115px] bg-secondary;
 }
 
 .refresh-btn {
-    @apply right-14 bg-secondary;
+    @apply right-[60px] bg-secondary;
 }
 
-.close-btn {
-    @apply right-1 bg-red-900;
+.remove-btn {
+    @apply right-[5px] bg-red-900;
+}
+
+.expanded {
+    @apply fixed bottom-0 left-0 right-0 top-0 z-[999999] m-0 h-full w-full overflow-hidden p-0;
 }

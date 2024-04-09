@@ -1,27 +1,27 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="./test.js"></script>
-        <style>
-            body {
-                margin: 0;
-                overflow: hidden;
-            }
-        </style>
-    </head>
-    <body>
-        <iframe id="webclient" width="600" height="400"></iframe>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./test.js"></script>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="webclient" width="600" height="400"></iframe>
 
-        <script>
-            const iframe = document.getElementById('webclient').contentWindow.document;
-            createAudioBtnMock(iframe);
-            iframe.body.appendChild(
-                Object.assign(document.createElement('script'), {
-                    src: './script.js',
-                }),
-            );
-        </script>
-    </body>
+    <script>
+      const iframe = document.getElementById('webclient').contentWindow.document;
+      createAudioBtnMock(iframe);
+      iframe.body.appendChild(
+        Object.assign(document.createElement('script'), {
+          src: './script.js',
+        }),
+      );
+    </script>
+  </body>
 </html>

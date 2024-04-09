@@ -1,18 +1,6 @@
 (async () => {
-    console.log('Hi from YT Iframe');
+    console.log('Hi from YouTube Iframe');
 
-    const canvas = document.createElement('canvas');
-    canvas.id = 'audio-meter';
-    canvas.width = 100;
-    canvas.height = 100;
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.right = '0';
-    canvas.style.width = '20px';
-    canvas.style.height = '100vh';
-    document.body.appendChild(canvas);
-
-    window.audioCtx = new AudioContext();
     const videoElem = document.getElementsByClassName('video-stream')[0];
     console.assert(videoElem != undefined);
 
@@ -21,16 +9,14 @@
     const splitter = audioCtx.createChannelSplitter(2);
     video.connect(splitter);
 
-    const buffSize = 16;
-
     const analyserL = audioCtx.createAnalyser();
-    analyserL.smoothingTimeConstant = 0.2;
-    analyserL.fftSize = buffSize * 2;
+    analyserL.smoothingTimeConstant = SMOOTHING_TIME;
+    analyserL.fftSize = BUFF_SIZE * 2;
     splitter.connect(analyserL, 0);
 
     const analyserR = audioCtx.createAnalyser();
-    analyserR.smoothingTimeConstant = 0.2;
-    analyserR.fftSize = buffSize * 2;
+    analyserR.smoothingTimeConstant = SMOOTHING_TIME;
+    analyserR.fftSize = BUFF_SIZE * 2;
     splitter.connect(analyserR, 1);
 
     const merger = audioCtx.createChannelMerger(2);
@@ -70,25 +56,7 @@
 
     // Draw the VU meter
     window.ctx = document.getElementById('audio-meter').getContext('2d');
-    function draw() {
-        const arrayL = new Float32Array(buffSize);
-        const arrayR = new Float32Array(buffSize);
-        analyserL.getFloatFrequencyData(arrayL);
-        analyserR.getFloatFrequencyData(arrayR);
-        ctx.clearRect(0, 0, 100, 100); // Clear the canvas
-
-        let maxL = getMax(arrayL),
-            maxR = getMax(arrayR);
-
-        ctx.fillStyle = 'green';
-        ctx.fillRect(0, 100 - maxL, 50, maxL);
-        ctx.fillRect(50, 100 - maxR, 100, maxR);
-
-        setTimeout(() => {
-            requestAnimationFrame(draw);
-        }, 200);
-    }
-    draw();
+    draw(ctx, analyserL, analyserR);
 
     const adjustSettings = () => {
         // move video lo the left so there is a space for VU meter
@@ -103,7 +71,6 @@
         liveDiv.style['display'] = '';
 
         const liveBtn = document.getElementsByClassName('ytp-live-badge')[0];
-        console.log(autoLive);
         if (autoLive) {
             liveBtn.click();
         }
@@ -111,13 +78,10 @@
     setInterval(adjustSettings, 5000);
 })();
 
-let autoLive = true;
-
 chrome.runtime.onMessage.addListener((msg) => {
     if (msg.type === 'SET_QUALITY') {
         setQualityYT('min');
     } else if (msg.type === 'AUTO_LIVE') {
-        console.log(autoLive);
         autoLive = msg.value;
     }
 });
