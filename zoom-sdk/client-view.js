@@ -5,7 +5,7 @@ const urlParams = new URLSearchParams(window.location.search);
 let idParam = urlParams.get('id');
 let pwdParam = urlParams.get('pwd');
 
-const authEndpoint = 'http://localhost:4000';
+const authEndpoint = 'https://meetingsdk-auth-endpoint-2v0x.onrender.com';
 const sdkKey = 'LulHW4M5Rnes22C4JSig';
 const meetingNumber = idParam ? idParam : '';
 const passWord = pwdParam ? pwdParam : '';

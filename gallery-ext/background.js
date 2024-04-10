@@ -3,5 +3,9 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
         chrome.tabs.sendMessage(sender.tab.id, msg);
     } else if (msg.type === 'AUTO_LIVE') {
         chrome.tabs.sendMessage(sender.tab.id, msg);
+    } else if (msg.type === 'ZOOM_BLINK') {
+        chrome.tabs.sendMessage(sender.tab.id, msg);
+    } else if (msg.type === 'ZOOM_BEEP') {
+        chrome.tabs.sendMessage(sender.tab.id, msg);
     }
 });
