@@ -62,9 +62,9 @@
       </div>
     </div>
 
-    <div class="my-8 px-5">
+    <!-- <div class="my-8 px-5">
       <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
-    </div>
+    </div> -->
 
     <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">
       <div class="card-body">
@@ -78,6 +78,26 @@
           <a class="btn btn-outline btn-secondary" href="/lsm/gallery-ext/" target="_blank">Install</a>
         </div>
       </div>
+    </div>
+
+    <div class="prose max-w-4xl px-5">
+      <h2>Documentation</h2>
+      <h3>Video ID</h3>
+      For the <code>Video ID</code> field you should put:
+      <ul>
+        <li>
+          <code>CU (Custom)</code> Paste any web link. Example: https://alexfreik.github.io/lsm/gallery/isha-logo.png<br />
+          <b>Note</b>: most links won't work because of CORS restrictions in browser.
+        </li>
+        <li><code>YT, YN (YouTube)</code> Paste video ID. For youtube.com/watch?v=jfKfPfyJRdk the ID will be jfKfPfyJRdk</li>
+        <li><code>FB (Facebook)</code> Paste video ID</li>
+        <li><code>IG (Instagram)</code> Not supported yet</li>
+        <li><code>ZO (ZOom)</code> Paste meeting number and password sepparated by "&". Example: 1234567890&abcd1234</li>
+      </ul>
+
+      <h3>Zoom</h3>
+      When you click "Join Meeting" button for the first time in a while it may take 50s or more because server is "cold". After this it should happen
+      almost immediately.
     </div>
 
     <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
