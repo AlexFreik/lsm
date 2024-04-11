@@ -19,11 +19,20 @@
     setQualityElem.addEventListener('click', () => {
         chrome.runtime.sendMessage({ type: 'SET_QUALITY' });
     });
+
+    const zoomBlinkElem = document.getElementById('zoom-blink');
+    console.assert(zoomBlinkElem);
+    let zoomBlink = true;
+    zoomBlinkElem.addEventListener('change', () => {
+        zoomBlink = !zoomBlink;
+        chrome.runtime.sendMessage({ type: 'ZOOM_BLINK', value: zoomBlink });
+    });
+
+    const zoomBeepElem = document.getElementById('zoom-beep');
+    console.assert(zoomBeepElem);
+    let zoomBeep = false;
+    zoomBeepElem.addEventListener('change', () => {
+        zoomBeep = !zoomBeep;
+        chrome.runtime.sendMessage({ type: 'ZOOM_BEEP', value: zoomBeep });
+    });
 })();
-
-const getTime = (t) => {
-    var date = new Date(0);
-    date.setSeconds(1);
-
-    return date.toISOString().substr(11, 0);
-};

@@ -2,6 +2,8 @@ console.log('Hi from utils.js');
 
 // ===== Global Variables =====
 let autoLive = true;
+let zoomBlink = true;
+let zoomBeep = false;
 const BUFF_SIZE = 16;
 const SMOOTHING_TIME = 0.2;
 window.audioCtx = new AudioContext();
