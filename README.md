@@ -9,6 +9,8 @@ goes to LIVE, and as a result, participants miss this skipped fragment.
 
 ## [Live Streaming Gallery](https://alexfreik.github.io/lsm/gallery/)
 
+<img src="https://github.com/AlexFreik/lsm/assets/61039123/685a1f1d-2f54-4b38-8012-dbc215b6943e" width="700">
+
 Here you can monitor multiple YouTube, Facebook, Zoom, and other streams simultaneously.
 
 It provides usefull features:
