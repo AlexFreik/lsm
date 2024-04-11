@@ -5,16 +5,14 @@ function isSpeakerMuted() {
     );
 }
 
-function beep() {
+async function beep() {
     const oscillator = window.audioCtx.createOscillator();
     oscillator.type = 'sine';
     oscillator.frequency.value = 800;
     oscillator.connect(audioCtx.destination);
     oscillator.start();
-    // Beep for 500 milliseconds
-    setTimeout(function () {
-        oscillator.stop();
-    }, 500);
+    await sleep(200);
+    oscillator.stop();
 }
 
 (async () => {
@@ -27,11 +25,11 @@ function beep() {
         document.body.classList.remove('blinking-border');
     }
 
-    let continueToBeep = true;
-    function startBeeping() {
-        beep();
-        if (continueToBeep) {
-            setTimeout(startBeeping, 1000);
+    let beepingNow = false;
+    async function startBeeping() {
+        while (beepingNow) {
+            await beep();
+            await sleep(1000);
         }
     }
 
@@ -43,10 +41,12 @@ function beep() {
         }
 
         if (zoomBeep && isSpeakerMuted()) {
-            continueToBeep = true;
-            startBeeping();
+            if (!beepingNow) {
+                beepingNow = true;
+                startBeeping();
+            }
         } else {
-            continueToBeep = false;
+            beepingNow = false;
         }
     };
     setInterval(adjustSettings, 2000);
