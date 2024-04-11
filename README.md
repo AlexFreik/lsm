@@ -2,12 +2,16 @@
 
 ## [YAD: YouTube Auto Delay](https://alexfreik.github.io/lsm/yad/)
 
+<img src="https://github.com/AlexFreik/lsm/assets/61039123/7357967a-9bc9-43e2-8514-e9769e11cf5a" width="700">
+
 Webpage where you can configure a delay for any YouTube
 stream, and it will automatically maintain it. It solves the
 skipping problem when because of network lag a stream with delay
 goes to LIVE, and as a result, participants miss this skipped fragment.
 
 ## [Live Streaming Gallery](https://alexfreik.github.io/lsm/gallery/)
+
+<img src="https://github.com/AlexFreik/lsm/assets/61039123/685a1f1d-2f54-4b38-8012-dbc215b6943e" width="700">
 
 Here you can monitor multiple YouTube, Facebook, Zoom, and other streams simultaneously.
 
