@@ -53,12 +53,9 @@ async function beep() {
 })();
 
 chrome.runtime.onMessage.addListener((msg) => {
-    console.log(msg, zoomBlink, zoomBeep);
     if (msg.type === 'ZOOM_BLINK') {
         zoomBlink = msg.value;
-        console.log(zoomBlink, zoomBeep);
     } else if (msg.type === 'ZOOM_BEEP') {
         zoomBeep = msg.value;
-        console.log(zoomBlink, zoomBeep);
     }
 });
