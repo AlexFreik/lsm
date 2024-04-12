@@ -45,19 +45,19 @@
       <div class="mb-4">
         <label class="relative inline-flex cursor-pointer items-center">
           <button type="button" id="set-quality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
-          <span class="text-md ms-3">YouTube: Select lowest quality (resolution) for all videos</span>
+          <span class="text-md ms-3">YouTube: Select the lowest quality (resolution) for all videos</span>
         </label>
       </div>
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
           <input type="checkbox" id="zoom-blink" class="toggle toggle-secondary m-0" checked />
-          <span class="text-md ms-3">Zoom: blink if current speaker is muted</span>
+          <span class="text-md ms-3">Zoom: blink if the current speaker is muted</span>
         </label>
       </div>
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
           <input type="checkbox" id="zoom-beep" class="toggle toggle-secondary m-0" />
-          <span class="text-md ms-3">Zoom: beep if current speaker is muted</span>
+          <span class="text-md ms-3">Zoom: beep if the current speaker is muted</span>
         </label>
       </div>
     </div>
@@ -72,7 +72,7 @@
         <p>
           Because of the CORS policy, we can't access the videos with JavaScript directly.
           <br />
-          That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE and other features.
+          That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE, and other features.
         </p>
         <div class="card-actions justify-end">
           <a class="btn btn-outline btn-secondary" href="/lsm/gallery-ext/" target="_blank">Install</a>
@@ -81,27 +81,30 @@
     </div>
 
     <div class="prose max-w-4xl px-5">
-      <h2 id="documentation">Documentation</h2>
+      <h2 id="docs">Documentation</h2>
+      <p>Please use the latest Chrome browser.</p>
       <h3>Video ID</h3>
-      For the <code>Video ID</code> field you should put:
+      <p>For the <code>Video ID</code> field, you should put:</p>
       <ul>
         <li>
           <code>CU (Custom)</code> Paste any web link. Example: https://alexfreik.github.io/lsm/gallery/isha-logo.png<br />
-          <b>Note</b>: most links won't work because of CORS restrictions in browser.
+          <b>Note</b>: most links won't work because of CORS restrictions in the browser.
         </li>
         <li><code>YT, YN (YouTube)</code> Paste video ID. For youtube.com/watch?v=jfKfPfyJRdk the ID will be jfKfPfyJRdk</li>
         <li><code>FB (Facebook)</code> Paste video ID</li>
         <li><code>IG (Instagram)</code> Not supported yet</li>
-        <li><code>ZO (ZOom)</code> Paste meeting number and password sepparated by "&". Example: 1234567890&abcd1234</li>
+        <li><code>ZO (ZOom)</code> Paste the meeting number and password separated by "&". Example: 1234567890&abcd1234</li>
       </ul>
 
       <h3>Zoom</h3>
-      When you click "Join Meeting" button for the first time in a while it may take 50s or more because server is "cold". After this it should happen
-      almost immediately.
+      <p>
+        When you click the "Join Meeting" button for the first time in a while it may take 50s or more because the server is "cold". After this server
+        is "warm" and joining should happen almost immediately.
+      </p>
 
       <hr />
       <h2 id="support">Support</h2>
-      If you face any issues you can contact me at <a href="mailto:alex.freik@ishafoundation.org">alex.freik@ishafoundation.org</a>
+      <p>If you face any issues you can contact me at <a href="mailto:alex.freik@ishafoundation.org">alex.freik@ishafoundation.org</a></p>
     </div>
 
     <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
