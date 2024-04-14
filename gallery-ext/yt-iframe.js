@@ -28,45 +28,19 @@ function getAudioTools() {
     return { analyserL: analyserL, analyserR: analyserR, merger: merger };
 }
 
-function monitorButtonClick(audioTools) {
-    const btn = document.getElementsByClassName('monitor-btn')[0];
-    const iconImg = btn.firstChild;
-    if (btn.classList.contains('off')) {
-        audioTools.analyserL.connect(merger, 0, 0);
-        audioTools.analyserR.connect(merger, 0, 1);
-        iconImg.src = chrome.runtime.getURL('assets/headset.png');
+function muteClick(audioTools, mute) {
+    if (!mute) {
+        audioTools.analyserL.connect(audioTools.merger, 0, 0);
+        audioTools.analyserR.connect(audioTools.merger, 0, 1);
     } else {
         audioTools.analyserL.disconnect();
         audioTools.analyserR.disconnect();
-        iconImg.src = chrome.runtime.getURL('assets/headset-cross.png');
     }
-    btn.classList.toggle('off');
-}
-
-function createMonitorButton(audioTools) {
-    const iconImg = document.createElement('img');
-    iconImg.alt = 'Headset Image';
-
-    const monitorBtn = document.createElement('button');
-
-    volumeArea = document.getElementsByClassName('ytp-volume-area')[0];
-
-    monitorBtn.appendChild(iconImg);
-
-    // Add monitor button so we can mute / unmute the audio
-    // When I mute using regular YT button the VU meter stops receiving the audio
-    monitorBtn.className = 'ytp-button monitor-btn';
-    volumeArea.insertBefore(monitorBtn, volumeArea.firstChild);
-
-    const clickMonitorBtn = () => monitorButtonClick(audioTools);
-    monitorBtn.addEventListener('click', clickMonitorBtn);
-    clickMonitorBtn();
 }
 
 (async () => {
     const audioTools = getAudioTools();
-
-    createMonitorButton(audioTools);
+    muteClick(audioTools, true);
 
     // Draw the VU meter
     window.ctx = document.getElementById('audio-meter').getContext('2d');
@@ -88,12 +62,18 @@ function createMonitorButton(audioTools) {
         }
     };
     setInterval(adjustSettings, 2000);
-})();
 
-chrome.runtime.onMessage.addListener((msg) => {
-    if (msg.type === 'SET_QUALITY') {
-        setQualityYT('min');
-    } else if (msg.type === 'AUTO_LIVE') {
-        autoLive = msg.value;
-    }
-});
+    const urlParams = new URLSearchParams(window.location.search);
+    const boxId = urlParams.get('boxId');
+    console.assert(boxId);
+
+    chrome.runtime.onMessage.addListener((msg) => {
+        if (msg.type === 'SET_QUALITY') {
+            setQualityYT('min');
+        } else if (msg.type === 'AUTO_LIVE') {
+            autoLive = msg.value;
+        } else if (msg.type === 'MUTE_CLICK' && boxId === msg.boxId) {
+            muteClick(audioTools, msg.value);
+        }
+    });
+})();

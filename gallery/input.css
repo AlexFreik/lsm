@@ -45,6 +45,10 @@ iframe {
     @apply absolute top-1 z-10 h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
 }
 
+.mute-btn {
+    @apply right-[170px] bg-secondary;
+}
+
 .expand-btn {
     @apply right-[115px] bg-secondary;
 }

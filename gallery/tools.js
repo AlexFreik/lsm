@@ -27,4 +27,8 @@ function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export { getUrlParameters, updateUrlParameters, capitalizeFirst };
+function generateUUID() {
+    return (Math.random() + 1).toString(36).substring(2);
+}
+
+export { getUrlParameters, updateUrlParameters, capitalizeFirst, generateUUID };

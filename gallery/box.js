@@ -1,6 +1,6 @@
-import { expandVideo, refreshVideo, removeVideo } from './box-controls.js';
+import { muteVideo, expandVideo, refreshVideo, removeVideo } from './box-controls.js';
 import { getPlayer } from './players.js';
-import { updateUrlParameters, capitalizeFirst } from './tools.js';
+import { updateUrlParameters, capitalizeFirst, generateUUID } from './tools.js';
 
 function createBox(name, type, videoId) {
     const box = document.createElement('div');
@@ -60,11 +60,17 @@ function createBox(name, type, videoId) {
     embedContainer.className = 'embed-container';
     box.appendChild(embedContainer);
 
+    embedContainer.appendChild(createTopBtn('mute', muteVideo));
     embedContainer.appendChild(createTopBtn('expand', expandVideo));
     embedContainer.appendChild(createTopBtn('refresh', refreshVideo));
     embedContainer.appendChild(createTopBtn('remove', removeVideo));
 
-    embedContainer.appendChild(getPlayer(type, videoId));
+    box.getElementsByClassName('mute-btn')[0].innerHTML = 'Unmute';
+
+    const boxId = generateUUID();
+    box.dataset.boxId = boxId;
+
+    embedContainer.appendChild(getPlayer(type, videoId, boxId));
     return box;
 }
 

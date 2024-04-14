@@ -17,7 +17,18 @@ function getType(box) {
     return box.getElementsByClassName('video-type')[0].value;
 }
 
+function getBoxId(box) {
+    console.assert(box.classList.contains('box'));
+    const boxId = box.dataset.boxId;
+    console.assert(boxId);
+    return boxId;
+}
+
 // ===== Embed Top Buttons =====
+function muteVideo() {
+    // Do nothing, logic will be implemented inside Extension
+}
+
 function expandVideo(btn) {
     const embedContainer = btn.parentNode;
     embedContainer.classList.toggle('expanded');
@@ -34,7 +45,7 @@ function refreshVideo(btn) {
     const player = embedContainer.lastChild;
 
     embedContainer.removeChild(player);
-    embedContainer.appendChild(getPlayer(getType(box), getVideoId(box)));
+    embedContainer.appendChild(getPlayer(getType(box), getVideoId(box), getBoxId(box)));
 }
 
 function removeVideo(btn) {
@@ -43,4 +54,4 @@ function removeVideo(btn) {
     updateUrlParameters();
 }
 
-export { getVideoName, getVideoId, getType, expandVideo, refreshVideo, removeVideo };
+export { getVideoName, getVideoId, getType, muteVideo, expandVideo, refreshVideo, removeVideo };

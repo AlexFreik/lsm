@@ -1,11 +1,5 @@
 chrome.runtime.onMessage.addListener((msg, sender) => {
-    if (msg.type === 'SET_QUALITY') {
-        chrome.tabs.sendMessage(sender.tab.id, msg);
-    } else if (msg.type === 'AUTO_LIVE') {
-        chrome.tabs.sendMessage(sender.tab.id, msg);
-    } else if (msg.type === 'ZOOM_BLINK') {
-        chrome.tabs.sendMessage(sender.tab.id, msg);
-    } else if (msg.type === 'ZOOM_BEEP') {
+    if (['MUTE_CLICK', 'SET_QUALITY', 'AUTO_LIVE', 'ZOOM_BLINK', 'ZOOM_BEEP'].includes(msg.type)) {
         chrome.tabs.sendMessage(sender.tab.id, msg);
     }
 });
