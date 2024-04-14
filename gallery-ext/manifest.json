@@ -6,6 +6,7 @@
     "host_permissions": [
         "https://*.youtube-nocookie.com/*",
         "https://*.youtube.com/*",
+        "https://*.innerengineering.vualto.com/*",
         "https://*.facebook.com/v3.2/plugins/*",
         "http://alexfreik.github.io/lsm/gallery/*",
         "http://localhost:3000/gallery/*"
@@ -17,6 +18,11 @@
         {
             "matches": ["https://*.youtube.com/embed/*", "https://*.youtube-nocookie.com/embed/*"],
             "js": ["utils.js", "yt-iframe.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["https://player.controlhub.innerengineering.vualto.com/Player/Index/*"],
+            "js": ["utils.js", "jw-iframe.js"],
             "all_frames": true
         },
         {

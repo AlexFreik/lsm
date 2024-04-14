@@ -17,7 +17,7 @@ function createBox(name, type, videoId) {
     const typeInput = document.createElement('select');
     typeInput.onblur = () => updateUrlParameters();
     typeInput.className = 'video-type select select-xs select-bordered w-16 max-w-xs ';
-    const options = Array(6)
+    const options = Array(7)
         .fill(null)
         .map((_) => document.createElement('option'));
     options.forEach((o) => typeInput.append(o));
@@ -26,25 +26,29 @@ function createBox(name, type, videoId) {
     options[0].text = 'CU (Custom)';
     options[0].selected = type === 'CU' || type === '';
 
-    options[1].value = 'YT';
-    options[1].text = 'YT (YouTube)';
-    options[1].selected = type === 'YT';
+        options[1].value = 'YN';
+        options[1].text = 'YN (YouTube with enhanced privacy)';
+        options[1].selected = type === 'YN';
 
-    options[2].value = 'YN';
-    options[2].text = 'YN (YouTube with enhanced privacy)';
-    options[2].selected = type === 'YN';
+    options[2].value = 'ZO';
+    options[2].text = 'ZO (Zoom)';
+    options[2].selected = type === 'ZO';
 
-    options[3].value = 'FB';
-    options[3].text = 'FB (Facebook)';
-    options[3].selected = type === 'FB';
+    options[3].value = 'JW';
+    options[3].text = 'JW (JW Player)';
+    options[3].selected = type === 'JW';
 
-    options[4].value = 'IG';
-    options[4].text = 'IG (Instagram)';
-    options[4].selected = type === 'IG';
+    options[4].value = 'FB';
+    options[4].text = 'FB (Facebook)';
+    options[4].selected = type === 'FB';
 
-    options[5].value = 'ZO';
-    options[5].text = 'ZO (Zoom)';
-    options[5].selected = type === 'ZO';
+    options[5].value = 'IG';
+    options[5].text = 'IG (Instagram)';
+    options[5].selected = type === 'IG';
+
+    options[6].value = 'YT';
+    options[6].text = 'YT (YouTube)';
+    options[6].selected = type === 'YT';
 
     box.appendChild(typeInput);
 

@@ -22,6 +22,38 @@ document.body.appendChild(canvas);
 
 // function initAudioMeter(videoElem) {}
 
+function getAudioTools(videoElem) {
+    const video = audioCtx.createMediaElementSource(videoElem);
+
+    const splitter = audioCtx.createChannelSplitter(2);
+    video.connect(splitter);
+
+    const analyserL = audioCtx.createAnalyser();
+    analyserL.smoothingTimeConstant = SMOOTHING_TIME;
+    analyserL.fftSize = BUFF_SIZE * 2;
+    splitter.connect(analyserL, 0);
+
+    const analyserR = audioCtx.createAnalyser();
+    analyserR.smoothingTimeConstant = SMOOTHING_TIME;
+    analyserR.fftSize = BUFF_SIZE * 2;
+    splitter.connect(analyserR, 1);
+
+    const merger = audioCtx.createChannelMerger(2);
+    merger.connect(audioCtx.destination);
+
+    return { analyserL: analyserL, analyserR: analyserR, merger: merger };
+}
+
+function muteClick(audioTools, mute) {
+    if (!mute) {
+        audioTools.analyserL.connect(audioTools.merger, 0, 0);
+        audioTools.analyserR.connect(audioTools.merger, 0, 1);
+    } else {
+        audioTools.analyserL.disconnect();
+        audioTools.analyserR.disconnect();
+    }
+}
+
 function draw(ctx, analyserL, analyserR) {
     const arrayL = new Float32Array(BUFF_SIZE);
     const arrayR = new Float32Array(BUFF_SIZE);

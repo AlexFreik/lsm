@@ -1,7 +1,7 @@
-console.log('Hi from YouTube Iframe');
+console.log('Hi from JW Player Iframe');
 
 function getVideoElem() {
-    const videoElem = document.getElementsByClassName('video-stream')[0];
+    const videoElem = document.getElementsByTagName('video')[0];
     console.assert(videoElem != undefined);
     return videoElem;
 }
@@ -15,26 +15,13 @@ function getVideoElem() {
     window.ctx = document.getElementById('audio-meter').getContext('2d');
     draw(ctx, audioTools.analyserL, audioTools.analyserR);
 
-    const adjustSettings = () => {
-        // move video lo the left so there is a space for VU meter
-        videoElem.style['left'] = '0';
-
-        const liveBtn = document.getElementsByClassName('ytp-live-badge')[0];
-        if (autoLive) {
-            liveBtn.click();
-        }
-    };
-    setInterval(adjustSettings, 2000);
-
     const urlParams = new URLSearchParams(window.location.search);
     const boxId = urlParams.get('boxId');
     console.assert(boxId);
 
     chrome.runtime.onMessage.addListener((msg) => {
         if (msg.type === 'SET_QUALITY') {
-            setQualityYT('min');
-        } else if (msg.type === 'AUTO_LIVE') {
-            autoLive = msg.value;
+            // TODO
         } else if (msg.type === 'MUTE_CLICK' && boxId === msg.boxId) {
             muteClick(audioTools, msg.value);
         }
