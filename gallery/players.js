@@ -38,7 +38,7 @@ function getYouTubePlayer(videoId, boxId, cookies) {
     iframe.frameBorder = '0';
     iframe.allow =
         'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen;';
-    iframe.allowfullscreen = true;
+    iframe.allowfullscreen = 'true';
     return iframe;
 }
 
@@ -55,24 +55,25 @@ function getJWPlayer(videoId, boxId) {
     const iframe = document.createElement('iframe');
     iframe.src = `https://player.controlhub.innerengineering.vualto.com/Player/Index/${videoId}?viewUnpublished=True&boxId=${boxId}`;
     iframe.title = 'JWP';
+    iframe.seamless = 'seamless';
+    iframe.scrolling = 'no';
     iframe.frameBorder = '0';
-    iframe.allow =
-        'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen;';
+    iframe.allow = 'encrypted-media; autoplay; fullscreen; clipboard-read; clipboard-write;';
     iframe.allowfullscreen = true;
     return iframe;
 }
 
 function getFacebookPlayer(videoId, boxId) {
-    const player = document.createElement('div');
-    player.className = 'fb-video';
-    player.setAttribute(
-        'data-href',
-        `https://www.facebook.com/facebook/videos/${videoId}&boxId=${boxId}`,
-    );
-    player.setAttribute('data-allowfullscreen', 'true');
-    return player;
+    const [channel, video] = videoId.split('&');
+    const iframe = document.createElement('iframe');
+    iframe.src = `https://www.facebook.com/video/embed?video_id=${videoId}$boxId=${boxId}`;
+    iframe.className = 'fb-video';
+    iframe.frameborder = '0';
+    iframe.allow = 'autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share';
+    iframe.allowfullscreen = 'true';
+    iframe.setAttribute('allowFullScreen', 'true');
+    return iframe;
 }
-
 
 function getInstagramPlayer(videoId, boxId) {
     const player = document.createElement('iframe');

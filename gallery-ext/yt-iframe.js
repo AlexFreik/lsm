@@ -26,9 +26,7 @@ function getVideoElem() {
     };
     setInterval(adjustSettings, 2000);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const boxId = urlParams.get('boxId');
-    console.assert(boxId);
+    const boxId = getBoxId();
 
     chrome.runtime.onMessage.addListener((msg) => {
         if (msg.type === 'SET_QUALITY') {

@@ -73,6 +73,13 @@ function draw(ctx, analyserL, analyserR) {
     }, 200);
 }
 
+function getBoxId() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const boxId = urlParams.get('boxId');
+    console.assert(boxId);
+    return boxId;
+}
+
 // ===== YT Auto Quality =====
 let sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

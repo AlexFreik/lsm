@@ -1,13 +1,47 @@
 console.log('Hi from JW Player Iframe');
 
+function querySelectorAllShadows(selector, el = document.body) {
+    // recurse on childShadows
+    const childShadows = Array.from(el.querySelectorAll('*'))
+        .map((el) => el.shadowRoot)
+        .filter(Boolean);
+
+    // console.log('[querySelectorAllShadows]', selector, el, `(${childShadows.length} shadowRoots)`);
+
+    const childResults = childShadows.map((child) => querySelectorAllShadows(selector, child));
+
+    // fuse all results into singular, flat array
+    const result = Array.from(el.querySelectorAll(selector));
+    return result.concat(childResults).flat();
+}
+
 function getVideoElem() {
-    const videoElem = document.getElementsByTagName('video')[0];
-    console.assert(videoElem != undefined);
+    const videoElem = querySelectorAllShadows('video')[0];
     return videoElem;
 }
 
 (async () => {
-    const videoElem = getVideoElem();
+    let videoElem = getVideoElem();
+    for (let i = 2; i <= 100 && videoElem === undefined; i++) {
+        console.log('Trying to find video element, attempt #' + i);
+        await sleep(1000);
+        videoElem = getVideoElem();
+    }
+
+    if (!videoElem) {
+        console.assert('Could not find video element...');
+    }
+
+    // Align video to the left
+    const wrapper = querySelectorAllShadows('.vch-player')[0];
+    console.assert(wrapper);
+    wrapper.style = 'margin: 0 -10px;';
+
+    // Unmute
+    const muteBtn = querySelectorAllShadows('.svelte-2yyyz0')[1];
+    console.assert(muteBtn);
+    muteBtn.click();
+
     const audioTools = getAudioTools(videoElem);
     muteClick(audioTools, true);
 

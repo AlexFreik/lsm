@@ -26,9 +26,9 @@ function createBox(name, type, videoId) {
     options[0].text = 'CU (Custom)';
     options[0].selected = type === 'CU' || type === '';
 
-        options[1].value = 'YN';
-        options[1].text = 'YN (YouTube with enhanced privacy)';
-        options[1].selected = type === 'YN';
+    options[1].value = 'YN';
+    options[1].text = 'YN (YouTube with enhanced privacy)';
+    options[1].selected = type === 'YN';
 
     options[2].value = 'ZO';
     options[2].text = 'ZO (Zoom)';
