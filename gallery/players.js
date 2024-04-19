@@ -44,8 +44,9 @@ function getYouTubePlayer(videoId, boxId, cookies) {
 
 function getZoomPlayer(videoId, boxId) {
     const iframe = document.createElement('iframe');
-    const [id, pwd] = videoId.split('&');
-    iframe.src = `../zoom-sdk?id=${id}&pwd=${pwd}&boxId=${boxId}`;
+    const [id, pwd, tk] = videoId.split('&');
+    console.assert(id);
+    iframe.src = `../zoom-sdk?id=${id}&tk=${tk ? tk : ''}&pwd=${pwd ? pwd : ''}&boxId=${boxId}`;
     iframe.title = 'Zoom Web SDK Client';
     iframe.allow = 'camera; microphone;';
     return iframe;

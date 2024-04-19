@@ -2,17 +2,18 @@ ZoomMtg.preLoadWasm();
 ZoomMtg.prepareWebSDK();
 
 const urlParams = new URLSearchParams(window.location.search);
-let idParam = urlParams.get('id');
-let pwdParam = urlParams.get('pwd');
+const idParam = urlParams.get('id');
+const pwdParam = urlParams.get('pwd');
+const tkParam = urlParams.get('tk');
 
-const authEndpoint = 'https://meetingsdk-auth-endpoint-2v0x.onrender.com';
-const sdkKey = 'JcmG6RF_TEGhA7WNsyJw';
+const authEndpoint = 'https://meetingsdk-auth-endpoint-1.onrender.com';
+const sdkKey = 'twP7kAS2T8iGhkMketu9Ng';
 const meetingNumber = idParam ? idParam : '';
 const passWord = pwdParam ? pwdParam : '';
 const role = 0;
-const userName = 'JavaScript';
-const userEmail = '';
-const registrantToken = '';
+const userName = 'LS Gallery';
+const userEmail = 'ls.gallery@ishafoundation.org';
+const registrantToken = tkParam ? tkParam : '';
 const zakToken = '';
 const leaveUrl = '../zoom-sdk';
 
@@ -47,7 +48,14 @@ function startMeeting(signature) {
         patchJsMedia: true,
         success: (success) => {
             console.log(success);
-            console.log('Joining meeting ' + meetingNumber + ' with a password ' + passWord);
+            console.log(
+                'Joining meeting ' +
+                    meetingNumber +
+                    ' with a password ' +
+                    passWord +
+                    'and a tk ' +
+                    registrantToken,
+            );
             ZoomMtg.join({
                 signature: signature,
                 sdkKey: sdkKey,
