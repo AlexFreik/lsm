@@ -6,8 +6,8 @@ const idParam = urlParams.get('id');
 const pwdParam = urlParams.get('pwd');
 const tkParam = urlParams.get('tk');
 
-const authEndpoint = 'https://meetingsdk-auth-endpoint-1.onrender.com';
-const sdkKey = 'twP7kAS2T8iGhkMketu9Ng';
+const authEndpoint = 'https://meetingsdk-auth-endpoint-2v0x.onrender.com';
+const sdkKey = 'JcmG6RF_TEGhA7WNsyJw';
 const meetingNumber = idParam ? idParam : '';
 const passWord = pwdParam ? pwdParam : '';
 const role = 0;
