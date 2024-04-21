@@ -45,7 +45,7 @@
                 "https://alexfreik.github.io/lsm/gallery/*",
                 "http://localhost:3000/gallery/*"
             ],
-            "js": ["content-script.js"]
+            "js": ["utils.js", "content-script.js"]
         }
     ],
     "web_accessible_resources": [

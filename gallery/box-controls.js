@@ -1,5 +1,5 @@
 import { getPlayer } from './players.js';
-import { updateUrlParameters } from './tools.js';
+import { updateUrlParams } from './tools.js';
 
 // ===== Box Data =====
 function getVideoName(box) {
@@ -51,7 +51,7 @@ function refreshVideo(btn) {
 function removeVideo(btn) {
     const box = btn.parentNode.parentNode;
     box.parentNode.removeChild(box);
-    updateUrlParameters();
+    updateUrlParams();
 }
 
 export { getVideoName, getVideoId, getType, muteVideo, expandVideo, refreshVideo, removeVideo };

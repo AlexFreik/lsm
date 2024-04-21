@@ -15,7 +15,7 @@
                 mute = false;
                 btn.innerHTML = 'Mute';
             }
-            chrome.runtime.sendMessage({ type: 'MUTE_CLICK', value: mute, boxId: boxId });
+            chrome.runtime.sendMessage({ type: m.muteClick, value: mute, boxId: boxId });
         };
     });
 
@@ -24,33 +24,31 @@
     console.assert(controlsElem);
     controlsElem.classList.remove('hidden');
 
-    const autoLiveElem = document.getElementById('auto-live');
+    const autoLiveElem = document.getElementById('autoLive');
     console.assert(autoLiveElem);
-    let autoLive = true;
     autoLiveElem.addEventListener('change', () => {
-        autoLive = !autoLive;
-        chrome.runtime.sendMessage({ type: 'AUTO_LIVE', value: autoLive });
+        chrome.runtime.sendMessage({ type: m.autoLive, value: autoLiveElem.checked });
     });
 
-    const setQualityElem = document.getElementById('set-quality');
+    const setQualityElem = document.getElementById('setQuality');
     console.assert(setQualityElem);
     setQualityElem.addEventListener('click', () => {
-        chrome.runtime.sendMessage({ type: 'SET_QUALITY' });
+        chrome.runtime.sendMessage({ type: m.setQuality });
     });
 
-    const zoomBlinkElem = document.getElementById('zoom-blink');
+    const zoomBlinkElem = document.getElementById('zoomBlink');
     console.assert(zoomBlinkElem);
     let zoomBlink = true;
     zoomBlinkElem.addEventListener('change', () => {
         zoomBlink = !zoomBlink;
-        chrome.runtime.sendMessage({ type: 'ZOOM_BLINK', value: zoomBlink });
+        chrome.runtime.sendMessage({ type: m.zoomBlink, value: zoomBlink });
     });
 
-    const zoomBeepElem = document.getElementById('zoom-beep');
+    const zoomBeepElem = document.getElementById('zoomBeep');
     console.assert(zoomBeepElem);
     let zoomBeep = false;
     zoomBeepElem.addEventListener('change', () => {
         zoomBeep = !zoomBeep;
-        chrome.runtime.sendMessage({ type: 'ZOOM_BEEP', value: zoomBeep });
+        chrome.runtime.sendMessage({ type: m.zoomBeep, value: zoomBeep });
     });
 })();

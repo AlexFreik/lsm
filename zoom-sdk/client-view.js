@@ -4,10 +4,13 @@ ZoomMtg.prepareWebSDK();
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 const pwdParam = urlParams.get('pwd');
-const tkParam = urlParams.get('tk');
+const authParam = urlParams.get('__zoomAuthEndpoint');
+const sdkParam = urlParams.get('__zoomSdkKey');
+console.assert(authParam, 'Error: Auth Endpoint is not defined');
+console.assert(sdkParam, 'Error: SDK Key is not defined');
 
-const authEndpoint = 'https://meetingsdk-auth-endpoint-2v0x.onrender.com';
-const sdkKey = 'JcmG6RF_TEGhA7WNsyJw';
+const authEndpoint = authParam;
+const sdkKey = sdkParam ? sdkParam : '';
 const meetingNumber = idParam ? idParam : '';
 const passWord = pwdParam ? pwdParam : '';
 const role = 0;

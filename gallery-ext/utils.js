@@ -1,24 +1,33 @@
 console.log('Hi from utils.js');
 
 // ===== Global Variables =====
-let autoLive = true;
-let zoomBlink = true;
-let zoomBeep = false;
+const m = {
+    audioLevels: 'AUDIO_LEVELS',
+    noAudioBlink: 'NO_AUDIO_BLINK',
+    muteClick: 'MUTE_CLICK',
+    setQuality: 'SET_QUALITY',
+    autoLive: 'AUTO_LIVE',
+    zoomBlink: 'ZOOM_BLINK',
+    zoomBeep: 'ZOOM_BEEP',
+};
+
 const BUFF_SIZE = 16;
 const SMOOTHING_TIME = 0.2;
 window.audioCtx = new AudioContext();
 
 // Create Audio Meter
-const canvas = document.createElement('canvas');
-canvas.id = 'audio-meter';
-canvas.width = 100;
-canvas.height = 100;
-canvas.style.position = 'fixed';
-canvas.style.top = '0';
-canvas.style.right = '0';
-canvas.style.width = '20px';
-canvas.style.height = '100vh';
-document.body.appendChild(canvas);
+function createAudioLevels() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'audio-meter';
+    canvas.width = 100;
+    canvas.height = 100;
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.right = '0';
+    canvas.style.width = '20px';
+    canvas.style.height = '100vh';
+    document.body.appendChild(canvas);
+}
 
 // function initAudioMeter(videoElem) {}
 
@@ -83,12 +92,34 @@ function getBoxId() {
 // ===== YT Auto Quality =====
 let sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
+function querySelectorAllShadows(selector, el = document.body) {
+    const childShadows = Array.from(el.querySelectorAll('*'))
+        .map((el) => el.shadowRoot)
+        .filter(Boolean);
+
+    const childResults = childShadows.map((child) => querySelectorAllShadows(selector, child));
+
+    const result = Array.from(el.querySelectorAll(selector));
+    return result.concat(childResults).flat();
+}
+
+function getVideoElem() {
+    return querySelectorAllShadows('video')[0];
+}
+
 async function waitForVideo() {
-    let video = document.querySelector('video');
-    while (!video) {
-        console.log('waiting for video');
-        await sleep(200);
-        video = document.querySelector('video');
+    let videoElem = getVideoElem();
+    for (let i = 2; i <= 100 && videoElem === undefined; i++) {
+        console.log('waiting for video, attempt #' + i);
+        await sleep(300);
+        videoElem = getVideoElem();
+    }
+
+    if (!videoElem) {
+        console.error('Could not find video element...');
+        return null;
+    } else {
+        return videoElem;
     }
 }
 

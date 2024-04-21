@@ -18,6 +18,9 @@ async function beep() {
 (async () => {
     console.log('Hi from Zoom Iframe');
 
+    let zoomBlink = true;
+    let zoomBeep = false;
+
     function startBlinking() {
         document.body.classList.add('blinking-border');
     }
@@ -50,12 +53,12 @@ async function beep() {
         }
     };
     setInterval(adjustSettings, 2000);
-})();
 
-chrome.runtime.onMessage.addListener((msg) => {
-    if (msg.type === 'ZOOM_BLINK') {
-        zoomBlink = msg.value;
-    } else if (msg.type === 'ZOOM_BEEP') {
-        zoomBeep = msg.value;
-    }
-});
+    chrome.runtime.onMessage.addListener((msg) => {
+        if (msg.type === 'ZOOM_BLINK') {
+            zoomBlink = msg.value;
+        } else if (msg.type === 'ZOOM_BEEP') {
+            zoomBeep = msg.value;
+        }
+    });
+})();

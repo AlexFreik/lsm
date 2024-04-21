@@ -1,36 +1,9 @@
-console.log('Hi from JW Player Iframe');
-
-function querySelectorAllShadows(selector, el = document.body) {
-    // recurse on childShadows
-    const childShadows = Array.from(el.querySelectorAll('*'))
-        .map((el) => el.shadowRoot)
-        .filter(Boolean);
-
-    // console.log('[querySelectorAllShadows]', selector, el, `(${childShadows.length} shadowRoots)`);
-
-    const childResults = childShadows.map((child) => querySelectorAllShadows(selector, child));
-
-    // fuse all results into singular, flat array
-    const result = Array.from(el.querySelectorAll(selector));
-    return result.concat(childResults).flat();
-}
-
-function getVideoElem() {
-    const videoElem = querySelectorAllShadows('video')[0];
-    return videoElem;
-}
-
 (async () => {
-    let videoElem = getVideoElem();
-    for (let i = 2; i <= 100 && videoElem === undefined; i++) {
-        console.log('Trying to find video element, attempt #' + i);
-        await sleep(1000);
-        videoElem = getVideoElem();
-    }
+    console.log('Hi from JW Player Iframe');
 
-    if (!videoElem) {
-        console.assert('Could not find video element...');
-    }
+    const videoElem = await waitForVideo();
+    console.assert(videoElem);
+    createAudioLevels();
 
     // Align video to the left
     const wrapper = querySelectorAllShadows('.vch-player')[0];

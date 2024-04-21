@@ -1,13 +1,9 @@
-console.log('Hi from YouTube Iframe');
-
-function getVideoElem() {
-    const videoElem = document.getElementsByClassName('video-stream')[0];
-    console.assert(videoElem != undefined);
-    return videoElem;
-}
-
 (async () => {
-    const videoElem = getVideoElem();
+    console.log('Hi from YouTube Iframe');
+
+    const videoElem = await waitForVideo();
+    console.assert(videoElem);
+    createAudioLevels();
     const audioTools = getAudioTools(videoElem);
     muteClick(audioTools, true);
 
@@ -28,12 +24,13 @@ function getVideoElem() {
 
     const boxId = getBoxId();
 
+    let autoLive = true;
     chrome.runtime.onMessage.addListener((msg) => {
-        if (msg.type === 'SET_QUALITY') {
+        if (msg.type === m.setQuality) {
             setQualityYT('min');
-        } else if (msg.type === 'AUTO_LIVE') {
+        } else if (msg.type === m.autoLive) {
             autoLive = msg.value;
-        } else if (msg.type === 'MUTE_CLICK' && boxId === msg.boxId) {
+        } else if (msg.type === m.muteClick && boxId === msg.boxId) {
             muteClick(audioTools, msg.value);
         }
     });
