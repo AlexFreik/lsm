@@ -32,13 +32,13 @@ function initConfig() {
     });
 }
 
-function updateUrlWhenConfigChanges() {
+function addListenersWhenConfigChanges() {
     Array.from(document.getElementsByClassName('url-param')).forEach((input) =>
         input.addEventListener('change', updateUrlParams),
     );
 }
 
 window.addBox = addBox;
-initBoxes();
-initConfig();
-updateUrlWhenConfigChanges();
+initConfig(); // take all config params from URL and apply to config elements
+initBoxes(); // create all the video player boxes
+addListenersWhenConfigChanges();

@@ -18,8 +18,13 @@ async function beep() {
 (async () => {
     console.log('Hi from Zoom Iframe');
 
-    let zoomBlink = true;
-    let zoomBeep = false;
+    const blinkParam = getUrlParam('blink');
+    console.assert(['0', '1'].includes(blinkParam));
+    let zoomBlink = blinkParam === '1';
+
+    const beepParam = getUrlParam('beep');
+    console.assert(['0', '1'].includes(beepParam));
+    let zoomBeep = beepParam === '1';
 
     function startBlinking() {
         document.body.classList.add('blinking-border');

@@ -4,8 +4,9 @@ ZoomMtg.prepareWebSDK();
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 const pwdParam = urlParams.get('pwd');
-const authParam = urlParams.get('__zoomAuthEndpoint');
-const sdkParam = urlParams.get('__zoomSdkKey');
+const tkParam = urlParams.get('tk');
+const authParam = urlParams.get('auth');
+const sdkParam = urlParams.get('sdk');
 console.assert(authParam, 'Error: Auth Endpoint is not defined');
 console.assert(sdkParam, 'Error: SDK Key is not defined');
 

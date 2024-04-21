@@ -29,7 +29,10 @@ function createAudioLevels() {
     document.body.appendChild(canvas);
 }
 
-// function initAudioMeter(videoElem) {}
+function getUrlParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 
 function getAudioTools(videoElem) {
     const video = audioCtx.createMediaElementSource(videoElem);

@@ -11,6 +11,13 @@
     window.ctx = document.getElementById('audio-meter').getContext('2d');
     draw(ctx, audioTools.analyserL, audioTools.analyserR);
 
+    const autoLiveParam = getUrlParam('autoLive');
+    console.assert(
+        ['0', '1'].includes(autoLiveParam),
+        'autoLive must be 0 or 1, but it is: ' + autoLiveParam,
+    );
+    let autoLive = autoLiveParam === '1';
+
     const adjustSettings = () => {
         // move video lo the left so there is a space for VU meter
         videoElem.style['left'] = '0';
@@ -24,11 +31,11 @@
 
     const boxId = getBoxId();
 
-    let autoLive = true;
     chrome.runtime.onMessage.addListener((msg) => {
         if (msg.type === m.setQuality) {
             setQualityYT('min');
         } else if (msg.type === m.autoLive) {
+            console.log('New Auto Live: ' + msg.value);
             autoLive = msg.value;
         } else if (msg.type === m.muteClick && boxId === msg.boxId) {
             muteClick(audioTools, msg.value);

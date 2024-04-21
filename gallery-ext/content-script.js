@@ -26,9 +26,9 @@
 
     const autoLiveElem = document.getElementById('autoLive');
     console.assert(autoLiveElem);
-    autoLiveElem.addEventListener('change', () => {
-        chrome.runtime.sendMessage({ type: m.autoLive, value: autoLiveElem.checked });
-    });
+    autoLiveElem.addEventListener('change', () =>
+        chrome.runtime.sendMessage({ type: m.autoLive, value: autoLiveElem.checked }),
+    );
 
     const setQualityElem = document.getElementById('setQuality');
     console.assert(setQualityElem);
@@ -38,17 +38,13 @@
 
     const zoomBlinkElem = document.getElementById('zoomBlink');
     console.assert(zoomBlinkElem);
-    let zoomBlink = true;
-    zoomBlinkElem.addEventListener('change', () => {
-        zoomBlink = !zoomBlink;
-        chrome.runtime.sendMessage({ type: m.zoomBlink, value: zoomBlink });
-    });
+    zoomBlinkElem.addEventListener('change', () =>
+        chrome.runtime.sendMessage({ type: m.zoomBlink, value: zoomBlinkElem.checked }),
+    );
 
     const zoomBeepElem = document.getElementById('zoomBeep');
     console.assert(zoomBeepElem);
-    let zoomBeep = false;
-    zoomBeepElem.addEventListener('change', () => {
-        zoomBeep = !zoomBeep;
-        chrome.runtime.sendMessage({ type: m.zoomBeep, value: zoomBeep });
-    });
+    zoomBeepElem.addEventListener('change', () =>
+        chrome.runtime.sendMessage({ type: m.zoomBeep, value: zoomBeepElem.checked }),
+    );
 })();
