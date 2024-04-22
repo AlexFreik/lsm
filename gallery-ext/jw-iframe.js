@@ -3,7 +3,13 @@
 
     const videoElem = await waitForVideo();
     console.assert(videoElem);
+    const audioTools = getAudioTools(videoElem);
+    muteClick(audioTools, true);
+
+    // Draw the VU meter
     createAudioLevels();
+    window.ctx = document.getElementById('audio-meter').getContext('2d');
+    draw(ctx, audioTools.analyserL, audioTools.analyserR);
 
     // Align video to the left
     const wrapper = querySelectorAllShadows('.vch-player')[0];
@@ -15,21 +21,14 @@
     console.assert(muteBtn);
     muteBtn.click();
 
-    const audioTools = getAudioTools(videoElem);
-    muteClick(audioTools, true);
-
-    // Draw the VU meter
-    window.ctx = document.getElementById('audio-meter').getContext('2d');
-    draw(ctx, audioTools.analyserL, audioTools.analyserR);
-
     const urlParams = new URLSearchParams(window.location.search);
     const boxId = urlParams.get('boxId');
     console.assert(boxId);
 
     chrome.runtime.onMessage.addListener((msg) => {
-        if (msg.type === 'SET_QUALITY') {
+        if (msg.type === m.setQuality) {
             // TODO
-        } else if (msg.type === 'MUTE_CLICK' && boxId === msg.boxId) {
+        } else if (msg.type === m.muteClick && boxId === msg.boxId) {
             muteClick(audioTools, msg.value);
         }
     });

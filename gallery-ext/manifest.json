@@ -17,17 +17,17 @@
     "content_scripts": [
         {
             "matches": ["https://*.youtube.com/embed/*", "https://*.youtube-nocookie.com/embed/*"],
-            "js": ["utils.js", "yt-iframe.js"],
+            "js": ["messages.js", "utils.js", "yt-iframe.js"],
             "all_frames": true
         },
         {
             "matches": ["https://player.controlhub.innerengineering.vualto.com/Player/Index/*"],
-            "js": ["utils.js", "jw-iframe.js"],
+            "js": ["messages.js", "utils.js", "jw-iframe.js"],
             "all_frames": true
         },
         {
             "matches": ["https://*.facebook.com/video/embed/*"],
-            "js": ["utils.js", "fb-iframe.js"],
+            "js": ["messages.js", "utils.js", "fb-iframe.js"],
             "css": ["fb-styles.css"],
             "all_frames": true
         },
@@ -36,7 +36,7 @@
                 "https://alexfreik.github.io/lsm/zoom-sdk/*",
                 "http://localhost:3000/zoom-sdk/*"
             ],
-            "js": ["utils.js", "zoom-iframe.js"],
+            "js": ["messages.js", "utils.js", "zoom-iframe.js"],
             "css": ["zoom-styles.css"],
             "all_frames": true
         },
@@ -45,7 +45,7 @@
                 "https://alexfreik.github.io/lsm/gallery/*",
                 "http://localhost:3000/gallery/*"
             ],
-            "js": ["utils.js", "content-script.js"]
+            "js": ["messages.js", "content-script.js"]
         }
     ],
     "web_accessible_resources": [

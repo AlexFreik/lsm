@@ -1,16 +1,6 @@
 console.log('Hi from utils.js');
 
 // ===== Global Variables =====
-const m = {
-    audioLevels: 'AUDIO_LEVELS',
-    noAudioBlink: 'NO_AUDIO_BLINK',
-    muteClick: 'MUTE_CLICK',
-    setQuality: 'SET_QUALITY',
-    autoLive: 'AUTO_LIVE',
-    zoomBlink: 'ZOOM_BLINK',
-    zoomBeep: 'ZOOM_BEEP',
-};
-
 const BUFF_SIZE = 16;
 const SMOOTHING_TIME = 0.2;
 window.audioCtx = new AudioContext();
@@ -66,7 +56,7 @@ function muteClick(audioTools, mute) {
     }
 }
 
-function draw(ctx, analyserL, analyserR) {
+async function draw(ctx, analyserL, analyserR) {
     const arrayL = new Float32Array(BUFF_SIZE);
     const arrayR = new Float32Array(BUFF_SIZE);
     analyserL.getFloatFrequencyData(arrayL);
@@ -80,9 +70,12 @@ function draw(ctx, analyserL, analyserR) {
     ctx.fillRect(0, 100 - maxL, 50, maxL);
     ctx.fillRect(50, 100 - maxR, 100, maxR);
 
-    setTimeout(() => {
-        requestAnimationFrame(() => draw(ctx, analyserL, analyserR));
-    }, 200);
+    while (!audioLevels) {
+        await sleep(2000);
+    }
+
+    await sleep(200);
+    requestAnimationFrame(() => draw(ctx, analyserL, analyserR));
 }
 
 function getBoxId() {
@@ -126,38 +119,6 @@ async function waitForVideo() {
     }
 }
 
-/**
- * Sets the quality
- * options are: "max", "min" and the options available in the menu ("720p", "480p", etc.)
- */
-async function setQualityYT(quality) {
-    await waitForVideo();
-    await sleep(1000);
-
-    let settingsButton = document.getElementsByClassName('ytp-settings-button')[0];
-    settingsButton.click();
-    await sleep(500);
-
-    let qualityMenu = document.getElementsByClassName('ytp-panel-menu')[0].lastChild;
-    qualityMenu.click();
-    await sleep(500);
-
-    let qualityOptions = [...document.getElementsByClassName('ytp-menuitem')];
-    let selection;
-    if (quality === 'max') selection = qualityOptions[0];
-    if (quality === 'min') selection = qualityOptions[qualityOptions.length - 2];
-    else selection = qualityOptions.filter((el) => el.innerText == quality)[0];
-
-    if (!selection) {
-        let qualityTexts = qualityOptions.map((el) => el.innerText).join('\n');
-        console.log('"' + quality + '" not found. Options are: \n\nmax\nmin\n' + qualityTexts);
-        settingsButton.click(); // click menu button to close
-        return;
-    }
-
-    selection.click();
-}
-
 function getMax(array) {
     let max = -60;
     for (let i = 0; i < array.length; i++) {
@@ -165,3 +126,19 @@ function getMax(array) {
     }
     return ((max + 60) * 5) / 3;
 }
+
+const audioLevlesParam = getUrlParam('audioLevels');
+console.assert(['0', '1'].includes(audioLevlesParam));
+let audioLevels = audioLevlesParam === '1';
+
+const noAudioBlinkParam = getUrlParam('noAudioBlink');
+console.assert(['0', '1'].includes(noAudioBlinkParam));
+let noAudioBlink = noAudioBlinkParam === '1';
+
+chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === m.audioLevels) {
+        audioLevels = msg.value;
+    } else if (msg.type === m.noAudioBlink) {
+        noAudioBlink = msg.value;
+    }
+});

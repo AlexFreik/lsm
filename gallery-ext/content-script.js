@@ -24,6 +24,18 @@
     console.assert(controlsElem);
     controlsElem.classList.remove('hidden');
 
+    const audioLevelsElem = document.getElementById('audioLevels');
+    console.assert(audioLevelsElem);
+    audioLevelsElem.addEventListener('change', () =>
+        chrome.runtime.sendMessage({ type: m.audioLevels, value: audioLevelsElem.checked }),
+    );
+
+    const noAudioBlinkElem = document.getElementById('noAudioBlink');
+    console.assert(noAudioBlinkElem);
+    noAudioBlinkElem.addEventListener('change', () =>
+        chrome.runtime.sendMessage({ type: m.noAudioBlink, value: noAudioBlinkElem.checked }),
+    );
+
     const autoLiveElem = document.getElementById('autoLive');
     console.assert(autoLiveElem);
     autoLiveElem.addEventListener('change', () =>
