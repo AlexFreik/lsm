@@ -35,26 +35,60 @@
     <div class="hidden w-screen px-5" id="controls">
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" id="auto-live" class="toggle toggle-secondary m-0" checked />
+          <input type="checkbox" id="audioLevels" class="url-param toggle toggle-secondary m-0" checked />
+          <span class="text-md ms-3">Draw audio levels</span>
+        </label>
+      </div>
+      <div class="mb-4">
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input type="checkbox" id="noAudioBlink" class="url-param toggle toggle-secondary m-0" disabled />
+          <span class="text-md ms-3">Blink if no audio for over 5 seconds</span>
+        </label>
+      </div>
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input type="checkbox" id="autoLive" class="url-param toggle toggle-secondary m-0" checked />
           <span class="text-md ms-3">YouTube: automatically switch to LIVE</span>
         </label>
       </div>
       <div class="mb-4">
         <label class="relative inline-flex cursor-pointer items-center">
-          <button type="button" id="set-quality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
+          <button type="button" id="setQuality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
           <span class="text-md ms-3">YouTube: Select the lowest quality (resolution) for all videos</span>
         </label>
       </div>
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" id="zoom-blink" class="toggle toggle-secondary m-0" checked />
+          <input type="checkbox" id="zoomBlink" class="url-param toggle toggle-secondary m-0" checked />
           <span class="text-md ms-3">Zoom: blink if the current speaker is muted</span>
         </label>
       </div>
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
-          <input type="checkbox" id="zoom-beep" class="toggle toggle-secondary m-0" />
+          <input type="checkbox" id="zoomBeep" class="url-param toggle toggle-secondary m-0" />
           <span class="text-md ms-3">Zoom: beep if the current speaker is muted</span>
+        </label>
+      </div>
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input
+            id="zoomAuthEndpoint"
+            type="text"
+            placeholder="Type here"
+            class="url-param input input-bordered input-xs w-80"
+            value="https://meetingsdk-auth-endpoint-1.onrender.com" />
+          <span class="text-md ms-3">Zoom: auth endpoint url</span>
+        </label>
+      </div>
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input
+            id="zoomSdkKey"
+            type="text"
+            placeholder="Type here"
+            class="url-param input input-bordered input-xs w-80"
+            value="9hEIb3UMRrO9pR9VywLrqQ" />
+          <span class="text-md ms-3">Zoom: Web SDK key</span>
         </label>
       </div>
     </div>
@@ -90,13 +124,24 @@
         <li><code>YT, YN (YouTube)</code> Paste video ID. For youtube.com/watch?v=jfKfPfyJRdk the ID will be jfKfPfyJRdk</li>
         <li><code>FB (Facebook)</code> Paste video ID</li>
         <li><code>IG (Instagram)</code> Not supported yet</li>
-        <li><code>ZO (ZOom)</code> Paste the meeting number and password separated by "&". Example: 1234567890&abcd1234</li>
+        <li>
+          <code>ZO (Zoom)</code> Paste the meeting number, password (optional), and registration token separated by <code>&</code>.
+          <br />
+          <b>Example:</b> 1234567890 or 1234567890<b>&</b>abcde or 1234567890<b>&</b>abcde<b>&</b>ARi34I94...AAAAA
+          <br />
+          Registration token is required only for meetings with registration. To get the token, you can register for a meeting, after which it will
+          open a similar URL:
+          <br />
+          "https://domain.zoom.us/w/1234567890?tk=<b>ARi34I94C_hL...AAAAAAA</b>&pwd=WHE...WJV#success"
+          <br />
+          and token will be <code>ARi34I94C_hL...AAAAAAA</code> (the part between <code>tk=</code> and <code>&pwd</code>).
+        </li>
       </ul>
 
       <h3>Zoom</h3>
       <p>
-        When you click the "Join Meeting" button for the first time in a while it may take 50s or more because the server is "cold". After this server
-        is "warm" joining should happen almost immediately.
+        When you click the "Join Meeting" button for the first time in a while it may take 50s or more because the server is "cold". After this
+        joining should happen almost immediately.
       </p>
 
       <hr />

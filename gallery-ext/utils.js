@@ -1,26 +1,28 @@
 console.log('Hi from utils.js');
 
 // ===== Global Variables =====
-let autoLive = true;
-let zoomBlink = true;
-let zoomBeep = false;
 const BUFF_SIZE = 16;
 const SMOOTHING_TIME = 0.2;
 window.audioCtx = new AudioContext();
 
 // Create Audio Meter
-const canvas = document.createElement('canvas');
-canvas.id = 'audio-meter';
-canvas.width = 100;
-canvas.height = 100;
-canvas.style.position = 'fixed';
-canvas.style.top = '0';
-canvas.style.right = '0';
-canvas.style.width = '20px';
-canvas.style.height = '100vh';
-document.body.appendChild(canvas);
+function createAudioLevels() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'audio-meter';
+    canvas.width = 100;
+    canvas.height = 100;
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.right = '0';
+    canvas.style.width = '20px';
+    canvas.style.height = '100vh';
+    document.body.appendChild(canvas);
+}
 
-// function initAudioMeter(videoElem) {}
+function getUrlParam(name) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
 
 function getAudioTools(videoElem) {
     const video = audioCtx.createMediaElementSource(videoElem);
@@ -54,7 +56,7 @@ function muteClick(audioTools, mute) {
     }
 }
 
-function draw(ctx, analyserL, analyserR) {
+async function draw(ctx, analyserL, analyserR) {
     const arrayL = new Float32Array(BUFF_SIZE);
     const arrayR = new Float32Array(BUFF_SIZE);
     analyserL.getFloatFrequencyData(arrayL);
@@ -68,9 +70,12 @@ function draw(ctx, analyserL, analyserR) {
     ctx.fillRect(0, 100 - maxL, 50, maxL);
     ctx.fillRect(50, 100 - maxR, 100, maxR);
 
-    setTimeout(() => {
-        requestAnimationFrame(() => draw(ctx, analyserL, analyserR));
-    }, 200);
+    while (!audioLevels) {
+        await sleep(2000);
+    }
+
+    await sleep(200);
+    requestAnimationFrame(() => draw(ctx, analyserL, analyserR));
 }
 
 function getBoxId() {
@@ -83,45 +88,35 @@ function getBoxId() {
 // ===== YT Auto Quality =====
 let sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-async function waitForVideo() {
-    let video = document.querySelector('video');
-    while (!video) {
-        console.log('waiting for video');
-        await sleep(200);
-        video = document.querySelector('video');
-    }
+function querySelectorAllShadows(selector, el = document.body) {
+    const childShadows = Array.from(el.querySelectorAll('*'))
+        .map((el) => el.shadowRoot)
+        .filter(Boolean);
+
+    const childResults = childShadows.map((child) => querySelectorAllShadows(selector, child));
+
+    const result = Array.from(el.querySelectorAll(selector));
+    return result.concat(childResults).flat();
 }
 
-/**
- * Sets the quality
- * options are: "max", "min" and the options available in the menu ("720p", "480p", etc.)
- */
-async function setQualityYT(quality) {
-    await waitForVideo();
-    await sleep(1000);
+function getVideoElem() {
+    return querySelectorAllShadows('video')[0];
+}
 
-    let settingsButton = document.getElementsByClassName('ytp-settings-button')[0];
-    settingsButton.click();
-    await sleep(500);
-
-    let qualityMenu = document.getElementsByClassName('ytp-panel-menu')[0].lastChild;
-    qualityMenu.click();
-    await sleep(500);
-
-    let qualityOptions = [...document.getElementsByClassName('ytp-menuitem')];
-    let selection;
-    if (quality === 'max') selection = qualityOptions[0];
-    if (quality === 'min') selection = qualityOptions[qualityOptions.length - 2];
-    else selection = qualityOptions.filter((el) => el.innerText == quality)[0];
-
-    if (!selection) {
-        let qualityTexts = qualityOptions.map((el) => el.innerText).join('\n');
-        console.log('"' + quality + '" not found. Options are: \n\nmax\nmin\n' + qualityTexts);
-        settingsButton.click(); // click menu button to close
-        return;
+async function waitForVideo() {
+    let videoElem = getVideoElem();
+    for (let i = 2; i <= 100 && videoElem === undefined; i++) {
+        console.log('waiting for video, attempt #' + i);
+        await sleep(300);
+        videoElem = getVideoElem();
     }
 
-    selection.click();
+    if (!videoElem) {
+        console.error('Could not find video element...');
+        return null;
+    } else {
+        return videoElem;
+    }
 }
 
 function getMax(array) {
@@ -131,3 +126,19 @@ function getMax(array) {
     }
     return ((max + 60) * 5) / 3;
 }
+
+const audioLevlesParam = getUrlParam('audioLevels');
+console.assert(['0', '1'].includes(audioLevlesParam));
+let audioLevels = audioLevlesParam === '1';
+
+const noAudioBlinkParam = getUrlParam('noAudioBlink');
+console.assert(['0', '1'].includes(noAudioBlinkParam));
+let noAudioBlink = noAudioBlinkParam === '1';
+
+chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.type === m.audioLevels) {
+        audioLevels = msg.value;
+    } else if (msg.type === m.noAudioBlink) {
+        noAudioBlink = msg.value;
+    }
+});

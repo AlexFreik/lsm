@@ -7,9 +7,3 @@ const m = {
     zoomBlink: 'ZOOM_BLINK',
     zoomBeep: 'ZOOM_BEEP',
 };
-
-chrome.runtime.onMessage.addListener((msg, sender) => {
-    if (Object.values(m).includes(msg.type)) {
-        chrome.tabs.sendMessage(sender.tab.id, msg);
-    }
-});

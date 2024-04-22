@@ -1,6 +1,6 @@
 import { muteVideo, expandVideo, refreshVideo, removeVideo } from './box-controls.js';
 import { getPlayer } from './players.js';
-import { updateUrlParameters, capitalizeFirst, generateUUID } from './tools.js';
+import { updateUrlParams, capitalizeFirst, generateUUID } from './tools.js';
 
 function createBox(name, type, videoId) {
     const box = document.createElement('div');
@@ -8,14 +8,14 @@ function createBox(name, type, videoId) {
 
     const nameInput = document.createElement('input');
     nameInput.type = 'text';
-    nameInput.onblur = () => updateUrlParameters();
+    nameInput.onblur = () => updateUrlParams();
     nameInput.placeholder = 'Name';
     nameInput.value = name;
     nameInput.className = 'video-name input input-bordered input-xs w-20 max-w-xs';
     box.appendChild(nameInput);
 
     const typeInput = document.createElement('select');
-    typeInput.onblur = () => updateUrlParameters();
+    typeInput.onblur = () => updateUrlParams();
     typeInput.className = 'video-type select select-xs select-bordered w-16 max-w-xs ';
     const options = Array(7)
         .fill(null)
@@ -54,7 +54,7 @@ function createBox(name, type, videoId) {
 
     const videoIdInput = document.createElement('input');
     videoIdInput.type = 'text';
-    videoIdInput.onblur = () => updateUrlParameters();
+    videoIdInput.onblur = () => updateUrlParams();
     videoIdInput.placeholder = 'Video ID';
     videoIdInput.value = videoId;
     videoIdInput.className = 'video-id input input-bordered input-xs w-24 max-w-xs';
