@@ -1,8 +1,11 @@
 import { getBoxUrlParams, getConfigUrlParams, updateUrlParams } from './tools.js';
-import { createBox } from './box.js';
+import { createBox, createSwapBtn } from './box.js';
 
 function addBox(name = '', type = '', videoId = '') {
     const gallery = document.getElementById('gallery');
+    if (gallery.firstElementChild.classList.contains('box')) {
+        gallery.insertBefore(createSwapBtn(name, type, videoId), gallery.lastElementChild);
+    }
     gallery.insertBefore(createBox(name, type, videoId), gallery.lastElementChild);
 }
 
@@ -32,13 +35,14 @@ function initConfig() {
     });
 }
 
-function addListenersWhenConfigChanges() {
-    Array.from(document.getElementsByClassName('url-param')).forEach((input) =>
-        input.addEventListener('change', updateUrlParams),
-    );
-}
-
-window.addBox = addBox;
 initConfig(); // take all config params from URL and apply to config elements
 initBoxes(); // create all the video player boxes
-addListenersWhenConfigChanges();
+
+(() => {
+    document
+        .querySelectorAll('.url-param')
+        .forEach((input) => input.addEventListener('change', updateUrlParams));
+
+    const addBtn = document.getElementById('add-box');
+    addBtn.addEventListener('click', () => addBox());
+})();

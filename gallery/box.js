@@ -1,6 +1,20 @@
-import { muteVideo, expandVideo, refreshVideo, removeVideo } from './box-controls.js';
+import { muteVideo, expandVideo, refreshVideo, removeVideo, swapBoxes } from './box-controls.js';
 import { getPlayer } from './players.js';
 import { updateUrlParams, capitalizeFirst, generateUUID } from './tools.js';
+
+function createSwapBtn() {
+    const swapBtn = document.createElement('button');
+    swapBtn.className = 'swap-btn';
+    swapBtn.onclick = (e) => swapBoxes(e);
+
+    const img = document.createElement('img');
+    img.className = 'h-6 w-6';
+    img.src = './swap.svg';
+    img.alt = 'Swap Icon';
+    swapBtn.appendChild(img);
+
+    return swapBtn;
+}
 
 function createBox(name, type, videoId) {
     const box = document.createElement('div');
@@ -86,4 +100,4 @@ function createTopBtn(name, onclick) {
     return btn;
 }
 
-export { createBox };
+export { createBox, createSwapBtn };

@@ -50,8 +50,40 @@ function refreshVideo(btn) {
 
 function removeVideo(btn) {
     const box = btn.parentNode.parentNode;
+    const prev = box.previousElementSibling;
+    const next = box.nextElementSibling;
+
+    if (prev) {
+        box.parentNode.removeChild(prev);
+    } else if (next) {
+        box.parentNode.removeChild(next);
+    }
     box.parentNode.removeChild(box);
+
     updateUrlParams();
 }
 
-export { getVideoName, getVideoId, getType, muteVideo, expandVideo, refreshVideo, removeVideo };
+function swapBoxes(e) {
+    const swapBtn = e.target.parentNode;
+    const prev = swapBtn.previousElementSibling;
+    const next = swapBtn.nextElementSibling;
+    console.assert(prev.classList.contains('box'));
+    console.assert(next.classList.contains('box'));
+
+    const parentElem = swapBtn.parentNode;
+    parentElem.insertBefore(prev, next);
+    parentElem.insertBefore(next, swapBtn);
+
+    updateUrlParams();
+}
+
+export {
+    getVideoName,
+    getVideoId,
+    getType,
+    muteVideo,
+    expandVideo,
+    refreshVideo,
+    removeVideo,
+    swapBoxes,
+};
