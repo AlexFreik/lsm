@@ -55,7 +55,7 @@ function removeVideo(btn) {
 
     if (prev) {
         box.parentNode.removeChild(prev);
-    } else if (next) {
+    } else if (next?.classList.contains('swap-btn')) {
         box.parentNode.removeChild(next);
     }
     box.parentNode.removeChild(box);
@@ -71,8 +71,8 @@ function swapBoxes(e) {
     console.assert(next.classList.contains('box'));
 
     const parentElem = swapBtn.parentNode;
-    parentElem.insertBefore(prev, next);
-    parentElem.insertBefore(next, swapBtn);
+    parentElem.insertBefore(next, prev);
+    parentElem.insertBefore(swapBtn, prev);
 
     updateUrlParams();
 }
