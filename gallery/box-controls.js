@@ -64,6 +64,7 @@ function removeVideo(btn) {
 }
 
 function swapBoxes(e) {
+    if (e.target.tagName === 'BUTTON') return;
     const swapBtn = e.target.parentNode;
     const prev = swapBtn.previousElementSibling;
     const next = swapBtn.nextElementSibling;

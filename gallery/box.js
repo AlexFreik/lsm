@@ -4,11 +4,11 @@ import { updateUrlParams, capitalizeFirst, generateUUID } from './tools.js';
 
 function createSwapBtn() {
     const swapBtn = document.createElement('button');
-    swapBtn.className = 'swap-btn';
+    swapBtn.className = 'swap-btn cursor-default';
     swapBtn.onclick = (e) => swapBoxes(e);
 
     const img = document.createElement('img');
-    img.className = 'h-6 w-6';
+    img.className = 'h-4 w-4 cursor-pointer';
     img.src = './swap.svg';
     img.alt = 'Swap Icon';
     swapBtn.appendChild(img);
