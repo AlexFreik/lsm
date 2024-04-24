@@ -24,6 +24,15 @@
     console.assert(controlsElem);
     controlsElem.classList.remove('hidden');
 
+    const warningElem = document.getElementById('outdated-extension-warning');
+    console.assert(warningElem);
+    const extVersion = chrome.runtime.getManifest().version;
+    document.getElementById('ext-version').innerHTML = extVersion;
+    const galVersion = document.getElementById('gal-version').innerHTML;
+    if (extVersion !== galVersion) {
+        warningElem.classList.remove('hidden');
+    }
+
     const audioLevelsElem = document.getElementById('audioLevels');
     console.assert(audioLevelsElem);
     audioLevelsElem.addEventListener('change', () =>
