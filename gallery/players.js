@@ -11,8 +11,10 @@ function getPlayer(type, videoId, boxId) {
         return getCustomPlayer(videoId);
     } else if (type === 'YN') {
         return getYouTubePlayer(videoId, urlParams, false);
-    } else if (type === 'ZO') {
-        return getZoomPlayer(videoId, urlParams);
+    } else if (type === 'ZH') {
+        return getZoomPlayer(videoId, urlParams, true);
+    } else if (type === 'ZP') {
+        return getZoomPlayer(videoId, urlParams, false);
     } else if (type === 'JW') {
         return getJWPlayer(videoId, urlParams);
     } else if (type === 'FB') {
@@ -50,12 +52,13 @@ function getYouTubePlayer(videoId, urlParams, cookies) {
     return iframe;
 }
 
-function getZoomPlayer(videoId, urlParams) {
+function getZoomPlayer(videoId, urlParams, isHost) {
     const iframe = document.createElement('iframe');
+    const role = isHost ? '1' : '0';
     const [id, pwd, tk] = videoId.split('&');
     console.assert(id);
 
-    iframe.src = `../zoom-sdk?id=${id}&tk=${tk ? tk : ''}&pwd=${pwd ? pwd : ''}&${urlParams}`;
+    iframe.src = `../zoom-sdk?id=${id}&tk=${tk ? tk : ''}&pwd=${pwd ? pwd : ''}&role={role}&${urlParams}`;
     iframe.title = 'Zoom Web SDK Client';
     iframe.allow = 'camera; microphone;';
     return iframe;

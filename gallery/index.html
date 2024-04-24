@@ -81,10 +81,11 @@
           <input
             id="zoomAuthEndpoint"
             type="text"
+            name="zoom-auth-endpoint"
             placeholder="Type here"
             class="url-param input input-bordered input-xs w-80"
-            value="https://meetingsdk-auth-endpoint-1.onrender.com" />
-          <span class="text-md ms-3">Zoom: auth endpoint url</span>
+            value="" />
+          <span class="text-md ms-3">Zoom: auth endpoint url. Example: https://your-url.com</span>
         </label>
       </div>
       <div>
@@ -92,10 +93,11 @@
           <input
             id="zoomSdkKey"
             type="text"
+            name="zoom-sdk-key"
             placeholder="Type here"
             class="url-param input input-bordered input-xs w-80"
-            value="9hEIb3UMRrO9pR9VywLrqQ" />
-          <span class="text-md ms-3">Zoom: Web SDK key</span>
+            value="" />
+          <span class="text-md ms-3">Zoom: Web SDK key. Example: S0M3w3IrdC0d3</span>
         </label>
       </div>
     </div>
@@ -128,7 +130,12 @@
           <code>CU (Custom)</code> Paste any web link. Example: https://alexfreik.github.io/lsm/gallery/isha-logo.png<br />
           <b>Note</b>: most links won't work because of CORS restrictions in the browser.
         </li>
-        <li><code>YT, YN (YouTube)</code> Paste video ID. For youtube.com/watch?v=jfKfPfyJRdk the ID will be jfKfPfyJRdk</li>
+        <li>
+          <code>YT, YN (YouTube)</code> Paste video ID. For youtube.com/watch?v=jfKfPfyJRdk the ID will be jfKfPfyJRdk
+          <br />
+          <b>Note</b>: YN is privacy enhanced youtube, you will join in "incognito" mode. If the video is private you will have to use YT, it will see
+          youtube account you've logged with and it will allow.
+        </li>
         <li><code>FB (Facebook)</code> Paste video ID</li>
         <li><code>IG (Instagram)</code> Not supported yet</li>
         <li>

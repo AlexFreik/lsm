@@ -4,9 +4,13 @@ ZoomMtg.prepareWebSDK();
 const urlParams = new URLSearchParams(window.location.search);
 const idParam = urlParams.get('id');
 const pwdParam = urlParams.get('pwd');
+const roleParam = urlParams.get('role');
 const tkParam = urlParams.get('tk');
 const authParam = urlParams.get('zoomAuthEndpoint');
 const sdkParam = urlParams.get('zoomSdkKey');
+
+console.assert(idParam, 'Error: Meeting number is not defined');
+console.assert(['0', '1'].includes(roleParam), 'Error: Role is not defined');
 console.assert(authParam, 'Error: Auth Endpoint is not defined');
 console.assert(sdkParam, 'Error: SDK Key is not defined');
 
@@ -14,9 +18,9 @@ const authEndpoint = authParam;
 const sdkKey = sdkParam ? sdkParam : '';
 const meetingNumber = idParam ? idParam : '';
 const passWord = pwdParam ? pwdParam : '';
-const role = 0;
+const role = roleParam === '1' ? 1 : 0;
 const userName = 'LS Gallery';
-const userEmail = 'ls.gallery@ishafoundation.org';
+const userEmail = 'ls@gallery.com';
 const registrantToken = tkParam ? tkParam : '';
 const zakToken = '';
 const leaveUrl = '../zoom-sdk';
