@@ -16,7 +16,11 @@ async function beep() {
 }
 
 (async () => {
-    console.log('Hi from Zoom Iframe');
+    console.log('Gallery: Hi from Zoom Iframe');
+    if (!isGalleryIframe) {
+        console.log('Gallery: This iframe is not inside of Gallery, exiting.');
+        return;
+    }
 
     const blinkParam = getUrlParam('zoomBlink');
     console.assert(['0', '1'].includes(blinkParam));

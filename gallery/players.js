@@ -5,7 +5,7 @@ function getPlayer(type, videoId, boxId) {
 
     const config = new URLSearchParams();
     parseDocumentConfig().forEach((val, key) => config.append(key.substring(2), val));
-    const urlParams = `boxId=${boxId}&${config.toString()}`;
+    const urlParams = `gallery=1&boxId=${boxId}&${config.toString()}`;
 
     if (type === 'CU' || type === '' || videoId === '') {
         return getCustomPlayer(videoId);

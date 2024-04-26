@@ -1,5 +1,9 @@
 (async () => {
-    console.log('Hi from JW Player Iframe');
+    console.log('Gallery: Hi from JW Player Iframe');
+    if (!isGalleryIframe) {
+        console.log('Gallery: This iframe is not inside of Gallery, exiting.');
+        return;
+    }
 
     const videoElem = await waitForVideo();
     console.assert(videoElem);

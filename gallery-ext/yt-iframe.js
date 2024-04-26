@@ -31,7 +31,11 @@ async function setQualityYT(quality) {
 }
 
 (async () => {
-    console.log('Hi from YouTube Iframe');
+    console.log('Gallery: Hi from YouTube Iframe');
+    if (!isGalleryIframe) {
+        console.log('Gallery: This iframe is not inside Gallery, exiting.');
+        return;
+    }
 
     const videoElem = await waitForVideo();
     console.assert(videoElem);
