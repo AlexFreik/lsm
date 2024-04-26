@@ -58,7 +58,7 @@ function getZoomPlayer(videoId, urlParams, isHost) {
     const [id, pwd, tk] = videoId.split('&');
     console.assert(id);
 
-    iframe.src = `../zoom-sdk?id=${id}&tk=${tk ? tk : ''}&pwd=${pwd ? pwd : ''}&role={role}&${urlParams}`;
+    iframe.src = `../zoom-sdk?id=${id}&tk=${tk ? tk : ''}&pwd=${pwd ? pwd : ''}&role=${role}&${urlParams}`;
     iframe.title = 'Zoom Web SDK Client';
     iframe.allow = 'camera; microphone;';
     return iframe;

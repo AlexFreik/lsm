@@ -3466,6 +3466,7 @@ iframe {
   position: absolute;
   top: 0.25rem;
   z-index: 10;
+  display: none;
   height: 1.25rem;
   width: 50px;
   cursor: pointer;
@@ -3475,6 +3476,14 @@ iframe {
   line-height: 1rem;
   --tw-text-opacity: 1;
   color: rgb(248 250 252 / var(--tw-text-opacity));
+}
+
+.embed-container:hover + .top-btn {
+  display: block;
+}
+
+.embed-container:hover > .top-btn {
+  display: block;
 }
 
 .mute-btn {
