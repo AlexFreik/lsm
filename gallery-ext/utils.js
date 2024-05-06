@@ -1,9 +1,4 @@
-console.log('Hi from utils.js');
-
-// ===== Global Variables =====
-const BUFF_SIZE = 16;
-const SMOOTHING_TIME = 0.2;
-window.audioCtx = new AudioContext();
+console.log('Gallery: Hi from utils.js');
 
 // Create Audio Meter
 function createAudioLevels() {
@@ -127,18 +122,33 @@ function getMax(array) {
     return ((max + 60) * 5) / 3;
 }
 
-const audioLevlesParam = getUrlParam('audioLevels');
-console.assert(['0', '1'].includes(audioLevlesParam));
-let audioLevels = audioLevlesParam === '1';
-
-const noAudioBlinkParam = getUrlParam('noAudioBlink');
-console.assert(['0', '1'].includes(noAudioBlinkParam));
-let noAudioBlink = noAudioBlinkParam === '1';
-
-chrome.runtime.onMessage.addListener((msg) => {
-    if (msg.type === m.audioLevels) {
-        audioLevels = msg.value;
-    } else if (msg.type === m.noAudioBlink) {
-        noAudioBlink = msg.value;
+(() => {
+    const galleryParam = getUrlParam('gallery');
+    console.assert([null, '1'].includes(galleryParam));
+    window.isGalleryIframe = galleryParam === '1';
+    if (!isGalleryIframe) {
+        console.log('Gallery: This iframe is not inside of Gallery, exiting.');
+        return;
     }
-});
+
+    // ===== Global Variables =====
+    window.BUFF_SIZE = 16;
+    window.SMOOTHING_TIME = 0.2;
+    window.audioCtx = new AudioContext();
+
+    const audioLevlesParam = getUrlParam('audioLevels');
+    console.assert(['0', '1'].includes(audioLevlesParam));
+    window.audioLevels = audioLevlesParam === '1';
+
+    const noAudioBlinkParam = getUrlParam('noAudioBlink');
+    console.assert(['0', '1'].includes(noAudioBlinkParam));
+    window.noAudioBlink = noAudioBlinkParam === '1';
+
+    chrome.runtime.onMessage.addListener((msg) => {
+        if (msg.type === m.audioLevels) {
+            audioLevels = msg.value;
+        } else if (msg.type === m.noAudioBlink) {
+            noAudioBlink = msg.value;
+        }
+    });
+})();

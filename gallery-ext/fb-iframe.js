@@ -1,5 +1,3 @@
-console.log('Hi from Facebook Iframe');
-
 function getVideoElem() {
     const videoElem = document.getElementsByTagName('video')[0];
     console.assert(videoElem != undefined);
@@ -7,6 +5,11 @@ function getVideoElem() {
 }
 
 (async () => {
+    console.log('Gallery: Hi from Facebook Iframe');
+    if (!isGalleryIframe) {
+        console.log('Gallery: This iframe is not inside of Gallery, exiting.');
+        return;
+    }
     const videoElem = getVideoElem();
     const audioTools = getAudioTools(videoElem);
     muteClick(audioTools, true);
