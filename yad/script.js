@@ -53,14 +53,15 @@ function loadPlayer() {
 async function loadNewVideo() {
     player.videoId = getVideoId();
     player.delay = getDelay();
-    await player.ytPlayer.loadVideoById({ videoId: player.videoId });
+    // await player.ytPlayer.loadVideoById({ videoId: player.videoId });
 
     // Update the URL without triggering a full page reload
-    var stateObj = { videoId: player.videoId, delay: player.delay };
+    // var stateObj = { videoId: player.videoId, delay: player.delay };
     var newUrl =
         window.location.href.split('?')[0] +
         `?${VIDEO_ID_PARAM}=${player.videoId}&${DELAY_PARAM}=${player.delay}`;
-    history.pushState(stateObj, '', newUrl);
+    // history.pushState(stateObj, '', newUrl);
+    location.replace(newUrl);
 }
 
 function loadPlayerAPI() {
@@ -84,7 +85,6 @@ function getCurrentDate() {
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
-        player.isReady = true;
         duration = player.ytPlayer.getDuration() - STREAM_DURATION_CORRECTION;
         // if duration is the same as current one, it means
         // that player wasn't reloaded, so we don't need to update timings
@@ -93,6 +93,7 @@ function onPlayerStateChange(event) {
             player.startingDuration = duration;
             console.log('Player started. Duration:', player.startingDuration);
         }
+        player.isReady = true;
     }
 }
 
@@ -112,6 +113,13 @@ function getActualDuration() {
         return 0;
     }
     return ans;
+}
+
+function seekDelay(delay) {
+    const newTime = getActualDuration() - delay - SKIP_CORRECTION;
+    console.log('Seeking to delay:', delay, ', at time:', newTime);
+    player.ytPlayer.seekTo(newTime);
+    player.isReady = false;
 }
 
 setInputsFromUrlParams();
@@ -149,9 +157,6 @@ setInterval(() => {
         player.savedDelay = MINIMAL_DELAY;
         console.log('New saved delay:', MINIMAL_DELAY);
     } else {
-        const newTime = actualDuration - player.savedDelay - SKIP_CORRECTION;
-        console.log('Seeking to saved delay:', player.savedDelay, ', at time:', newTime);
-        player.ytPlayer.seekTo(newTime);
-        player.isReady = false;
+        seekDelay(player.savedDelay);
     }
 }, 1000);
