@@ -9,6 +9,13 @@ install:
 pretty:
 	npx prettier --write .
 
+pretty-gal:
+	npx prettier --write gallery/
+	npx prettier --write gallery-ext/
+
+pretty-yad:
+	npx prettier --write yad/
+
 start:
 	npm start
 
