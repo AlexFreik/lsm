@@ -12,6 +12,9 @@ pretty:
 start:
 	npm start
 
+css-yad:
+	npx tailwindcss -i yad/input.css -o yad/output.css --watch
+
 css-gal:
 	npx tailwindcss -i gallery/input.css -o gallery/output.css --watch
 

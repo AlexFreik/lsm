@@ -5,61 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YAD: YouTube Auto Delay</title>
     <script src="./script.js" defer></script>
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./output.css" />
     <link rel="icon" type="image/png" href="./isha-logo.png" />
   </head>
   <body>
-    <div class="iframe-container">
+    <div class="width-full relative m-auto overflow-hidden pb-[56.25%]">
       <iframe
         id="player"
+        class="absolute h-full w-full"
         width="560"
         height="315"
-        src="https://www.youtube-nocookie.com/embed/jfKfPfyJRdk?autoplay=1&enablejsapi=1&iv_load_policy=3"
+        src=""
         title="YouTube video player"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowfullscreen></iframe>
     </div>
 
-    <header>
-      <div class="title-container">
-        <h1>YAD: YouTube Auto Delay</h1>
+    <div class="navbar mb-2 mt-10 bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/lsm/">YAD: YouTube Auto Delay</a>
       </div>
-      <div class="github-link">
-        <a href="https://github.com/AlexFreik/lsm/tree/master/yad" target="_blank">GitHub</a>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="#docs">Docs</a></li>
+          <li><a href="/lsm/gallery/">Gallery</a></li>
+          <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
+        </ul>
       </div>
-    </header>
+    </div>
 
-    <div class="explanation">
+    <div class="prose mx-auto">
       <p>
-        This website allows you to
-        <strong>configure the delay for a YouTube Live Stream</strong>
-        to have a fixed delay. Please check the bottom of this page for more details.<br /><br />
+        This website fixes the
+        <strong>skipping issue</strong> in YouTube for delayed streams.<br /><br />
 
-        <strong>Example 1:</strong> The configured delay is 15min and the current delay is 13min 59s, it will be reset back to 15min. And if the
-        current delay is 1h 15min 1s, it will be also reset back to 15min.<br /><br />
+        <strong>What is the skipping issue?</strong> If you are currently watching a stream 20min behind LIVE and you face some network fluctuations
+        YouTube might jump to LIVE (i.e. 0sec delay), and these 20min will be lost.<br /><br />
 
-        <strong>Example 2:</strong> The configured delay is 15min, but due to network issues the delay slowly become is 20min. Now if YT skips and
-        delay becomes 0s the script will reset delay back to 20min 5s.
+        But if you are using YAD and YouTube tries to skip to LIVE <b>the script will automatically bring you back</b>, so you will not miss
+        anything!<br /><br />
+
+        <strong>Note 1:</strong> Due to YouTube limitations the script works only for streams that started at least 30min ago. For newly started
+        streams the script will not be correcting skipping.<br /><br />
+
+        <strong>Note 2:</strong> You can't go to LIVE because the minimal possible delay is set to 60s. When you click the <b>LIVE</b> button the
+        script will think that YouTube skipped and transition you back.<br /><br />
       </p>
     </div>
 
-    <section>
-      <label for="videoId">YouTube Stream ID:</label>
-      <input type="text" id="videoId" placeholder="Enter Video ID" value="jfKfPfyJRdk" />
-
-      <label for="delay">Delay (in seconds):</label>
-      <input type="number" id="delay" placeholder="Enter Delay" value="900" />
-
-      <button onclick="configurePlayer()">Update</button>
-    </section>
-
-    <div class="explanation">
-      <p>
-        In short the script will do the following:<br />
-
-        <script src="https://gist.github.com/AlexFreik/544d7996b607781c1c01313d9bffc3f0.js"></script>
-      </p>
+    <div class="mx-auto my-5 w-96">
+      <label class="input input-bordered my-2 flex items-center gap-2">
+        YouTube Video ID
+        <input type="text" class="grow text-secondary" placeholder="Enter Video ID" value="jfKfPfyJRdk" id="videoId" />
+      </label>
+      <label class="input input-bordered my-2 flex items-center gap-2">
+        Delay (seconds)
+        <input type="number" class="grow text-secondary" placeholder="Enter Delay" value="900" id="delay" />
+      </label>
+      <button class="btn btn-outline btn-secondary btn-sm my-2" onclick="loadNewVideo()">Update</button>
     </div>
   </body>
 </html>
