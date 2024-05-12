@@ -139,7 +139,8 @@ loadPlayer();
 loadPlayerAPI();
 
 setInterval(() => {
-    if (!player.isReady) {
+    // First 30min after stream started player.getDuration() will always return 3600
+    if (!player.isReady || player.durationWhenStarted === 3600) {
         return;
     }
 
@@ -148,12 +149,7 @@ setInterval(() => {
     const currentTime = player.ytPlayer.getCurrentTime();
     console.assert(!isNaN(actualDuration));
 
-    if (
-        isNaN(currentTime) ||
-        actualDuration < player.delay ||
-        player.durationWhenStarted === 3600 ||
-        currentTime < START_MARGIN
-    ) {
+    if (isNaN(currentTime) || currentTime < START_MARGIN || actualDuration < player.delay) {
         return;
     }
     const currentDelay = actualDuration - currentTime;
