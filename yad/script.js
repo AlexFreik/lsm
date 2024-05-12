@@ -13,11 +13,11 @@ const MINIMAL_DELAY = 60;
 const player = {
     ytPlayer: null,
     isReady: false,
-    startingDuration: -1,
-    startingDate: -1,
+    startingDuration: -100,
+    startingDate: -100,
     videoId: '',
-    delay: -1,
-    savedDelay: -1,
+    delay: -100,
+    savedDelay: -100,
 };
 
 function getVideoId() {
@@ -140,7 +140,7 @@ loadPlayerAPI();
 
 setInterval(() => {
     // First 30min after stream started player.getDuration() will always return 3600
-    if (!player.isReady || player.durationWhenStarted === 3600) {
+    if (!player.isReady || player.startingDuration === 0) {
         return;
     }
 
