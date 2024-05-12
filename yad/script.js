@@ -52,8 +52,12 @@ function loadPlayer() {
 }
 
 async function loadNewVideo() {
+    player.isReady = false;
+
     player.videoId = getVideoId();
     player.delay = getDelay();
+    player.savedDelay = player.delay;
+
     await player.ytPlayer.loadVideoById({ videoId: player.videoId });
 
     // Update the URL without triggering a full page reload
@@ -120,7 +124,7 @@ function getActualDuration() {
 
 function seekDelay(delay) {
     const newTime = getActualDuration() - delay - SKIP_CORRECTION;
-    console.log('Seeking to delay:', delay, ', at time:', newTime);
+    console.log('Seeking to a new delay:', delay, ', at time:', newTime);
     player.ytPlayer.seekTo(newTime);
     player.isReady = false;
 }
@@ -142,7 +146,10 @@ setInterval(() => {
     console.assert(player.videoId, !isNaN(player.delay), !isNaN(player.savedDelay));
     const actualDuration = getActualDuration();
     const currentTime = player.ytPlayer.getCurrentTime();
+    console.assert(!isNaN(actualDuration));
+
     if (
+        isNaN(currentTime) ||
         actualDuration < player.delay ||
         player.durationWhenStarted === 3600 ||
         currentTime < START_MARGIN
@@ -165,6 +172,7 @@ setInterval(() => {
         player.savedDelay = MINIMAL_DELAY;
         console.log('New saved delay:', MINIMAL_DELAY);
     } else {
+        console.log('Current delay was: ' + currentDelay);
         seekDelay(player.savedDelay);
     }
 }, 1000);
