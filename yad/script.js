@@ -2,6 +2,7 @@ const DELAY_PARAM = 'd';
 const VIDEO_ID_PARAM = 'v';
 
 const SKIP_MARGIN = 30;
+const START_MARGIN = 30;
 const SKIP_CORRECTION = 5;
 const STREAM_DURATION_CORRECTION = 3600;
 
@@ -53,15 +54,15 @@ function loadPlayer() {
 async function loadNewVideo() {
     player.videoId = getVideoId();
     player.delay = getDelay();
-    // await player.ytPlayer.loadVideoById({ videoId: player.videoId });
+    await player.ytPlayer.loadVideoById({ videoId: player.videoId });
 
     // Update the URL without triggering a full page reload
-    // var stateObj = { videoId: player.videoId, delay: player.delay };
+    var stateObj = { videoId: player.videoId, delay: player.delay };
     var newUrl =
         window.location.href.split('?')[0] +
         `?${VIDEO_ID_PARAM}=${player.videoId}&${DELAY_PARAM}=${player.delay}`;
-    // history.pushState(stateObj, '', newUrl);
-    location.replace(newUrl);
+    history.pushState(stateObj, '', newUrl);
+    // location.replace(newUrl);
 }
 
 function loadPlayerAPI() {
@@ -74,6 +75,7 @@ function loadPlayerAPI() {
 function onYouTubeIframeAPIReady() {
     player.ytPlayer = new YT.Player('player', {
         events: {
+            onReady: loadNewVideo,
             onStateChange: onPlayerStateChange,
         },
     });
@@ -85,13 +87,14 @@ function getCurrentDate() {
 
 function onPlayerStateChange(event) {
     if (event.data == YT.PlayerState.PLAYING) {
-        duration = player.ytPlayer.getDuration() - STREAM_DURATION_CORRECTION;
+        const duration = player.ytPlayer.getDuration() - STREAM_DURATION_CORRECTION;
         // if duration is the same as current one, it means
         // that player wasn't reloaded, so we don't need to update timings
-        if (Math.abs(duration - player.startingDuration) > 2) {
+        if (Math.abs(duration - player.startingDuration) > 10) {
             player.startingDate = getCurrentDate();
             player.startingDuration = duration;
             console.log('Player started. Duration:', player.startingDuration);
+            loadNewVideo();
         }
         player.isReady = true;
     }
@@ -138,10 +141,15 @@ setInterval(() => {
 
     console.assert(player.videoId, !isNaN(player.delay), !isNaN(player.savedDelay));
     const actualDuration = getActualDuration();
-    if (actualDuration < player.delay || player.durationWhenStarted === 3600) {
+    const currentTime = player.ytPlayer.getCurrentTime();
+    if (
+        actualDuration < player.delay ||
+        player.durationWhenStarted === 3600 ||
+        currentTime < START_MARGIN
+    ) {
         return;
     }
-    const currentDelay = actualDuration - player.ytPlayer.getCurrentTime();
+    const currentDelay = actualDuration - currentTime;
     console.assert(currentDelay > -10, 'Invalid current delay: ' + currentDelay);
 
     if (currentDelay >= MINIMAL_DELAY) {
