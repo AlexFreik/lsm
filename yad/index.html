@@ -22,6 +22,25 @@
         allowfullscreen></iframe>
     </div>
 
+    <div id="controls">
+      <span class="mx-1">||</span>
+      <strong>Duration:</strong> <span id="duration-stat">...</span>
+      <span class="mx-1">||</span>
+      <strong>Delay:</strong> <span id="delay-stat">...</span>
+      <span class="mx-1">||</span>
+      New Delay
+      <input type="number" class="input input-xs input-bordered w-14 text-secondary" placeholder="Delay" value="900" id="new-delay" />
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="updateDelay()">Update</button>
+      <span class="mx-1">||</span>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-60)">-60s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-30)">-30s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-10)">-10s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(10)">+10s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(30)">+30s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(60)">+60s</button>
+      <span class="mx-1">||</span>
+    </div>
+
     <div class="navbar mb-2 mt-10 bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">YAD: YouTube Auto Delay</a>

@@ -28,6 +28,7 @@ function getDelay() {
     const delay = parseInt(document.getElementById('delay').value);
     console.assert(delay >= MINIMAL_DELAY);
     if (delay < MINIMAL_DELAY) {
+        console.error("Delay shouldn't be less then minimal delay: " + MINIMAL_DELAY);
         return MINIMAL_DELAY;
     }
     return delay;
@@ -123,10 +124,46 @@ function getActualDuration() {
 }
 
 function seekDelay(delay) {
-    const newTime = getActualDuration() - delay - SKIP_CORRECTION;
-    console.log('Seeking to a new delay:', delay, ', at time:', newTime);
+    if (isNaN(delay)) {
+        console.error('Delay should be a positive number, but it is: ' + delay);
+        return;
+    }
+    console.assert(delay >= MINIMAL_DELAY);
+    const newTime = getActualDuration() - delay;
+    console.log('Seeking to a new delay: ' + delay + ', at time:' + newTime);
     player.ytPlayer.seekTo(newTime);
     player.isReady = false;
+}
+
+function updateDelay() {
+    const newDelayElem = document.getElementById('new-delay');
+    let newDelay = parseInt(newDelayElem.value);
+    console.log(newDelay);
+    if (newDelay < MINIMAL_DELAY) newDelay = MINIMAL_DELAY;
+    seekDelay(newDelay);
+}
+
+function adjustDelay(val) {
+    const currentDelay = getActualDuration() - player.ytPlayer.getCurrentTime();
+    let newDelay = currentDelay + val;
+    if (newDelay < MINIMAL_DELAY) newDelay = MINIMAL_DELAY;
+    seekDelay(newDelay);
+}
+
+function renderStats(duration, delay) {
+    const durationElem = document.getElementById('duration-stat');
+    const delayElem = document.getElementById('delay-stat');
+
+    const dur = duration | 0;
+    const durationHours = (dur / 3600) | 0;
+    const durationMinutes = ((dur / 60) | 0) % 60;
+    const durationSeconds = dur % 60;
+    durationElem.innerHTML = `${durationHours}h:${durationMinutes}m:${durationSeconds}s`;
+
+    const del = delay | 0;
+    const delayMinutes = (del / 60) | 0;
+    const delaySeconds = del % 60;
+    delayElem.innerHTML = `${delayMinutes}m:${delaySeconds}s (${del} s)`;
 }
 
 setInputsFromUrlParams();
@@ -155,6 +192,8 @@ setInterval(() => {
     const currentDelay = actualDuration - currentTime;
     console.assert(currentDelay > -10, 'Invalid current delay: ' + currentDelay);
 
+    renderStats(actualDuration, currentDelay);
+
     if (currentDelay >= MINIMAL_DELAY) {
         if (Math.abs(player.savedDelay - currentDelay) < 2) {
             return;
@@ -168,7 +207,7 @@ setInterval(() => {
         player.savedDelay = MINIMAL_DELAY;
         console.log('New saved delay:', MINIMAL_DELAY);
     } else {
-        console.log('Current delay was: ' + currentDelay);
-        seekDelay(player.savedDelay);
+        console.log('Current delay was: ' + currentDelay + ', saved delay: ' + player.savedDelay);
+        seekDelay(player.savedDelay + SKIP_CORRECTION);
     }
 }, 1000);
