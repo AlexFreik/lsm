@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YAD: YouTube Auto Delay</title>
+    <script src="./controls.js" defer></script>
+    <link rel="stylesheet" href="./output.css" />
+    <link rel="icon" type="image/png" href="./isha-logo.png" />
+  </head>
+  <body>
+    <div class="navbar mb-2 bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/lsm/">YAD: Controls</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="#docs">Docs</a></li>
+          <li><a href="/lsm/gallery/">Gallery</a></li>
+          <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="controls" class="mx-auto mt-5 w-fit">
+      <div class="card-container">
+        <div class="card-body">
+          <h2 class="card-title">Duration</h2>
+          <span class="text-5xl" id="duration-stat">...</span>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card-body">
+          <h2 class="card-title">Delay</h2>
+          <span class="text-5xl" id="delay-stat">...</span>
+        </div>
+      </div>
+      <br />
+      <span class="mx-1">||</span>
+      New Delay
+      <input type="number" class="input input-xs input-bordered w-14 text-secondary" placeholder="Delay" value="900" id="new-delay" />
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="updateDelay()">Update</button>
+      <span class="mx-1">||</span>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-60)">-60s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-30)">-30s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-10)">-10s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(10)">+10s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(30)">+30s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(60)">+60s</button>
+      <span class="mx-1">||</span>
+    </div>
+
+    <div class="mx-auto my-5 w-96">
+      <label class="input input-bordered my-2 flex items-center gap-2">
+        YouTube Video ID
+        <input type="text" class="grow text-secondary" placeholder="Enter Video ID" value="jfKfPfyJRdk" id="videoId" />
+      </label>
+      <button class="btn btn-outline btn-secondary btn-sm my-2" onclick="changeConnection()">Connect</button>
+    </div>
+  </body>
+</html>

@@ -16,6 +16,7 @@ const player = {
     startingDuration: -100,
     startingDate: -100,
     videoId: '',
+    connection: null,
     delay: -100,
     savedDelay: -100,
 };
@@ -56,18 +57,20 @@ async function loadNewVideo() {
     player.isReady = false;
 
     player.videoId = getVideoId();
-    player.delay = getDelay();
+    player.delay = getDelay() - SKIP_CORRECTION;
     player.savedDelay = player.delay;
+
+    if (player.connection) player.connection.close();
+    player.connection = getNewBroadcastChannel();
 
     await player.ytPlayer.loadVideoById({ videoId: player.videoId });
 
     // Update the URL without triggering a full page reload
-    var stateObj = { videoId: player.videoId, delay: player.delay };
+    var stateObj = { videoId: getVideoId(), delay: getDelay() };
     var newUrl =
         window.location.href.split('?')[0] +
         `?${VIDEO_ID_PARAM}=${player.videoId}&${DELAY_PARAM}=${player.delay}`;
     history.pushState(stateObj, '', newUrl);
-    // location.replace(newUrl);
 }
 
 function loadPlayerAPI() {
@@ -166,9 +169,27 @@ function renderStats(duration, delay) {
     delayElem.innerHTML = `${delayMinutes}m:${delaySeconds}s (${del} s)`;
 }
 
+function getNewBroadcastChannel() {
+    const bc = new BroadcastChannel(player.videoId);
+    bc.onmessage = (event) => {
+        const msg = JSON.parse(event.data);
+        if (msg.type === 'NEW_DELAY') {
+            const newDelayElem = document.getElementById('new-delay');
+            newDelayElem.value = msg.value;
+            updateDelay();
+        }
+        if (msg.type === 'ADJUST_DELAY') {
+            adjustDelay(msg.value);
+        }
+    };
+    return bc;
+}
+
+// ===== Code Execution =====
 setInputsFromUrlParams();
 
 player.videoId = getVideoId();
+player.connection = getNewBroadcastChannel();
 player.delay = getDelay();
 player.savedDelay = player.delay;
 
@@ -193,6 +214,9 @@ setInterval(() => {
     console.assert(currentDelay > -10, 'Invalid current delay: ' + currentDelay);
 
     renderStats(actualDuration, currentDelay);
+    player.connection.postMessage(
+        JSON.stringify({ type: 'STATS', duration: actualDuration, delay: currentDelay }),
+    );
 
     if (currentDelay >= MINIMAL_DELAY) {
         if (Math.abs(player.savedDelay - currentDelay) < 2) {

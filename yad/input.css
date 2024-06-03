@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.card-container {
+    @apply card static inline-block w-[450px] bg-base-100 shadow-xl;
+}
