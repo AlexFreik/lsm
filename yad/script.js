@@ -69,7 +69,7 @@ async function loadNewVideo() {
     var stateObj = { videoId: getVideoId(), delay: getDelay() };
     var newUrl =
         window.location.href.split('?')[0] +
-        `?${VIDEO_ID_PARAM}=${player.videoId}&${DELAY_PARAM}=${player.delay}`;
+        `?${VIDEO_ID_PARAM}=${getVideoId()}&${DELAY_PARAM}=${getDelay()}`;
     history.pushState(stateObj, '', newUrl);
 }
 
