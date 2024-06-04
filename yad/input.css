@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .card-container {
-    @apply card static inline-block w-[450px] bg-base-100 shadow-xl;
+    @apply card static mx-2 my-5 inline-block min-h-44 w-[500px] bg-base-200 shadow-xl;
 }

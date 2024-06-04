@@ -15,8 +15,8 @@
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
-          <li><a href="#docs">Docs</a></li>
-          <li><a href="/lsm/gallery/">Gallery</a></li>
+          <li><a href="/lsm/yad/" target="_blank">YAD</a></li>
+          <li><a href="/lsm/gallery/" target="_blank">Gallery</a></li>
           <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
         </ul>
       </div>
@@ -37,26 +37,48 @@
         </div>
       </div>
       <br />
-      <span class="mx-1">||</span>
-      New Delay
-      <input type="number" class="input input-xs input-bordered w-14 text-secondary" placeholder="Delay" value="900" id="new-delay" />
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="updateDelay()">Update</button>
-      <span class="mx-1">||</span>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-60)">-60s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-30)">-30s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-10)">-10s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(10)">+10s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(30)">+30s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(60)">+60s</button>
-      <span class="mx-1">||</span>
+      <div class="card-container">
+        <div class="card-body">
+          <h2 class="card-title">New Delay (seconds)</h2>
+          <div>
+            <input
+              type="number"
+              class="input input-lg input-bordered w-52 text-secondary"
+              placeholder="New delay (seconds)"
+              value="900"
+              id="new-delay" />
+            <button class="btn btn-outline btn-secondary btn-lg w-fit" onclick="updateDelay()">Update</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-container">
+        <div class="card-body">
+          <h2 class="card-title">Adjust Delay (seconds)</h2>
+          <div>
+            <button class="btn btn-outline btn-secondary btn-md m-1" onclick="adjustDelay(-60)">-60</button>
+            <button class="btn btn-outline btn-secondary btn-md m-1" onclick="adjustDelay(-30)">-30</button>
+            <button class="btn btn-outline btn-secondary btn-md m-1" onclick="adjustDelay(-10)">-10</button>
+            <button class="btn btn-secondary btn-md m-1" onclick="adjustDelay(10)">+10</button>
+            <button class="btn btn-secondary btn-md m-1" onclick="adjustDelay(30)">+30</button>
+            <button class="btn btn-secondary btn-md m-1" onclick="adjustDelay(60)">+60</button>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="mx-auto my-5 w-96">
+    <div class="mx-auto my-16 w-96">
       <label class="input input-bordered my-2 flex items-center gap-2">
         YouTube Video ID
         <input type="text" class="grow text-secondary" placeholder="Enter Video ID" value="jfKfPfyJRdk" id="videoId" />
       </label>
       <button class="btn btn-outline btn-secondary btn-sm my-2" onclick="changeConnection()">Connect</button>
     </div>
+
+    <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
+      <aside>
+        <p>Copyright © 2024 - All right reserved by LSM</p>
+      </aside>
+    </footer>
   </body>
 </html>
