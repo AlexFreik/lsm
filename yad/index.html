@@ -22,14 +22,34 @@
         allowfullscreen></iframe>
     </div>
 
+    <div id="controls" class="mx-auto mt-5 w-fit">
+      <span class="mx-1">||</span>
+      <strong>Duration:</strong> <span id="duration-stat">...</span>
+      <span class="mx-1">||</span>
+      <strong>Delay:</strong> <span id="delay-stat">...</span>
+      <span class="mx-1">||</span>
+      New Delay
+      <input type="number" class="input input-xs input-bordered w-14 text-secondary" placeholder="Delay" value="900" id="new-delay" />
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="updateDelay()">Update</button>
+      <span class="mx-1">||</span>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-60)">-60s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-30)">-30s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-10)">-10s</button>
+      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(10)">+10s</button>
+      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(30)">+30s</button>
+      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(60)">+60s</button>
+      <span class="mx-1">||</span>
+    </div>
+
     <div class="navbar mb-2 mt-10 bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">YAD: YouTube Auto Delay</a>
       </div>
       <div class="flex-none">
         <ul class="menu menu-horizontal px-1">
+          <li><a href="/lsm/yad/controls.html" target="_blank">Controls</a></li>
           <li><a href="#docs">Docs</a></li>
-          <li><a href="/lsm/gallery/">Gallery</a></li>
+          <li><a href="/lsm/gallery/" target="_blank">Gallery</a></li>
           <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
         </ul>
       </div>
@@ -65,5 +85,11 @@
       </label>
       <button class="btn btn-outline btn-secondary btn-sm my-2" onclick="loadNewVideo()">Update</button>
     </div>
+
+    <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
+      <aside>
+        <p>Copyright © 2024 - All right reserved by LSM</p>
+      </aside>
+    </footer>
   </body>
 </html>
