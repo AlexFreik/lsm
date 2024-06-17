@@ -27,3 +27,6 @@ css-gal:
 
 css-gal-ext:
 	npx tailwindcss -i gallery-ext/popup.css -o gallery-ext/output.css --watch
+
+css-scheduler:
+		npx tailwindcss -i scheduler/input.css -o scheduler/output.css --watch

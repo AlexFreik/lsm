@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: system-ui, sans-serif;
+}
+
+.events {
+    @apply grid grid-rows-[repeat(14,_30px)] rounded-md bg-neutral;
+}
+
+.event {
+    @apply bg-neutral-content text-base-300;
+    border: 1px solid base-300;
+    border-radius: 5px;
+    padding: 0.5rem;
+    margin: 0 0.5rem;
+}
+
+.date {
+    height: 60px;
+}
+
+.date {
+    display: flex;
+    gap: 1em;
+}
+
+.date-num {
+    @apply inline text-3xl font-semibold;
+}
+
+.date-day {
+    @apply inline font-thin;
+}
+
+.time-marker {
+    @apply border-t border-dashed border-neutral-content;
+}

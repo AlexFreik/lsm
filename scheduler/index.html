@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scheduler</title>
+    <link rel="icon" type="image/png" href="./isha-logo.png" />
+    <link rel="stylesheet" href="./output.css" />
+    <script type="module" src="./script.js" defer></script>
+  </head>
+  <body class="bg-base-100 text-base-content">
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/lsm/">Streaming Scheduler</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/lsm/yad/" target="_blank">YAD</a></li>
+          <li><a href="/lsm/gallery/" target="_blank">Gallery</a></li>
+          <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="m-auto w-52 rounded-xl bg-neutral-content text-center text-3xl font-bold text-neutral">10 June</div>
+    <div class="m-8 grid grid-cols-[auto_1fr] gap-2.5">
+      <div class="grid grid-rows-[repeat(7,_60px)]">
+        <div></div>
+        <div class="time-marker">10 AM</div>
+        <div class="time-marker">11 AM</div>
+        <div class="time-marker">12 PM</div>
+        <div class="time-marker">1 PM</div>
+        <div class="time-marker">2 PM</div>
+        <div class="time-marker">3 PM</div>
+        <div class="time-marker">4 PM</div>
+      </div>
+      <div class="col-start-2 grid grid-cols-[repeat(auto-fit,_minmax(150px,_1fr))] gap-1">
+        <div class="day">
+          <div class="date">
+            <p class="date-num">131</p>
+            <p class="date-day">Materials</p>
+          </div>
+          <div class="events">
+            <div class="event row-start-9 row-end-[15]">
+              <p class="mb-1 font-semibold">Securities Regulation</p>
+              <p class="time">2 PM - 5 PM</p>
+            </div>
+          </div>
+        </div>
+        <div class="day">
+          <div class="date">
+            <p class="date-num">132</p>
+            <p class="date-day"></p>
+          </div>
+          <div class="events">
+            <div class="event row-start-1 row-end-3">
+              <p class="mb-1 font-semibold">Corporate Finance</p>
+              <p class="time">10 AM - 12 PM</p>
+            </div>
+            <div class="event row-start-7 row-end-[13]">
+              <p class="mb-1 font-semibold">Entertainment Law</p>
+              <p class="time">1PM - 4PM</p>
+            </div>
+          </div>
+        </div>
+        <div class="day">
+          <div class="date">
+            <p class="date-num">132</p>
+            <p class="date-day">Monitoring</p>
+          </div>
+          <div class="events">
+            <div class="event row-start-3 row-end-5">
+              <p class="mb-1 font-semibold">Writing Seminar</p>
+              <p class="time">11 AM - 12 PM</p>
+            </div>
+          </div>
+        </div>
+        <div class="day">
+          <div class="date">
+            <p class="date-num">Upcoming</p>
+            <p class="date-day"></p>
+          </div>
+          <div class="events"></div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
+      <aside>
+        <p>Copyright © 2024 - All right reserved by LSM</p>
+      </aside>
+    </footer>
+  </body>
+</html>
