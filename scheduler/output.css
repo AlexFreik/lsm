@@ -3781,11 +3781,6 @@ input.tab:checked + .tab-content,
   margin-right: 0.25rem;
 }
 
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -3814,10 +3809,6 @@ input.tab:checked + .tab-content,
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
-}
-
-.mb-1 {
-  margin-bottom: 0.25rem;
 }
 
 .mb-2 {
@@ -3864,16 +3855,12 @@ input.tab:checked + .tab-content,
   height: 1rem;
 }
 
-.h-\[60px\] {
-  height: 60px;
+.h-\[50px\] {
+  height: 50px;
 }
 
 .h-full {
   height: 100%;
-}
-
-.h-\[50px\] {
-  height: 50px;
 }
 
 .min-h-screen {
@@ -3977,104 +3964,12 @@ input.tab:checked + .tab-content,
   grid-template-columns: repeat(7,200px);
 }
 
-.grid-rows-\[repeat\(1\2c _60px\)\] {
-  grid-template-rows: repeat(1, 60px);
+.grid-cols-\[repeat\(8\2c 200px\)\] {
+  grid-template-columns: repeat(8,200px);
 }
 
-.grid-rows-\[repeat\(10\2c _30px\)\] {
-  grid-template-rows: repeat(10, 30px);
-}
-
-.grid-rows-\[repeat\(12\2c _30px\)\] {
-  grid-template-rows: repeat(12, 30px);
-}
-
-.grid-rows-\[repeat\(14\2c _30px\)\] {
-  grid-template-rows: repeat(14, 30px);
-}
-
-.grid-rows-\[repeat\(16\2c _30px\)\] {
-  grid-template-rows: repeat(16, 30px);
-}
-
-.grid-rows-\[repeat\(18\2c _30px\)\] {
-  grid-template-rows: repeat(18, 30px);
-}
-
-.grid-rows-\[repeat\(2\2c _30px\)\] {
-  grid-template-rows: repeat(2, 30px);
-}
-
-.grid-rows-\[repeat\(20\2c _30px\)\] {
-  grid-template-rows: repeat(20, 30px);
-}
-
-.grid-rows-\[repeat\(22\2c _30px\)\] {
-  grid-template-rows: repeat(22, 30px);
-}
-
-.grid-rows-\[repeat\(24\2c _30px\)\] {
-  grid-template-rows: repeat(24, 30px);
-}
-
-.grid-rows-\[repeat\(26\2c _30px\)\] {
-  grid-template-rows: repeat(26, 30px);
-}
-
-.grid-rows-\[repeat\(28\2c _30px\)\] {
-  grid-template-rows: repeat(28, 30px);
-}
-
-.grid-rows-\[repeat\(30\2c _30px\)\] {
-  grid-template-rows: repeat(30, 30px);
-}
-
-.grid-rows-\[repeat\(32\2c _30px\)\] {
-  grid-template-rows: repeat(32, 30px);
-}
-
-.grid-rows-\[repeat\(34\2c _30px\)\] {
-  grid-template-rows: repeat(34, 30px);
-}
-
-.grid-rows-\[repeat\(36\2c _30px\)\] {
-  grid-template-rows: repeat(36, 30px);
-}
-
-.grid-rows-\[repeat\(38\2c _30px\)\] {
-  grid-template-rows: repeat(38, 30px);
-}
-
-.grid-rows-\[repeat\(4\2c _30px\)\] {
-  grid-template-rows: repeat(4, 30px);
-}
-
-.grid-rows-\[repeat\(40\2c _30px\)\] {
-  grid-template-rows: repeat(40, 30px);
-}
-
-.grid-rows-\[repeat\(42\2c _30px\)\] {
-  grid-template-rows: repeat(42, 30px);
-}
-
-.grid-rows-\[repeat\(44\2c _30px\)\] {
-  grid-template-rows: repeat(44, 30px);
-}
-
-.grid-rows-\[repeat\(46\2c _30px\)\] {
-  grid-template-rows: repeat(46, 30px);
-}
-
-.grid-rows-\[repeat\(48\2c _30px\)\] {
-  grid-template-rows: repeat(48, 30px);
-}
-
-.grid-rows-\[repeat\(6\2c _30px\)\] {
-  grid-template-rows: repeat(6, 30px);
-}
-
-.grid-rows-\[repeat\(8\2c _30px\)\] {
-  grid-template-rows: repeat(8, 30px);
+.grid-cols-\[repeat\(6\2c 200px\)_400px\] {
+  grid-template-columns: repeat(6,200px) 400px;
 }
 
 .grid-rows-\[repeat\(1\2c _50px\)\] {
@@ -4347,6 +4242,11 @@ input.tab:checked + .tab-content,
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
+}
+
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
 }
 
 .text-xl {

@@ -5,7 +5,7 @@ const ROOMS = [
     { id: '134', description: '' },
     { id: '135', description: '' },
     { id: '136', description: '' },
-    { id: 'Upcoming', description: '' },
+    { id: 'upcoming', description: '' },
 ];
 
 class SubEvent {
@@ -169,7 +169,7 @@ function renderCalendar(year, month, eventGroups) {
         timeline += `</div>`;
         container.innerHTML = timeline;
 
-        let rooms = '<div class="col-start-2 grid grid-cols-[repeat(7,200px)] gap-1">';
+        let rooms = '<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">';
         ROOMS.forEach((r) => {
             rooms += `
         <div>
@@ -208,9 +208,9 @@ function renderEvents(eventGroups) {
 
             const roomEvents = document.getElementById('events-' + i + '-' + e.room);
             roomEvents.innerHTML += `
-            <div class="bg-neutral-content text-base-300 p-2 my-0 mx-2
+            <div class="bg-neutral-content text-base-300 px-1 my-0 text-sm
               rounded-md border border-base-300 row-start-[${startRow}] row-end-[${endRow}]">
-              <p class="mb-1 font-semibold">${e.event.name}</p>
+              <p class="font-semibold">${e.event.name}</p>
               <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)} (${e.event.lang})</p>
             </div>`;
         });
