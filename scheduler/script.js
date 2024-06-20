@@ -25,8 +25,8 @@ class SubEvent {
     }
 }
 
-function getEvents() {
-    return [
+function getMockEvents() {
+    return JSON.stringify([
         {
             name: 'IE 7 days',
             lang: 'English',
@@ -72,7 +72,7 @@ function getEvents() {
             ],
             details: [],
         },
-    ];
+    ]);
 }
 
 // ===== General Utils =====
@@ -217,34 +217,32 @@ function renderEvents(eventGroups) {
     }
 }
 
-const now = new Date();
-const year = now.getFullYear();
-const month = now.getMonth();
-const events = getEvents();
-const subEvents = flattenEvents(events);
-const eventGroups = groupEvents(year, month, subEvents);
+function renderPage(data) {
+    const events = JSON.parse(data);
 
-renderCalendar(year, month, eventGroups);
-renderEvents(eventGroups);
+    events.forEach((e) => {
+        e.allocation[0].forEach((a) => {
+            a[1] = new Date(a[1]);
+            a[2] = new Date(a[2]);
+        });
+        e.allocation[1].forEach((a) => {
+            a[1] = new Date(a[1]);
+            a[2] = new Date(a[2]);
+        });
+    });
 
-// Please ignore this string, it is needed for tailwind to generate classes since we render them dynamically
-` grid-rows-[repeat(2,_25px)] grid-rows-[repeat(4,_25px)] grid-rows-[repeat(6,_25px)]
-  grid-rows-[repeat(8,_25px)] grid-rows-[repeat(10,_25px)] grid-rows-[repeat(12,_25px)]
-  grid-rows-[repeat(14,_25px)] grid-rows-[repeat(16,_25px)] grid-rows-[repeat(18,_25px)]
-  grid-rows-[repeat(20,_25px)] grid-rows-[repeat(22,_25px)] grid-rows-[repeat(24,_25px)]
-  grid-rows-[repeat(26,_25px)] grid-rows-[repeat(28,_25px)] grid-rows-[repeat(30,_25px)]
-  grid-rows-[repeat(32,_25px)] grid-rows-[repeat(34,_25px)] grid-rows-[repeat(36,_25px)]
-  grid-rows-[repeat(38,_25px)] grid-rows-[repeat(40,_25px)] grid-rows-[repeat(42,_25px)]
-  grid-rows-[repeat(44,_25px)] grid-rows-[repeat(46,_25px)] grid-rows-[repeat(48,_25px)]
-  row-start-[1] row-start-[2] row-start-[3] row-start-[4] row-start-[5] row-start-[6] row-start-[7] row-start-[8]
-  row-start-[9] row-start-[10] row-start-[11] row-start-[12] row-start-[13] row-start-[14] row-start-[15] row-start-[16]
-  row-start-[17] row-start-[18] row-start-[19] row-start-[20] row-start-[21] row-start-[22] row-start-[23] row-start-[24]
-  row-start-[25] row-start-[26] row-start-[27] row-start-[28] row-start-[29] row-start-[30] row-start-[31] row-start-[32]
-  row-start-[33] row-start-[34] row-start-[35] row-start-[36] row-start-[37] row-start-[38] row-start-[39] row-start-[40]
-  row-start-[41] row-start-[42] row-start-[43] row-start-[44] row-start-[45] row-start-[46] row-start-[47] row-start-[48]
-  row-end-[1] row-end-[2] row-end-[3] row-end-[4] row-end-[5] row-end-[6] row-end-[7] row-end-[8]
-  row-end-[9] row-end-[10] row-end-[11] row-end-[12] row-end-[13] row-end-[14] row-end-[15] row-end-[16]
-  row-end-[17] row-end-[18] row-end-[19] row-end-[20] row-end-[21] row-end-[22] row-end-[23] row-end-[24]
-  row-end-[25] row-end-[26] row-end-[27] row-end-[28] row-end-[29] row-end-[30] row-end-[31] row-end-[32]
-  row-end-[33] row-end-[34] row-end-[35] row-end-[36] row-end-[37] row-end-[38] row-end-[39] row-end-[40]
-  row-end-[41] row-end-[42] row-end-[43] row-end-[44] row-end-[45] row-end-[46] row-end-[47] row-end-[48]`;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth();
+    const subEvents = flattenEvents(events);
+    const eventGroups = groupEvents(year, month, subEvents);
+    renderCalendar(year, month, eventGroups);
+    renderEvents(eventGroups);
+}
+
+if (typeof google !== 'undefined') {
+    console.log('Prod mode');
+} else {
+    console.log('Dev mode');
+    renderPage(getMockEvents());
+}
