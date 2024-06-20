@@ -3924,6 +3924,10 @@ input.tab:checked + .tab-content,
   max-width: 56rem;
 }
 
+.max-w-\[200px\] {
+  max-width: 200px;
+}
+
 .max-w-md {
   max-width: 28rem;
 }
@@ -3958,14 +3962,6 @@ input.tab:checked + .tab-content,
 
 .grid-cols-\[repeat\(1\2c 50px\)\] {
   grid-template-columns: repeat(1,50px);
-}
-
-.grid-cols-\[repeat\(7\2c 200px\)\] {
-  grid-template-columns: repeat(7,200px);
-}
-
-.grid-cols-\[repeat\(8\2c 200px\)\] {
-  grid-template-columns: repeat(8,200px);
 }
 
 .grid-cols-\[repeat\(6\2c 200px\)_400px\] {

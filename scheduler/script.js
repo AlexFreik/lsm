@@ -49,7 +49,22 @@ function getMockEvents() {
                 [],
                 [
                     [
-                        '132',
+                        'upcoming',
+                        new Date('2024-06-07T01:30:00.000Z'),
+                        new Date('2024-06-07T05:00:00.000Z'),
+                    ],
+                ],
+            ],
+            details: [],
+        },
+        {
+            name: 'Sadhguru Sahabhagi',
+            lang: 'Hindi',
+            allocation: [
+                [],
+                [
+                    [
+                        '131',
                         new Date('2024-06-07T01:30:00.000Z'),
                         new Date('2024-06-07T05:00:00.000Z'),
                     ],
@@ -208,7 +223,7 @@ function renderEvents(eventGroups) {
 
             const roomEvents = document.getElementById('events-' + i + '-' + e.room);
             roomEvents.innerHTML += `
-            <div class="bg-neutral-content text-base-300 px-1 my-0 text-sm
+            <div class="bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
               rounded-md border border-base-300 row-start-[${startRow}] row-end-[${endRow}]">
               <p class="font-semibold">${e.event.name}</p>
               <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)} (${e.event.lang})</p>
