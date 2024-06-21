@@ -6,7 +6,10 @@
     <title>Scheduler</title>
     <link rel="icon" type="image/png" href="./isha-logo.png" />
     <link rel="stylesheet" href="./output.css" />
+    <script src="./test-utils.js" defer></script>
     <script src="./script.js" defer></script>
+    <!-- <link rel="stylesheet" href="https://alexfreik.github.io/lsm/scheduler/output.css" />
+    <script src="https://alexfreik.github.io/lsm/scheduler/script.js" defer></script> -->
   </head>
   <body class="bg-base-100 font-sans text-base-content">
     <div class="navbar bg-base-100">
@@ -22,7 +25,18 @@
       </div>
     </div>
 
-    <div id="calendar"></div>
+    <div id="calendar" class="overflow-scroll"></div>
+
+    <div class="drawer drawer-end">
+      <input id="drawer-checkbox" type="checkbox" class="drawer-toggle" />
+      <div class="drawer-content"></div>
+      <div class="drawer-side">
+        <label for="drawer-checkbox" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul id="sidebar-body" class="min-h-full w-96 bg-base-200/95 p-5 text-base-content">
+          <!-- Sidebar content here -->
+        </ul>
+      </div>
+    </div>
 
     <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
       <aside>

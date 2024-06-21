@@ -25,71 +25,6 @@ class SubEvent {
     }
 }
 
-function getMockEvents() {
-    return JSON.stringify([
-        {
-            name: 'IE 7 days',
-            lang: 'English',
-            allocation: [
-                [],
-                [
-                    [
-                        '131',
-                        new Date('2024-06-07T13:30:00.000Z'),
-                        new Date('2024-06-07T15:30:00.000Z'),
-                    ],
-                ],
-            ],
-            details: [],
-        },
-        {
-            name: 'Sadhguru Sahabhagi',
-            lang: 'Hindi',
-            allocation: [
-                [],
-                [
-                    [
-                        'upcoming',
-                        new Date('2024-06-07T01:30:00.000Z'),
-                        new Date('2024-06-07T05:00:00.000Z'),
-                    ],
-                ],
-            ],
-            details: [],
-        },
-        {
-            name: 'Sadhguru Sahabhagi',
-            lang: 'Hindi',
-            allocation: [
-                [],
-                [
-                    [
-                        '131',
-                        new Date('2024-06-07T01:30:00.000Z'),
-                        new Date('2024-06-07T05:00:00.000Z'),
-                    ],
-                ],
-            ],
-            details: [],
-        },
-        {
-            name: 'Sadhguru Sahabhagi',
-            lang: 'Hindi',
-            allocation: [
-                [],
-                [
-                    [
-                        '132',
-                        new Date('2024-06-08T01:30:00.000Z'),
-                        new Date('2024-06-08T05:00:00.000Z'),
-                    ],
-                ],
-            ],
-            details: [],
-        },
-    ]);
-}
-
 // ===== General Utils =====
 function getHourStr(hour) {
     console.assert(0 <= hour && hour <= 24, hour);
@@ -145,6 +80,27 @@ function getTimelineRange(events) {
     let maxH = new Date(maxTime).getHours();
     if (new Date(maxTime).getMinutes() !== 0) maxH += 1;
     return { minH: minH, maxH: maxH };
+}
+
+// ===== Sidebar Utils =====
+function showSidebar() {
+    document.getElementById('drawer-checkbox').checked = true;
+}
+
+function hideSidebar() {
+    document.getElementById('drawer-checkbox').checked = false;
+}
+
+function renderSidebar(event, columnNames) {
+    const sidebarBody = document.getElementById('sidebar-body');
+    let sidebarHtml = '';
+    columnNames.forEach((name, i) => {
+        sidebarHtml += `
+      <li class="text-xl mb-1"><div><span class="text-secondary">${i}</span>&nbsp; ${name}</div></li>
+      <li class="mb-2"><input type="text" value="${event.details[i]}"
+        class="input input-sm input-bordered w-full" disabled/></li >`;
+    });
+    sidebarBody.innerHTML = sidebarHtml;
 }
 
 // ===== Page Rendering =====
@@ -221,19 +177,29 @@ function renderEvents(eventGroups) {
             if (endM > 15) endRow += 1;
             else if (endM > 45) endRow += 2;
 
-            const roomEvents = document.getElementById('events-' + i + '-' + e.room);
-            roomEvents.innerHTML += `
-            <div class="bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
-              rounded-md border border-base-300 row-start-[${startRow}] row-end-[${endRow}]">
+            const eventElem = document.createElement('div');
+            eventElem.className = `bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
+              rounded-md border border-base-300 row-start-[${startRow}] row-end-[${endRow}]`;
+            eventElem.innerHTML += `
               <p class="font-semibold">${e.event.name}</p>
-              <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)} (${e.event.lang})</p>
-            </div>`;
+              <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)}
+                (${e.event.lang})</p>`;
+            eventElem.addEventListener('dblclick', () => {
+                hideSidebar();
+                renderSidebar(e.event, columnNames);
+                showSidebar();
+            });
+
+            const roomEvents = document.getElementById('events-' + i + '-' + e.room);
+            roomEvents.appendChild(eventElem);
         });
     }
 }
 
 function renderPage(data) {
-    const events = JSON.parse(data);
+    const parsedData = JSON.parse(data);
+    const events = parsedData[0];
+    columnNames = parsedData[1];
 
     events.forEach((e) => {
         e.allocation[0].forEach((a) => {
@@ -255,9 +221,11 @@ function renderPage(data) {
     renderEvents(eventGroups);
 }
 
+let columnNames = null;
 if (typeof google !== 'undefined') {
-    console.log('Prod mode');
+    // Prod mode
+    google.script.run.withSuccessHandler((data) => renderPage(data)).getEvents();
 } else {
-    console.log('Dev mode');
-    renderPage(getMockEvents());
+    // Dev mode
+    renderPage(getEventsMock());
 }

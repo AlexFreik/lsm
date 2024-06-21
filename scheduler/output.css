@@ -1346,6 +1346,114 @@ html {
   --tw-border-opacity: 0.2;
 }
 
+.drawer {
+  position: relative;
+  display: grid;
+  grid-auto-columns: max-content auto;
+  width: 100%;
+}
+
+.drawer-content {
+  grid-column-start: 2;
+  grid-row-start: 1;
+  min-width: 0px;
+}
+
+.drawer-side {
+  pointer-events: none;
+  position: fixed;
+  inset-inline-start: 0px;
+  top: 0px;
+  grid-column-start: 1;
+  grid-row-start: 1;
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  align-items: flex-start;
+  justify-items: start;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  overscroll-behavior: contain;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.drawer-side > .drawer-overlay {
+  position: sticky;
+  top: 0px;
+  place-self: stretch;
+  cursor: pointer;
+  background-color: transparent;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+.drawer-side > * {
+  grid-column-start: 1;
+  grid-row-start: 1;
+}
+
+.drawer-side > *:not(.drawer-overlay) {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  transition-duration: 300ms;
+  will-change: transform;
+  transform: translateX(-100%);
+}
+
+[dir="rtl"] .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(100%);
+}
+
+.drawer-toggle {
+  position: fixed;
+  height: 0px;
+  width: 0px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  opacity: 0;
+}
+
+.drawer-toggle:checked ~ .drawer-side {
+  pointer-events: auto;
+  visibility: visible;
+  overflow-y: auto;
+}
+
+.drawer-toggle:checked ~ .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(0%);
+}
+
+.drawer-end {
+  grid-auto-columns: auto max-content;
+}
+
+.drawer-end .drawer-toggle ~ .drawer-content {
+  grid-column-start: 1;
+}
+
+.drawer-end .drawer-toggle ~ .drawer-side {
+  grid-column-start: 2;
+  justify-items: end;
+}
+
+.drawer-end .drawer-toggle ~ .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(100%);
+}
+
+[dir="rtl"] .drawer-end .drawer-toggle ~ .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(-100%);
+}
+
+.drawer-end .drawer-toggle:checked ~ .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(0%);
+}
+
 @media (hover: hover) {
   .btm-nav > *.disabled:hover,
       .btm-nav > *[disabled]:hover {
@@ -1632,6 +1740,12 @@ html {
 .input-xs[type="number"]::-webkit-inner-spin-button {
   margin-top: -0.25rem;
   margin-bottom: -0.25rem;
+  margin-inline-end: -0px;
+}
+
+.input-sm[type="number"]::-webkit-inner-spin-button {
+  margin-top: 0px;
+  margin-bottom: 0px;
   margin-inline-end: -0px;
 }
 
@@ -2033,6 +2147,10 @@ input.tab:checked + .tab-content,
     border-color: var(--btn-color, var(--fallback-b2));
   }
 
+  .btn-primary {
+    --btn-color: var(--fallback-p);
+  }
+
   .btn-secondary {
     --btn-color: var(--fallback-s);
   }
@@ -2089,7 +2207,17 @@ input.tab:checked + .tab-content,
   outline-offset: 2px;
 }
 
+.btn-primary {
+  --tw-text-opacity: 1;
+  color: var(--fallback-pc,oklch(var(--pc)/var(--tw-text-opacity)));
+  outline-color: var(--fallback-p,oklch(var(--p)/1));
+}
+
 @supports (color: oklch(0% 0 0)) {
+  .btn-primary {
+    --btn-color: var(--p);
+  }
+
   .btn-secondary {
     --btn-color: var(--s);
   }
@@ -2373,6 +2501,16 @@ input.tab:checked + .tab-content,
   100% {
     background-position-y: 0;
   }
+}
+
+.drawer-toggle:checked ~ .drawer-side > .drawer-overlay {
+  background-color: #0006;
+}
+
+.drawer-toggle:focus-visible ~ .drawer-content label.drawer-button {
+  outline-style: solid;
+  outline-width: 2px;
+  outline-offset: 2px;
 }
 
 .input input {
@@ -3178,6 +3316,41 @@ input.tab:checked + .tab-content,
   padding: 0px;
 }
 
+.drawer-open > .drawer-toggle {
+  display: none;
+}
+
+.drawer-open > .drawer-toggle ~ .drawer-side {
+  pointer-events: auto;
+  visibility: visible;
+  position: sticky;
+  display: block;
+  width: auto;
+  overscroll-behavior: auto;
+}
+
+.drawer-open > .drawer-toggle ~ .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(0%);
+}
+
+[dir="rtl"] .drawer-open > .drawer-toggle ~ .drawer-side > *:not(.drawer-overlay) {
+  transform: translateX(0%);
+}
+
+.drawer-open > .drawer-toggle:checked ~ .drawer-side {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+.drawer-open > .drawer-side {
+  overflow-y: auto;
+}
+
+html:has(.drawer-toggle:checked) {
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+}
+
 .input-xs {
   height: 1.5rem;
   padding-left: 0.5rem;
@@ -3194,6 +3367,14 @@ input.tab:checked + .tab-content,
   font-size: 1.125rem;
   line-height: 1.75rem;
   line-height: 2;
+}
+
+.input-sm {
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  font-size: 0.875rem;
+  line-height: 2rem;
 }
 
 .join.join-vertical {
@@ -3325,6 +3506,11 @@ input.tab:checked + .tab-content,
 
 .card-normal .card-title {
   margin-bottom: 0.75rem;
+}
+
+.drawer-open > .drawer-toggle ~ .drawer-side > .drawer-overlay {
+  cursor: default;
+  background-color: transparent;
 }
 
 .join.join-vertical > :where(*:not(:first-child)) {
@@ -3831,6 +4017,10 @@ input.tab:checked + .tab-content,
   margin-top: 1.25rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .inline {
   display: inline;
 }
@@ -3861,6 +4051,10 @@ input.tab:checked + .tab-content,
 
 .h-full {
   height: 100%;
+}
+
+.min-h-full {
+  min-height: 100%;
 }
 
 .min-h-screen {
@@ -4104,6 +4298,10 @@ input.tab:checked + .tab-content,
   overflow: hidden;
 }
 
+.overflow-scroll {
+  overflow: scroll;
+}
+
 .rounded-3xl {
   border-radius: 1.5rem;
 }
@@ -4176,12 +4374,32 @@ input.tab:checked + .tab-content,
   background-color: var(--fallback-nc,oklch(var(--nc)/var(--tw-bg-opacity)));
 }
 
+.bg-base-200\/75 {
+  background-color: var(--fallback-b2,oklch(var(--b2)/0.75));
+}
+
+.bg-base-200\/80 {
+  background-color: var(--fallback-b2,oklch(var(--b2)/0.8));
+}
+
+.bg-base-200\/90 {
+  background-color: var(--fallback-b2,oklch(var(--b2)/0.9));
+}
+
+.bg-base-200\/95 {
+  background-color: var(--fallback-b2,oklch(var(--b2)/0.95));
+}
+
 .p-2 {
   padding: 0.5rem;
 }
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-5 {
+  padding: 1.25rem;
 }
 
 .px-1 {
@@ -4211,6 +4429,10 @@ input.tab:checked + .tab-content,
 
 .pb-\[56\.25\%\] {
   padding-bottom: 56.25%;
+}
+
+.pl-5 {
+  padding-left: 1.25rem;
 }
 
 .text-center {
