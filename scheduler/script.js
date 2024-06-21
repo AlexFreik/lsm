@@ -91,13 +91,20 @@ function hideSidebar() {
     document.getElementById('drawer-checkbox').checked = false;
 }
 
+function escapeHTML(str) {
+    return new Option(str).innerHTML;
+}
+
 function renderSidebar(event, columnNames) {
     const sidebarBody = document.getElementById('sidebar-body');
     let sidebarHtml = '';
     columnNames.forEach((name, i) => {
+        const value = event.details[i];
+        if (value === '') return;
+
         sidebarHtml += `
-      <li class="text-xl mb-1"><div><span class="text-secondary">${i}</span>&nbsp; ${name}</div></li>
-      <li class="mb-2"><input type="text" value="${event.details[i]}"
+      <li class="text-xl"><span class="text-secondary">${i}</span>&nbsp; ${escapeHTML(name)}</li>
+      <li class="mb-2"><input type="text" value='${escapeHTML(value)}'
         class="input input-sm input-bordered w-full" disabled/></li >`;
     });
     sidebarBody.innerHTML = sidebarHtml;
