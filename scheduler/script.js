@@ -1,3 +1,8 @@
+const ALLOCATION_COL = 2;
+const START_DATE_COL = 9;
+const START_TIME_COL = 10;
+const END_TIME_COL = 11;
+
 const ROOMS = [
     { id: '131', description: 'Storage' },
     { id: '132', description: '' },
@@ -95,17 +100,55 @@ function escapeHTML(str) {
     return new Option(str).innerHTML;
 }
 
+function getDateString(date, timeZone = 'Asia/Kolkata') {
+    return new Date(date)
+        .toLocaleString('sv-SE', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            timeZone: timeZone,
+        })
+        .replace(' ', 'T');
+}
+
 function renderSidebar(event, columnNames) {
     const sidebarBody = document.getElementById('sidebar-body');
     let sidebarHtml = '';
+
+    const getAllocHtml = (a) => {
+        console.assert(a[0] !== '');
+        return `
+        <li class="mb-2">
+        <select class="select w-24 select-sm">
+          <option value='' disabled>Room</option>
+          ${ROOMS.map((r) => `<option value=${r.id} ${a[0] === r.id ? 'selected' : ''}>${r.id}</option>`)}
+        </select>
+        <input type="datetime-local" class="input input-sm" value="${getDateString(a[1])}"></input>
+        <input type="datetime-local" class="input input-sm" value="${getDateString(a[2])}"></input>
+        </li>`;
+    };
+
     columnNames.forEach((name, i) => {
         const value = event.details[i];
         if (value === '') return;
 
-        sidebarHtml += `
-      <li class="text-xl"><span class="text-secondary">${i}</span>&nbsp; ${escapeHTML(name)}</li>
-      <li class="mb-2"><input type="text" value='${escapeHTML(value)}'
-        class="input input-sm input-bordered w-full" disabled/></li >`;
+        sidebarHtml += `<li class="text-xl"><span class="text-secondary">${i}</span>&nbsp; ${escapeHTML(name)}</li>`;
+
+        if (i === ALLOCATION_COL) {
+            event.allocation[0].forEach((a) => (sidebarHtml += getAllocHtml(a)));
+            event.allocation[1].forEach((a) => (sidebarHtml += getAllocHtml(a)));
+        } else if (i === START_DATE_COL) {
+            sidebarHtml += `<li class="mb-2 text-gray-500">${getDateString(event.details[i]).split('T')[0]}</li>`;
+        } else if (i === START_TIME_COL || i === END_TIME_COL) {
+            console.log(event.details[i]);
+            sidebarHtml += `<li class="mb-2 text-gray-500">${getDateString(event.details[i]).split('T')[1]}</li>`;
+        } else {
+            sidebarHtml += `
+              <li class="mb-2 text-gray-500">${escapeHTML(value)}</li>`;
+        }
     });
     sidebarBody.innerHTML = sidebarHtml;
 }
@@ -210,10 +253,12 @@ function renderPage(data) {
 
     events.forEach((e) => {
         e.allocation[0].forEach((a) => {
+            a[0] = String(a[0]);
             a[1] = new Date(a[1]);
             a[2] = new Date(a[2]);
         });
         e.allocation[1].forEach((a) => {
+            a[0] = String(a[0]);
             a[1] = new Date(a[1]);
             a[2] = new Date(a[2]);
         });

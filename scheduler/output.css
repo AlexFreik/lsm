@@ -3421,6 +3421,20 @@ html:has(.drawer-toggle:checked) {
   position: absolute;
 }
 
+.select-sm {
+  height: 2rem;
+  min-height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 2rem;
+  font-size: 0.875rem;
+  line-height: 2rem;
+}
+
+[dir="rtl"] .select-sm {
+  padding-left: 2rem;
+  padding-right: 0.75rem;
+}
+
 .select-xs {
   height: 1.5rem;
   min-height: 1.5rem;
@@ -4088,6 +4102,10 @@ html:has(.drawer-toggle:checked) {
   width: 200px;
 }
 
+.w-\[550px\] {
+  width: 550px;
+}
+
 .w-fit {
   width: -moz-fit-content;
   width: fit-content;
@@ -4482,6 +4500,26 @@ html:has(.drawer-toggle:checked) {
 .text-secondary {
   --tw-text-opacity: 1;
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
+}
+
+.text-gray-900 {
+  --tw-text-opacity: 1;
+  color: rgb(17 24 39 / var(--tw-text-opacity));
+}
+
+.text-gray-500 {
+  --tw-text-opacity: 1;
+  color: rgb(107 114 128 / var(--tw-text-opacity));
+}
+
+.text-gray-300 {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.text-gray-400 {
+  --tw-text-opacity: 1;
+  color: rgb(156 163 175 / var(--tw-text-opacity));
 }
 
 .shadow-xl {
