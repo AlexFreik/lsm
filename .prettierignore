@@ -5,3 +5,4 @@ bundle.json
 package-lock.json
 .vscode
 output.css
+scheduler/test-utils.js
