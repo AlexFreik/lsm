@@ -1,18 +1,3 @@
-const ALLOCATION_COL = 2;
-const START_DATE_COL = 9;
-const START_TIME_COL = 10;
-const END_TIME_COL = 11;
-
-const ROOMS = [
-    { id: '131', description: 'Storage' },
-    { id: '132', description: '' },
-    { id: '133', description: 'Monitoring' },
-    { id: '134', description: '' },
-    { id: '135', description: '' },
-    { id: '136', description: '' },
-    { id: 'upcoming', description: '' },
-];
-
 class SubEvent {
     /**
      * @param {object} event
@@ -21,12 +6,12 @@ class SubEvent {
      * @param {date} end
      * @param {boolean} dryrun
      */
-    constructor(event, room, start, end, dryrun) {
+    constructor(event, room, start, end, color) {
         this.event = event;
         this.room = room;
         this.start = start;
         this.end = end;
-        this.dryrun = dryrun;
+        this.color = color;
     }
 }
 
@@ -54,8 +39,7 @@ function formatTime(num) {
 function flattenEvents(events) {
     const flat = [];
     events.forEach((e) => {
-        e.allocation[0].forEach((a) => flat.push(new SubEvent(e, a[0], a[1], a[2], true)));
-        e.allocation[1].forEach((a) => flat.push(new SubEvent(e, a[0], a[1], a[2], false)));
+        e.alloc.forEach((a) => flat.push(new SubEvent(e, a.room, a.start, a.end, a.color)));
     });
     return flat;
 }
@@ -115,42 +99,53 @@ function getDateString(date, timeZone = 'Asia/Kolkata') {
 }
 
 function renderSidebar(event, columnNames) {
-    const sidebarBody = document.getElementById('sidebar-body');
+    const sidebarElem = document.getElementById('sidebar-body');
     let sidebarHtml = '';
-
-    const getAllocHtml = (a) => {
-        console.assert(a[0] !== '');
-        return `
-        <li class="mb-2">
-        <select class="select w-24 select-sm">
-          <option value='' disabled>Room</option>
-          ${ROOMS.map((r) => `<option value=${r.id} ${a[0] === r.id ? 'selected' : ''}>${r.id}</option>`)}
-        </select>
-        <input type="datetime-local" class="input input-sm" value="${getDateString(a[1])}"></input>
-        <input type="datetime-local" class="input input-sm" value="${getDateString(a[2])}"></input>
-        </li>`;
-    };
 
     columnNames.forEach((name, i) => {
         const value = event.details[i];
         if (value === '') return;
 
         sidebarHtml += `<li class="text-xl"><span class="text-secondary">${i}</span>&nbsp; ${escapeHTML(name)}</li>`;
+        sidebarHtml += `<li class="mb-2 text-gray-500">`;
+        if (i === columnNumbers.alloc) {
+            event.alloc.forEach((a) => {
+                console.assert(a.room);
+                sidebarHtml += `
+                <div class="rounded-box border w-fit mb-2 border-neutral-content px-2">
+                  <div class="inline-block align-middle">
+                    <select class="select w-24 select-sm">
+                      <option value='' disabled>Room</option>
+                      ${rooms.map((r) => `<option value="${r.id}" ${a.room === r.id ? 'selected' : ''}>${r.id}</option>`)}
+                    </select>
+                    <br />
+                    <select class="select w-24 select-sm">
+                      <option value='' disabled>Colors</option>
+                      ${colors.map((c) => `<option value="${c}" ${a.color === c ? 'selected' : ''}>${c}</option>`)}
+                    </select>
+                  </div>
+                  <div class="inline-block align-middle">
+                    <input type="datetime-local" class="input input-sm" value="${getDateString(a.start)}"></input>
+                    <br />
+                    <input type="datetime-local" class="input input-sm" value="${getDateString(a.end)}"></input>
+                  </div>
 
-        if (i === ALLOCATION_COL) {
-            event.allocation[0].forEach((a) => (sidebarHtml += getAllocHtml(a)));
-            event.allocation[1].forEach((a) => (sidebarHtml += getAllocHtml(a)));
-        } else if (i === START_DATE_COL) {
-            sidebarHtml += `<li class="mb-2 text-gray-500">${getDateString(event.details[i]).split('T')[0]}</li>`;
-        } else if (i === START_TIME_COL || i === END_TIME_COL) {
-            console.log(event.details[i]);
-            sidebarHtml += `<li class="mb-2 text-gray-500">${getDateString(event.details[i]).split('T')[1]}</li>`;
+                  <button class="btn btn-accent btn-xs inline-block align-middle">remove</button>
+                </div>`;
+            });
+            sidebarHtml += `<div class="w-[377px] text-center">
+              <button class="btn btn-secondary btn-xs mx-auto">add</button>
+            </div>`;
+        } else if (i === columnNumbers.startDate) {
+            sidebarHtml += getDateString(event.details[i]).split('T')[0];
+        } else if (i === columnNumbers.startTime || i === columnNumbers.endTime) {
+            sidebarHtml += getDateString(event.details[i]).split('T')[1];
         } else {
-            sidebarHtml += `
-              <li class="mb-2 text-gray-500">${escapeHTML(value)}</li>`;
+            sidebarHtml += escapeHTML(value);
         }
     });
-    sidebarBody.innerHTML = sidebarHtml;
+    sidebarHtml += `</li>`;
+    sidebarElem.innerHTML = sidebarHtml;
 }
 
 // ===== Page Rendering =====
@@ -159,40 +154,41 @@ function renderCalendar(year, month, eventGroups) {
 
     const monthStr = new Date(year, month, 1).toLocaleString('en-US', { month: 'short' });
 
+    let calendarHtml = '';
     for (let i = 1; i < eventGroups.length; i++) {
         const dayStr = new Date(year, month, i).toLocaleString('en-US', { weekday: 'short' });
-        calendar.innerHTML += `
+        calendarHtml += `
           <div
+            id="date-${month}-${i}"
             class="m-auto w-[200px] text-center rounded-xl bg-neutral-content text-2xl font-bold text-neutral font-mono">
             ${i} ${monthStr}: ${dayStr}
           </div>`;
 
         const group = eventGroups[i];
         if (group.length === 0) {
-            calendar.innerHTML += `<div class="text-center">No events...</div>`;
+            calendarHtml += `<div class="text-center">No events...</div>`;
             continue;
         }
 
-        const container = document.createElement('div');
-        container.className = 'm-8 grid grid-cols-[auto_1fr] gap-2.5';
-        calendar.appendChild(container);
+        calendarHtml += `<div class="m-8 grid grid-cols-[auto_1fr] gap-2.5">`;
 
         const range = getTimelineRange(group);
         let scale = range.maxH - range.minH;
         console.assert(scale > 0, range.minH, range.maxH);
 
-        let timeline =
+        // Timeline
+        calendarHtml +=
             '<div id="timeline" class="grid grid-rows-[repeat(1,_50px)] grid-cols-[repeat(1,50px)]"><div></div>';
         for (let i = 0; i < scale; i++) {
-            timeline += `
+            calendarHtml += `
           <div class="border-t border-dashed border-neutral-content">${getHourStr(range.minH + i)}</div>`;
         }
-        timeline += `</div>`;
-        container.innerHTML = timeline;
+        calendarHtml += `</div>`;
 
-        let rooms = '<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">';
-        ROOMS.forEach((r) => {
-            rooms += `
+        // Rooms
+        calendarHtml += '<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">';
+        rooms.forEach((r) => {
+            calendarHtml += `
         <div>
           <div class="h-[50px] flex gap-4">
             <p class="inline text-3xl font-semibold">${r.id}</p>
@@ -201,9 +197,10 @@ function renderCalendar(year, month, eventGroups) {
           <div class="grid grid-rows-[repeat(${scale * 2},_25px)] rounded-md bg-neutral" id="events-${i}-${r.id}"></div>
         </div>`;
         });
-        rooms += '</div>';
-        container.innerHTML += rooms;
+        calendarHtml += '</div>';
+        calendarHtml += '</div>';
     }
+    calendar.innerHTML = calendarHtml;
 }
 
 function renderEvents(eventGroups) {
@@ -248,19 +245,17 @@ function renderEvents(eventGroups) {
 
 function renderPage(data) {
     const parsedData = JSON.parse(data);
-    const events = parsedData[0];
-    columnNames = parsedData[1];
+    events = parsedData.events;
+    columnNames = parsedData.columnNames;
+    columnNumbers = parsedData.columnNumbers;
+    rooms = parsedData.rooms;
+    colors = parsedData.colors;
 
     events.forEach((e) => {
-        e.allocation[0].forEach((a) => {
-            a[0] = String(a[0]);
-            a[1] = new Date(a[1]);
-            a[2] = new Date(a[2]);
-        });
-        e.allocation[1].forEach((a) => {
-            a[0] = String(a[0]);
-            a[1] = new Date(a[1]);
-            a[2] = new Date(a[2]);
+        e.alloc.forEach((a) => {
+            a.room = String(a.room);
+            a.start = new Date(a.start);
+            a.end = new Date(a.end);
         });
     });
 
@@ -273,7 +268,12 @@ function renderPage(data) {
     renderEvents(eventGroups);
 }
 
+let events = null;
 let columnNames = null;
+let columnNumbers = null;
+let rooms = null;
+let colors = null;
+
 if (typeof google !== 'undefined') {
     // Prod mode
     google.script.run.withSuccessHandler((data) => renderPage(data)).getEvents();
