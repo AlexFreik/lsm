@@ -4002,6 +4002,16 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 2rem;
 }
 
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.mx-5 {
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+}
+
 .mb-2 {
   margin-bottom: 0.5rem;
 }
@@ -4020,6 +4030,10 @@ html:has(.drawer-toggle:checked) {
 
 .mt-5 {
   margin-top: 1.25rem;
+}
+
+.mb-5 {
+  margin-bottom: 1.25rem;
 }
 
 .inline-block {
@@ -4129,6 +4143,46 @@ html:has(.drawer-toggle:checked) {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-\[20px\] {
+  width: 20px;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-36 {
+  width: 9rem;
+}
+
+.w-\[150px\] {
+  width: 150px;
+}
+
+.w-\[400px\] {
+  width: 400px;
+}
+
+.w-\[350px\] {
+  width: 350px;
+}
+
+.w-\[10px\] {
+  width: 10px;
+}
+
+.w-\[25px\] {
+  width: 25px;
+}
+
+.w-\[30px\] {
+  width: 30px;
+}
+
+.w-\[35px\] {
+  width: 35px;
 }
 
 .min-w-full {
@@ -4415,6 +4469,10 @@ html:has(.drawer-toggle:checked) {
   padding: 1.25rem;
 }
 
+.p-3 {
+  padding: 0.75rem;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -4445,12 +4503,45 @@ html:has(.drawer-toggle:checked) {
   padding-bottom: 1.5rem;
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 .pb-\[56\.25\%\] {
   padding-bottom: 56.25%;
 }
 
+.pl-1 {
+  padding-left: 0.25rem;
+}
+
+.pr-0 {
+  padding-right: 0px;
+}
+
+.pl-2 {
+  padding-left: 0.5rem;
+}
+
+.pl-3 {
+  padding-left: 0.75rem;
+}
+
+.pl-0 {
+  padding-left: 0px;
+}
+
+.text-left {
+  text-align: left;
+}
+
 .text-center {
   text-align: center;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .align-middle {
@@ -4487,6 +4578,11 @@ html:has(.drawer-toggle:checked) {
 
 .text-xl {
   font-size: 1.25rem;
+  line-height: 1.75rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
   line-height: 1.75rem;
 }
 

@@ -100,7 +100,14 @@ function getDateString(date, timeZone = 'Asia/Kolkata') {
 
 function renderSidebar(event, columnNames) {
     const sidebarElem = document.getElementById('sidebar-body');
-    let sidebarHtml = '';
+    let sidebarHtml = `
+      <li class="mb-5 w-fit">
+        <div class="text-xl text-secondary inline-block align-middle">Table Row: <span class="font-semibold">05</span></div>
+
+        <div class="inline-block align-middle w-[35px]"></div>
+        <button onclick="hideSidebar();" class="btn btn-outline btn-sm inline-block align-middle">cancel</button>
+        <button onclick="hideSidebar();" class="btn btn-secondary btn-sm text-right inline-block align-middle">save</button>
+      </li>`;
 
     columnNames.forEach((name, i) => {
         const value = event.details[i];
@@ -112,25 +119,25 @@ function renderSidebar(event, columnNames) {
             event.alloc.forEach((a) => {
                 console.assert(a.room);
                 sidebarHtml += `
-                <div class="rounded-box border w-fit mb-2 border-neutral-content px-2">
-                  <div class="inline-block align-middle">
-                    <select class="select w-24 select-sm">
+                <div class="rounded-box border w-fit mb-2 px-2 border-neutral-content">
+                  <div class="inline-block align-middle ">
+                    <select class="select w-16 select-sm pl-0">
                       <option value='' disabled>Room</option>
                       ${rooms.map((r) => `<option value="${r.id}" ${a.room === r.id ? 'selected' : ''}>${r.id}</option>`)}
                     </select>
                     <br />
-                    <select class="select w-24 select-sm">
-                      <option value='' disabled>Colors</option>
+                    <select class="select w-16 select-sm pl-0 ">
+                      <option value='' disabled>Color</option>
                       ${colors.map((c) => `<option value="${c}" ${a.color === c ? 'selected' : ''}>${c}</option>`)}
                     </select>
                   </div>
                   <div class="inline-block align-middle">
-                    <input type="datetime-local" class="input input-sm" value="${getDateString(a.start)}"></input>
+                    <input type="datetime-local" class="input input-sm px-0 w-[150px]" value="${getDateString(a.start)}"></input>
                     <br />
-                    <input type="datetime-local" class="input input-sm" value="${getDateString(a.end)}"></input>
+                    <input type="datetime-local" class="input input-sm px-0 w-[150px]" value="${getDateString(a.end)}"></input>
                   </div>
 
-                  <button class="btn btn-accent btn-xs inline-block align-middle">remove</button>
+                  <button class="btn btn-outline btn-xs inline-block align-middle">remove</button>
                 </div>`;
             });
             sidebarHtml += `<div class="w-[377px] text-center">
