@@ -98,6 +98,18 @@ function getDateString(date, timeZone = 'Asia/Kolkata') {
         .replace(' ', 'T');
 }
 
+function toggleDateView(month, date, isMax) {
+  const maxView = document.getElementById(`max-${month}-${date}`);
+  const minView = document.getElementById(`min-${month}-${date}`);
+
+    maxView.classList.remove(isMax ? 'hidden' : 'grid');
+    maxView.classList.add(isMax ? 'grid' : 'hidden');
+
+    minView.classList.remove(isMax ? 'grid' : 'hidden');
+    minView.classList.add(isMax ? 'hidden' : 'grid');
+}
+
+// ===== Page Rendering =====
 function renderSidebar(event, columnNames) {
     const sidebarElem = document.getElementById('sidebar-body');
     let sidebarHtml = `
@@ -155,56 +167,91 @@ function renderSidebar(event, columnNames) {
     sidebarElem.innerHTML = sidebarHtml;
 }
 
-// ===== Page Rendering =====
 function renderCalendar(year, month, eventGroups) {
     const calendar = document.getElementById('calendar');
 
     const monthStr = new Date(year, month, 1).toLocaleString('en-US', { month: 'short' });
 
-    let calendarHtml = '';
+    let calendarHtml = `
+      <div class="m-8 grid grid-cols-[90px_auto] gap-2.5 sticky top-0">
+        <div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1 bg-base-100">`;
+    rooms.forEach((r) => {
+        calendarHtml += `
+      <div class="h-[50px] flex gap-4">
+        <p class="inline text-3xl font-semibold">${r.id}</p>
+        <p class="inline font-thin">${r.description}</p>
+    </div>`;
+    });
+    calendarHtml += '</div>';
+
+    calendarHtml += '</div>';
+
     for (let i = 1; i < eventGroups.length; i++) {
         const dayStr = new Date(year, month, i).toLocaleString('en-US', { weekday: 'short' });
+
+        // ===== Minimized View =====
+        calendarHtml += `<div id="min-${month}-${i}" class="m-8 grid grid-cols-[auto_auto] gap-2.5">`;
+
+        // Date
         calendarHtml += `
-          <div
-            id="date-${month}-${i}"
-            class="m-auto w-[200px] text-center rounded-xl bg-neutral-content text-2xl font-bold text-neutral font-mono">
-            ${i} ${monthStr}: ${dayStr}
+          <div class="grid grid-rows-[repeat(1,_50px)] grid-cols-[repeat(1,90px)]">
+            <div
+              onclick="toggleDateView(${month}, ${i}, true)"
+              class="w-[80px] h-[40px] m-auto text-center rounded-xl bg-neutral-content
+                  text-neutral cursor-pointer">
+              <div class="font-mono text-lg font-bold">${i} ${monthStr}</div>
+              <div class="font-mono -mt-2">${dayStr}</div>
+            </div>
           </div>`;
 
+        // Rooms
+        calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">`;
+        rooms.forEach((r) => {
+            calendarHtml += ` <div class="rounded-md bg-neutral" id="min-events-${i}-${r.id}"></div>`;
+        });
+        calendarHtml += '</div>';
+
+        calendarHtml += '</div>';
+
+        // ===== Maximised View =====
         const group = eventGroups[i];
-        if (group.length === 0) {
-            calendarHtml += `<div class="text-center">No events...</div>`;
-            continue;
-        }
 
-        calendarHtml += `<div class="m-8 grid grid-cols-[auto_1fr] gap-2.5">`;
-
-        const range = getTimelineRange(group);
+        const range = group.length === 0 ? { minH: 5, maxH: 5 } : getTimelineRange(group);
         let scale = range.maxH - range.minH;
-        console.assert(scale > 0, range.minH, range.maxH);
+        console.assert(scale >= 0, range.minH, range.maxH);
+
+        calendarHtml += `<div id="max-${month}-${i}" class="m-8 hidden grid-cols-[auto_auto] gap-2.5">`;
+
+        // Date
+        calendarHtml += `
+          <div
+            onclick="toggleDateView(${month}, ${i}, false)"
+            id="timeline"
+            class="grid col-start-2 grid-rows-[repeat(1,30px)] grid-cols-[auto]]
+              rounded-xl bg-neutral-content cursor-pointer">
+            <div class="h-[30px] m-auto text-center text-neutral">
+              <span class="font-mono text-lg font-bold">${i} ${monthStr}</span>
+              <span class="font-mono -mt-2">${dayStr}</span>
+            </div>
+          </div>`;
 
         // Timeline
-        calendarHtml +=
-            '<div id="timeline" class="grid grid-rows-[repeat(1,_50px)] grid-cols-[repeat(1,50px)]"><div></div>';
+        calendarHtml += `
+          <div class="grid grid-rows-[repeat(1,_50px)] grid-cols-[repeat(1,90px)]">`;
         for (let i = 0; i < scale; i++) {
             calendarHtml += `
-          <div class="border-t border-dashed border-neutral-content">${getHourStr(range.minH + i)}</div>`;
+          <div class="border-t border-dashed border-neutral-content text-right">${getHourStr(range.minH + i)}</div>`;
         }
         calendarHtml += `</div>`;
 
         // Rooms
-        calendarHtml += '<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">';
+        calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">`;
         rooms.forEach((r) => {
             calendarHtml += `
-        <div>
-          <div class="h-[50px] flex gap-4">
-            <p class="inline text-3xl font-semibold">${r.id}</p>
-            <p class="inline font-thin">${r.description}</p>
-          </div>
-          <div class="grid grid-rows-[repeat(${scale * 2},_25px)] rounded-md bg-neutral" id="events-${i}-${r.id}"></div>
-        </div>`;
+          <div class="grid grid-rows-[repeat(${scale * 2},_25px)] rounded-md bg-neutral" id="events-${i}-${r.id}"></div>`;
         });
         calendarHtml += '</div>';
+
         calendarHtml += '</div>';
     }
     calendar.innerHTML = calendarHtml;
