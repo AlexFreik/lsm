@@ -99,8 +99,8 @@ function getDateString(date, timeZone = 'Asia/Kolkata') {
 }
 
 function toggleDateView(month, date, isMax) {
-  const maxView = document.getElementById(`max-${month}-${date}`);
-  const minView = document.getElementById(`min-${month}-${date}`);
+    const maxView = document.getElementById(`max-${month}-${date}`);
+    const minView = document.getElementById(`min-${month}-${date}`);
 
     maxView.classList.remove(isMax ? 'hidden' : 'grid');
     maxView.classList.add(isMax ? 'grid' : 'hidden');
@@ -144,17 +144,24 @@ function renderSidebar(event, columnNames) {
                     </select>
                   </div>
                   <div class="inline-block align-middle">
-                    <input type="datetime-local" class="input input-sm px-0 w-[150px]" value="${getDateString(a.start)}"></input>
+                    <input
+                      type="datetime-local"
+                      class="input input-sm px-0 w-[150px]"
+                      value="${getDateString(a.start)}" />
                     <br />
-                    <input type="datetime-local" class="input input-sm px-0 w-[150px]" value="${getDateString(a.end)}"></input>
+                    <input
+                      type="datetime-local"
+                      class="input input-sm px-0 w-[150px]"
+                      value="${getDateString(a.end)}" />
                   </div>
 
                   <button class="btn btn-outline btn-xs inline-block align-middle">remove</button>
                 </div>`;
             });
-            sidebarHtml += `<div class="w-[377px] text-center">
-              <button class="btn btn-secondary btn-xs mx-auto">add</button>
-            </div>`;
+            sidebarHtml += `
+              <div class="w-[326px] text-center">
+                <button class="btn btn-secondary btn-xs mx-auto">add</button>
+              </div>`;
         } else if (i === columnNumbers.startDate) {
             sidebarHtml += getDateString(event.details[i]).split('T')[0];
         } else if (i === columnNumbers.startTime || i === columnNumbers.endTime) {
@@ -248,7 +255,10 @@ function renderCalendar(year, month, eventGroups) {
         calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">`;
         rooms.forEach((r) => {
             calendarHtml += `
-          <div class="grid grid-rows-[repeat(${scale * 2},_25px)] rounded-md bg-neutral" id="events-${i}-${r.id}"></div>`;
+              <div
+                class="grid grid-rows-[repeat(${scale * 2},_25px)] rounded-md bg-neutral"
+                id="max-events-${i}-${r.id}">
+              </div>`;
         });
         calendarHtml += '</div>';
 
@@ -290,9 +300,23 @@ function renderEvents(eventGroups) {
                 renderSidebar(e.event, columnNames);
                 showSidebar();
             });
-
-            const roomEvents = document.getElementById('events-' + i + '-' + e.room);
+            const roomEvents = document.getElementById('max-events-' + i + '-' + e.room);
             roomEvents.appendChild(eventElem);
+
+            const eventElemMin = document.createElement('div');
+            eventElemMin.className = `bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
+              rounded-md border border-base-300`;
+            eventElemMin.innerHTML += `
+              <p class="font-semibold">${e.event.name}</p>
+              <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)}
+                (${e.event.lang})</p>`;
+            eventElemMin.addEventListener('dblclick', () => {
+                hideSidebar();
+                renderSidebar(e.event, columnNames);
+                showSidebar();
+            });
+            const roomEventsMin = document.getElementById('min-events-' + i + '-' + e.room);
+            roomEventsMin.appendChild(eventElemMin);
         });
     }
 }
