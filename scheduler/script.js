@@ -123,7 +123,7 @@ function renderSidebar(event, columnNames) {
 
     columnNames.forEach((name, i) => {
         const value = event.details[i];
-        if (value === '') return;
+        if (value === '' && i !== columnNumbers.alloc) return;
 
         sidebarHtml += `<li class="text-xl"><span class="text-secondary">${i}</span>&nbsp; ${escapeHTML(name)}</li>`;
         sidebarHtml += `<li class="mb-2 text-gray-500">`;
