@@ -180,7 +180,7 @@ function renderCalendar(year, month, eventGroups) {
     const monthStr = new Date(year, month, 1).toLocaleString('en-US', { month: 'short' });
 
     let calendarHtml = `
-      <div class="m-8 grid grid-cols-[90px_auto] gap-2.5 sticky top-0">
+      <div class="m-3 grid grid-cols-[90px_auto] gap-2.5 sticky top-0">
         <div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1 bg-base-100">`;
     rooms.forEach((r) => {
         calendarHtml += `
@@ -197,7 +197,7 @@ function renderCalendar(year, month, eventGroups) {
         const dayStr = new Date(year, month, i).toLocaleString('en-US', { weekday: 'short' });
 
         // ===== Minimized View =====
-        calendarHtml += `<div id="min-${month}-${i}" class="m-8 grid grid-cols-[auto_auto] gap-2.5">`;
+        calendarHtml += `<div id="min-${month}-${i}" class="m-3 grid grid-cols-[auto_auto] gap-2.5">`;
 
         // Date
         calendarHtml += `
@@ -227,7 +227,7 @@ function renderCalendar(year, month, eventGroups) {
         let scale = range.maxH - range.minH;
         console.assert(scale >= 0, range.minH, range.maxH);
 
-        calendarHtml += `<div id="max-${month}-${i}" class="m-8 hidden grid-cols-[auto_auto] gap-2.5">`;
+        calendarHtml += `<div id="max-${month}-${i}" class="m-3 hidden grid-cols-[auto_auto] gap-2.5">`;
 
         // Date
         calendarHtml += `
@@ -290,7 +290,7 @@ function renderEvents(eventGroups) {
 
             const eventElem = document.createElement('div');
             eventElem.className = `bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
-              rounded-md border border-base-300 row-start-[${startRow}] row-end-[${endRow}]`;
+              rounded-md border border-base-300 cursor-pointer row-start-[${startRow}] row-end-[${endRow}]`;
             eventElem.innerHTML += `
               <p class="font-semibold">${e.event.name}</p>
               <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)}
@@ -305,7 +305,7 @@ function renderEvents(eventGroups) {
 
             const eventElemMin = document.createElement('div');
             eventElemMin.className = `bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
-              rounded-md border border-base-300`;
+              rounded-md border border-base-300 cursor-pointer`;
             eventElemMin.innerHTML += `
               <p class="font-semibold">${e.event.name}</p>
               <p>${formatTime(startH)}:${formatTime(startM)} - ${formatTime(endH)}:${formatTime(endM)}
