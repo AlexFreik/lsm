@@ -7,8 +7,14 @@
     <link rel="icon" type="image/png" href="./isha-logo.png" />
     <link rel="stylesheet" href="./output.css" />
     <script src="./test-utils.js" defer></script>
+    <script src="./config.js" defer></script>
+    <script src="./utils.js" defer></script>
+    <script src="./sidebar.js" defer></script>
     <script src="./script.js" defer></script>
     <!-- <link rel="stylesheet" href="https://alexfreik.github.io/lsm/scheduler/output.css" />
+    <script src="https://alexfreik.github.io/lsm/scheduler/config.js" defer></script>
+    <script src="https://alexfreik.github.io/lsm/scheduler/utils.js" defer></script>
+    <script src="https://alexfreik.github.io/lsm/scheduler/sidebar.js" defer></script>
     <script src="https://alexfreik.github.io/lsm/scheduler/script.js" defer></script> -->
   </head>
   <body class="bg-base-100 font-sans text-base-content">
@@ -25,6 +31,10 @@
       </div>
     </div>
 
+    <div class="mx-auto mb-5 w-fit rounded-box border px-10 py-3">
+      Date: <input id="date-input" type="datetime-local" class="input text-secondary" /> &nbsp;&nbsp;&nbsp; Range:
+      <input id="range-input" type="number" min="1" max="180" type="text" value="10" class="input w-16 text-secondary" />
+    </div>
     <div id="calendar" class="">
       <div class="m-auto my-20 flex w-3/4 flex-col gap-8">
         <div class="skeleton h-10 w-full"></div>

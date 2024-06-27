@@ -4050,6 +4050,10 @@ html:has(.drawer-toggle:checked) {
   margin-top: 1.25rem;
 }
 
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -4175,6 +4179,10 @@ html:has(.drawer-toggle:checked) {
   width: 100vw;
 }
 
+.w-10 {
+  width: 2.5rem;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -4233,6 +4241,10 @@ html:has(.drawer-toggle:checked) {
 
 .grid-cols-\[repeat\(6\2c 200px\)_400px\] {
   grid-template-columns: repeat(6,200px) 400px;
+}
+
+.grid-cols-\[repeat\(7\2c 200px\)_400px\] {
+  grid-template-columns: repeat(7,200px) 400px;
 }
 
 .grid-rows-\[repeat\(1\2c 30px\)\] {
@@ -4467,6 +4479,10 @@ html:has(.drawer-toggle:checked) {
   padding: 1rem;
 }
 
+.p-5 {
+  padding: 1.25rem;
+}
+
 .px-0 {
   padding-left: 0px;
   padding-right: 0px;
@@ -4500,6 +4516,16 @@ html:has(.drawer-toggle:checked) {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .pb-\[56\.25\%\] {
@@ -4600,6 +4626,11 @@ html:has(.drawer-toggle:checked) {
 .text-secondary {
   --tw-text-opacity: 1;
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
+}
+
+.text-accent {
+  --tw-text-opacity: 1;
+  color: var(--fallback-a,oklch(var(--a)/var(--tw-text-opacity)));
 }
 
 .shadow-xl {

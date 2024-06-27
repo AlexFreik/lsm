@@ -1,10 +1,10 @@
-class SubEvent {
+class Session {
     /**
      * @param {object} event
      * @param {string} room
      * @param {date} start
      * @param {date} end
-     * @param {boolean} dryrun
+     * @param {string} color
      */
     constructor(event, room, start, end, color) {
         this.event = event;
@@ -15,33 +15,14 @@ class SubEvent {
     }
 }
 
-// ===== General Utils =====
-function getHourStr(hour) {
-    console.assert(0 <= hour && hour <= 24, hour);
-    if (hour <= 12) return hour + ' AM';
-    return hour - 12 + ' PM';
-}
-function daysInMonth(year, month) {
-    return new Date(year, (month + 1) % 12, 0).getDate();
-}
-
-function getFirstWeekday(year, month) {
-    return new Date(year, month, 1).getDay();
-}
-
-function formatTime(num) {
-    console.assert(num >= 0, num);
-    if (num < 10) return '0' + num;
-    return String(num);
-}
-
 // ===== Events Utils =====
 function flattenEvents(events) {
     const flat = [];
     events.forEach((e) => {
-        e.alloc.forEach((a) => flat.push(new SubEvent(e, a.room, a.start, a.end, a.color)));
+        e.alloc.forEach((a) => flat.push(new Session(e, a.room, a.start, a.end, a.color)));
     });
-    return flat;
+
+    return flat.sort((a, b) => a.start.getTime() - b.start.getTime());
 }
 
 // TODO: handle case when event spans over 2 days
@@ -71,109 +52,7 @@ function getTimelineRange(events) {
     return { minH: minH, maxH: maxH };
 }
 
-// ===== Sidebar Utils =====
-function showSidebar() {
-    document.getElementById('drawer-checkbox').checked = true;
-}
-
-function hideSidebar() {
-    document.getElementById('drawer-checkbox').checked = false;
-}
-
-function escapeHTML(str) {
-    return new Option(str).innerHTML;
-}
-
-function getDateString(date, timeZone = 'Asia/Kolkata') {
-    return new Date(date)
-        .toLocaleString('sv-SE', {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            timeZone: timeZone,
-        })
-        .replace(' ', 'T');
-}
-
-function toggleDateView(month, date, isMax) {
-    const maxView = document.getElementById(`max-${month}-${date}`);
-    const minView = document.getElementById(`min-${month}-${date}`);
-
-    maxView.classList.remove(isMax ? 'hidden' : 'grid');
-    maxView.classList.add(isMax ? 'grid' : 'hidden');
-
-    minView.classList.remove(isMax ? 'grid' : 'hidden');
-    minView.classList.add(isMax ? 'hidden' : 'grid');
-}
-
 // ===== Page Rendering =====
-function renderSidebar(event, columnNames) {
-    const sidebarElem = document.getElementById('sidebar-body');
-    let sidebarHtml = `
-      <li class="mb-5 w-fit">
-        <div class="text-xl text-secondary inline-block align-middle">Table Row: <span class="font-semibold">05</span></div>
-
-        <div class="inline-block align-middle w-[35px]"></div>
-        <button onclick="hideSidebar();" class="btn btn-outline btn-sm inline-block align-middle">cancel</button>
-        <button onclick="hideSidebar();" class="btn btn-secondary btn-sm text-right inline-block align-middle">save</button>
-      </li>`;
-
-    columnNames.forEach((name, i) => {
-        const value = event.details[i];
-        if (value === '' && i !== columnNumbers.alloc) return;
-
-        sidebarHtml += `<li class="text-xl"><span class="text-secondary">${i}</span>&nbsp; ${escapeHTML(name)}</li>`;
-        sidebarHtml += `<li class="mb-2 text-gray-500">`;
-        if (i === columnNumbers.alloc) {
-            event.alloc.forEach((a) => {
-                console.assert(a.room);
-                sidebarHtml += `
-                <div class="rounded-box border w-fit mb-2 px-2 border-neutral-content">
-                  <div class="inline-block align-middle ">
-                    <select class="select w-16 select-sm pl-0">
-                      <option value='' disabled>Room</option>
-                      ${rooms.map((r) => `<option value="${r.id}" ${a.room === r.id ? 'selected' : ''}>${r.id}</option>`)}
-                    </select>
-                    <br />
-                    <select class="select w-16 select-sm pl-0 ">
-                      <option value='' disabled>Color</option>
-                      ${colors.map((c) => `<option value="${c}" ${a.color === c ? 'selected' : ''}>${c}</option>`)}
-                    </select>
-                  </div>
-                  <div class="inline-block align-middle">
-                    <input
-                      type="datetime-local"
-                      class="input input-sm px-0 w-[150px]"
-                      value="${getDateString(a.start)}" />
-                    <br />
-                    <input
-                      type="datetime-local"
-                      class="input input-sm px-0 w-[150px]"
-                      value="${getDateString(a.end)}" />
-                  </div>
-
-                  <button class="btn btn-outline btn-xs inline-block align-middle">remove</button>
-                </div>`;
-            });
-            sidebarHtml += `
-              <div class="w-[326px] text-center">
-                <button class="btn btn-secondary btn-xs mx-auto">add</button>
-              </div>`;
-        } else if (i === columnNumbers.startDate) {
-            sidebarHtml += getDateString(event.details[i]).split('T')[0];
-        } else if (i === columnNumbers.startTime || i === columnNumbers.endTime) {
-            sidebarHtml += getDateString(event.details[i]).split('T')[1];
-        } else {
-            sidebarHtml += escapeHTML(value);
-        }
-    });
-    sidebarHtml += `</li>`;
-    sidebarElem.innerHTML = sidebarHtml;
-}
-
 function renderCalendar(year, month, eventGroups) {
     const calendar = document.getElementById('calendar');
 
@@ -181,7 +60,7 @@ function renderCalendar(year, month, eventGroups) {
 
     let calendarHtml = `
       <div class="m-3 grid grid-cols-[90px_auto] gap-2.5 sticky top-0">
-        <div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1 bg-base-100">`;
+        <div class="col-start-2 grid grid-cols-[repeat(7,200px)_400px] gap-1 bg-base-100">`;
     rooms.forEach((r) => {
         calendarHtml += `
       <div class="h-[50px] flex gap-4">
@@ -194,7 +73,7 @@ function renderCalendar(year, month, eventGroups) {
     calendarHtml += '</div>';
 
     for (let i = 1; i < eventGroups.length; i++) {
-        const dayStr = new Date(year, month, i).toLocaleString('en-US', { weekday: 'short' });
+        const dayStr = new Date(year, month, i).toLocaleString('en-US', { weekday: 'long' });
 
         // ===== Minimized View =====
         calendarHtml += `<div id="min-${month}-${i}" class="m-3 grid grid-cols-[auto_auto] gap-2.5">`;
@@ -207,12 +86,12 @@ function renderCalendar(year, month, eventGroups) {
               class="w-[80px] h-[40px] m-auto text-center rounded-xl bg-neutral-content
                   text-neutral cursor-pointer">
               <div class="font-mono text-lg font-bold">${i} ${monthStr}</div>
-              <div class="font-mono -mt-2">${dayStr}</div>
+              <div class="font-mono -mt-2">${dayStr.slice(0, 3)}</div>
             </div>
           </div>`;
 
         // Rooms
-        calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">`;
+        calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(7,200px)_400px] gap-1">`;
         rooms.forEach((r) => {
             calendarHtml += ` <div class="rounded-md bg-neutral" id="min-events-${i}-${r.id}"></div>`;
         });
@@ -237,7 +116,7 @@ function renderCalendar(year, month, eventGroups) {
             class="grid col-start-2 grid-rows-[repeat(1,30px)] grid-cols-[auto]]
               rounded-xl bg-neutral-content cursor-pointer">
             <div class="h-[30px] m-auto text-center text-neutral">
-              <span class="font-mono text-lg font-bold">${i} ${monthStr}</span>
+              <span class="font-mono text-lg font-bold">${i} ${monthStr}:</span>
               <span class="font-mono -mt-2">${dayStr}</span>
             </div>
           </div>`;
@@ -252,7 +131,7 @@ function renderCalendar(year, month, eventGroups) {
         calendarHtml += `</div>`;
 
         // Rooms
-        calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(6,200px)_400px] gap-1">`;
+        calendarHtml += `<div class="col-start-2 grid grid-cols-[repeat(7,200px)_400px] gap-1">`;
         rooms.forEach((r) => {
             calendarHtml += `
               <div
@@ -288,6 +167,7 @@ function renderEvents(eventGroups) {
             if (endM > 15) endRow += 1;
             else if (endM > 45) endRow += 2;
 
+            // Maximized View
             const eventElem = document.createElement('div');
             eventElem.className = `bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
               rounded-md border border-base-300 cursor-pointer row-start-[${startRow}] row-end-[${endRow}]`;
@@ -303,8 +183,9 @@ function renderEvents(eventGroups) {
             const roomEvents = document.getElementById('max-events-' + i + '-' + e.room);
             roomEvents.appendChild(eventElem);
 
+            // Minimized View
             const eventElemMin = document.createElement('div');
-            eventElemMin.className = `bg-neutral-content text-base-300 px-1 my-0 text-sm max-w-[200px]
+            eventElemMin.className = `bg-neutral-content text-base-300 px-1 my-0 mb-1 text-sm max-w-[200px]
               rounded-md border border-base-300 cursor-pointer`;
             eventElemMin.innerHTML += `
               <p class="font-semibold">${e.event.name}</p>
@@ -326,10 +207,20 @@ function renderPage(data) {
     events = parsedData.events;
     columnNames = parsedData.columnNames;
     columnNumbers = parsedData.columnNumbers;
-    rooms = parsedData.rooms;
-    colors = parsedData.colors;
 
     events.forEach((e) => {
+        if (e.alloc.length === 0) {
+            const start = new Date(e.details[columnNumbers.startDate]);
+            const startTime = new Date(e.details[columnNumbers.startTime]);
+            start.setHours(startTime.getHours(), startTime.getMinutes());
+
+            const end = new Date(e.details[columnNumbers.startDate]);
+            const endTime = new Date(e.details[columnNumbers.endTime]);
+            end.setHours(endTime.getHours(), endTime.getMinutes());
+
+            const upcomingRoom = rooms[rooms.length - 1].id;
+            e.alloc.push(new Session({}, upcomingRoom, start, end, 'default'));
+        }
         e.alloc.forEach((a) => {
             a.room = String(a.room);
             a.start = new Date(a.start);
@@ -340,8 +231,8 @@ function renderPage(data) {
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth();
-    const subEvents = flattenEvents(events);
-    const eventGroups = groupEvents(year, month, subEvents);
+    const sessions = flattenEvents(events);
+    const eventGroups = groupEvents(year, month, sessions);
     renderCalendar(year, month, eventGroups);
     renderEvents(eventGroups);
 }
@@ -349,8 +240,6 @@ function renderPage(data) {
 let events = null;
 let columnNames = null;
 let columnNumbers = null;
-let rooms = null;
-let colors = null;
 
 if (typeof google !== 'undefined') {
     // Prod mode
