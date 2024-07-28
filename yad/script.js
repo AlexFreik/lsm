@@ -1,5 +1,9 @@
+const YT_BASE_URL = 'https://www.youtube.com/embed/';
+const YN_BASE_URL = 'https://www.youtube-nocookie.com/embed/';
+
 const DELAY_PARAM = 'd';
 const VIDEO_ID_PARAM = 'v';
+const PRIVACY_PARAM = 'p';
 
 const SKIP_MARGIN = 30;
 const START_MARGIN = 30;
@@ -8,6 +12,7 @@ const STREAM_DURATION_CORRECTION = 3600;
 
 const DEFAULT_VIDEO_ID = 'jfKfPfyJRdk';
 const DEFAULT_DELAY = 900;
+const DEFAULT_PRIVACY = '0';
 const MINIMAL_DELAY = 60;
 
 const player = {
@@ -19,6 +24,7 @@ const player = {
     connection: null,
     delay: -100,
     savedDelay: -100,
+    privacy: false,
 };
 
 function getVideoId() {
@@ -35,6 +41,10 @@ function getDelay() {
     return delay;
 }
 
+function getPrivacy() {
+    return document.getElementById('privacy').checked;
+}
+
 function getUrlParam(name) {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
@@ -46,11 +56,15 @@ function setInputsFromUrlParams() {
 
     const delayParam = getUrlParam(DELAY_PARAM) || DEFAULT_DELAY;
     document.getElementById('delay').value = delayParam;
+
+    const privacyParam = getUrlParam(PRIVACY_PARAM) || DEFAULT_PRIVACY;
+    document.getElementById('privacy').checked = privacyParam === '1';
 }
 
 function loadPlayer() {
     const playerElem = document.getElementById('player');
-    playerElem.src = `https://www.youtube-nocookie.com/embed/${player.videoId}?autoplay=1&enablejsapi=1&iv_load_policy=3`;
+    const base = player.privacy ? YN_BASE_URL : YT_BASE_URL;
+    playerElem.src = base + `${player.videoId}?autoplay=1&enablejsapi=1&iv_load_policy=3`;
 }
 
 async function loadNewVideo() {
@@ -69,7 +83,7 @@ async function loadNewVideo() {
     var stateObj = { videoId: getVideoId(), delay: getDelay() };
     var newUrl =
         window.location.href.split('?')[0] +
-        `?${VIDEO_ID_PARAM}=${getVideoId()}&${DELAY_PARAM}=${getDelay()}`;
+        `?${VIDEO_ID_PARAM}=${getVideoId()}&${DELAY_PARAM}=${getDelay()}&${PRIVACY_PARAM}=${getPrivacy() ? '1' : '0'}`;
     history.pushState(stateObj, '', newUrl);
 }
 
@@ -191,6 +205,7 @@ setInputsFromUrlParams();
 player.videoId = getVideoId();
 player.connection = getNewBroadcastChannel();
 player.delay = getDelay();
+player.privacy = getPrivacy();
 player.savedDelay = player.delay;
 
 loadPlayer();

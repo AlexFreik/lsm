@@ -75,14 +75,35 @@
     </div>
 
     <div class="mx-auto my-5 w-96">
-      <label class="input input-bordered my-2 flex items-center gap-2">
+      <div class="flex items-center justify-between border-b p-4">
         YouTube Video ID
-        <input type="text" class="grow text-secondary" placeholder="Enter Video ID" value="jfKfPfyJRdk" id="videoId" />
-      </label>
-      <label class="input input-bordered my-2 flex items-center gap-2">
+        <input
+          type="text"
+          placeholder="Enter Video ID"
+          class="input input-bordered float-right w-52 text-secondary"
+          value="jfKfPfyJRdk"
+          id="videoId" />
+      </div>
+
+      <div class="flex items-center justify-between border-b p-4">
         Delay (seconds)
-        <input type="number" class="grow text-secondary" placeholder="Enter Delay" value="900" id="delay" />
-      </label>
+        <label class="ml-4 inline-flex cursor-pointer items-center">
+          <input
+            type="number"
+            class="input input-bordered float-right w-52 text-secondary"
+            placeholder="Enter Delay"
+            value="900"
+            min="60"
+            id="delay" />
+        </label>
+      </div>
+
+      <div class="flex items-center justify-between p-4">
+        Enhanced Privacy Player
+        <label class="ml-4 inline-flex cursor-pointer items-center">
+          <input type="checkbox" class="checkbox-secondary checkbox float-right" id="privacy" />
+        </label>
+      </div>
       <button class="btn btn-outline btn-secondary btn-sm my-2" onclick="loadNewVideo()">Update</button>
     </div>
 
