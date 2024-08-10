@@ -16,6 +16,9 @@ pretty-gal:
 pretty-yad:
 	npx prettier --write yad/
 
+pretty-vmm:
+	npx prettier --write vmix-master/
+
 start:
 	npm start
 
@@ -30,3 +33,6 @@ css-gal-ext:
 
 css-scheduler:
 		npx tailwindcss -i scheduler/input.css -o scheduler/output.css --watch
+
+css-vmm:
+	npx tailwindcss -i vmix-master/input.css -o vmix-master/output.css --watch

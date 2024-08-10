@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.swap-btn {
+    animation: fadeInRight 1s ease-out;
+}
+
+.box {
+    @apply m-1 h-[180px] w-[279px];
+    animation: fadeInRight 1s ease-out;
+}
+
+.input {
+    @apply m-1 bg-transparent text-sm text-slate-50;
+}
+
+.container {
+    @apply relative h-[150px] w-[290px] overflow-hidden rounded-lg bg-slate-700;
+}
+
+.top-btn {
+    @apply absolute top-1 z-10 h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
+}
+
+.embed-container:hover + .top-btn {
+    @apply block;
+}
+
+.embed-container:hover > .top-btn {
+    @apply block;
+}
+
+.refresh-btn {
+    @apply right-[60px] bg-secondary;
+}
+
+.remove-btn {
+    @apply right-[5px] bg-red-900;
+}

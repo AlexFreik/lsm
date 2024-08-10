@@ -5,6 +5,7 @@ module.exports = {
         './gallery-ext/**/*.{html,js}',
         './yad/**/*.{html,js}',
         './scheduler/**/*.{html,js}',
+        './vmix-master/**/*.{html,js}',
     ],
     theme: {
         extend: {},
