@@ -22,12 +22,39 @@
       </div>
     </div>
 
+    <div class="mx-auto my-10 max-w-3xl px-5" id="controls">
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input
+            id="rawRequest"
+            type="text"
+            name="rawRequest"
+            placeholder="Function=Fade&Duration=1000&Input=5"
+            class="url-param input input-xs input-bordered w-80"
+            value="" />
+          <span class="text-md ms-3"></span>
+          <button id="execute-btn" class="btn btn-secondary btn-sm">Execute</button>
+        </label>
+      </div>
+    </div>
+
     <div class="flex flex-col items-center">
       <div class="flex w-screen flex-wrap p-2" id="boxes">
         <div class="flex min-w-full flex-col items-center px-10 py-10">
           <button id="add-box" class="btn btn-outline btn-secondary">+</button>
         </div>
       </div>
+    </div>
+
+    <div class="prose mx-auto mb-8 max-w-3xl px-5">
+      <h2 class="text-2xl font-bold">Logs</h2>
+      <div id="logs" class="textarea textarea-bordered mx-auto h-64 w-full overflow-y-scroll" placeholder=""></div>
+    </div>
+
+    <div class="prose mx-auto max-w-3xl px-5">
+      <h2>Documentation</h2>
+      You can read official vMix API documentation here:
+      <a target="_blank" href="https://www.vmix.com/help25/index.htm?DeveloperAPI.html">vmix.com/help25/index.htm?DeveloperAPI.html</a>
     </div>
 
     <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
