@@ -50,7 +50,7 @@ function changeConnection() {
     videoId = getVideoId();
 
     if (connection) connection.close();
-    getNewBroadcastChannel();
+    connection = getNewBroadcastChannel(videoId);
     duration = -1;
     delay = -1;
     renderStats(duration, delay);
@@ -61,8 +61,7 @@ function changeConnection() {
     history.pushState(stateObj, '', newUrl);
 }
 
-function getNewBroadcastChannel() {
-    const videoId = getVideoId();
+function getNewBroadcastChannel(videoId) {
     const bc = new BroadcastChannel(videoId);
     bc.onmessage = (event) => {
         const msg = JSON.parse(event.data);
@@ -79,4 +78,4 @@ setInputsFromUrlParams();
 
 let duration = -1;
 let delay = -1;
-let connection = getNewBroadcastChannel();
+let connection = getNewBroadcastChannel(getVideoId());
