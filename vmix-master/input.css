@@ -26,19 +26,11 @@
     @apply m-1 bg-transparent text-sm text-slate-50;
 }
 
-.container {
-    @apply relative h-[150px] w-[290px] overflow-hidden rounded-lg bg-slate-700;
-}
-
 .top-btn {
-    @apply absolute top-1 z-10 h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
+    @apply absolute top-1 z-10 hidden h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
 }
 
-.embed-container:hover + .top-btn {
-    @apply block;
-}
-
-.embed-container:hover > .top-btn {
+.container:hover > .top-btn {
     @apply block;
 }
 

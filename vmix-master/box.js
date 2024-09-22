@@ -17,6 +17,17 @@ function removeBox(btn) {
     updateUrlParams();
 }
 
+function getBoxNum() {
+    return document.getElementsByClassName('box').length + 1;
+}
+
+function updateBoxNums() {
+    let cnt = 1;
+    Array.from(document.getElementsByClassName('box')).forEach((box) => {
+        box.getElementsByClassName('badge')[0].innerHTML = String(cnt++);
+    });
+}
+
 function swapBoxes(e) {
     if (e.target.tagName === 'BUTTON') return;
     const swapBtn = e.target.parentNode;
@@ -29,6 +40,7 @@ function swapBoxes(e) {
     parentElem.insertBefore(next, prev);
     parentElem.insertBefore(swapBtn, prev);
 
+    updateBoxNums();
     updateUrlParams();
 }
 
@@ -46,15 +58,17 @@ function createSwapBtn() {
     return swapBtn;
 }
 
-function createBox(name, host) {
+function createBox(name, host, num) {
     const box = document.createElement('div');
     box.className = 'box';
     box.innerHTML = `
+        <span class="badge">${num}</span>
         <input type="text" placeholder="Name" value="${name}" class="name-input input input-bordered input-xs w-20">
         <input type="text" placeholder="Host" value="${host}" class="host-input input input-bordered input-xs w-32">
-        <div class="relative max-w-full h-[150px] overflow-hidden rounded-lg bg-slate-700">
-            <button class="top-btn refresh-btn">Refresh</button>
-            <button class="top-btn remove-btn">Remove</button>
+        <div class="container relative max-w-full h-[150px] overflow-scroll rounded-lg border border-secondary bg-primary-content">
+          <button class="top-btn refresh-btn">Refresh</button>
+          <button class="top-btn remove-btn">Remove</button>
+          <div class="vmix-info text-sm m-1"></div>
         </div>
         `;
 
@@ -73,4 +87,4 @@ function createBox(name, host) {
     return box;
 }
 
-export { createBox, createSwapBtn };
+export { createBox, createSwapBtn, getBoxNum };

@@ -24,24 +24,53 @@
 
     <div class="mx-auto my-10 max-w-3xl px-5" id="controls">
       <div>
-        <label class="relative inline-flex cursor-pointer items-center">
-          <input
-            id="rawRequest"
-            type="text"
-            name="rawRequest"
-            placeholder="Function=Fade&Duration=1000&Input=5"
-            class="url-param input input-xs input-bordered w-80"
-            value="" />
-          <span class="text-md ms-3"></span>
-          <button id="execute-btn" class="btn btn-secondary btn-sm">Execute</button>
-        </label>
+        <span class="text-md">Command: </span>
+        <input
+          id="rawRequest"
+          type="text"
+          name="rawRequest"
+          placeholder="Function=Fade&Duration=1000&Input=5"
+          class="url-param input input-xs input-bordered w-[600px]"
+          value="" />
+        <br />
+        <span class="text-md">Include: </span>
+        <input
+          id="requestInclude"
+          type="text"
+          name="rawRequestInclude"
+          placeholder="1 2 3"
+          class="url-param input input-xs input-bordered w-64"
+          value="" />
+        <span class="text-md ms-3">Exclude: </span>
+        <input id="rawRequestExclude" type="text" name="rawRequest" placeholder="2 3" class="url-param input input-xs input-bordered w-64" value="" />
+        <br />
+        <button id="execute-btn" class="btn btn-secondary btn-sm mt-3">Execute</button>
       </div>
     </div>
 
     <div class="flex flex-col items-center">
-      <div class="flex w-screen flex-wrap p-2" id="boxes">
+      <div class="flex w-screen flex-wrap p-2" id="edit-buttons">
         <div class="flex min-w-full flex-col items-center px-10 py-10">
-          <button id="add-box" class="btn btn-outline btn-secondary">+</button>
+          <div>
+            <button id="add-button" class="btn btn-outline btn-secondary">Add Button</button>
+            <button id="save-buttons" class="btn btn-outline btn-secondary">Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-screen flex-wrap p-2" id="buttons"></div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-screen flex-wrap p-2" id="boxes">
+        <div class="flex min-w-full items-center justify-center px-10 py-10">
+          <button id="add-box" class="btn btn-outline btn-secondary ml-1 flex">Add Instance</button>
+          <label class="input input-bordered input-secondary flex items-center gap-2">
+            Auto Refresh (sec)
+            <input type="text" class="w-5" value="5" />
+          </label>
         </div>
       </div>
     </div>

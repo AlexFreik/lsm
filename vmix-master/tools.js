@@ -1,9 +1,13 @@
-function getName(box) {
+function getBoxes() {
+    return document.querySelectorAll('.box');
+}
+
+function getBoxName(box) {
     console.assert(box.classList.contains('box'));
     return box.getElementsByClassName('name-input')[0].value;
 }
 
-function getHost(box) {
+function getBoxHost(box) {
     console.assert(box.classList.contains('box'));
     return box.getElementsByClassName('host-input')[0].value;
 }
@@ -47,9 +51,9 @@ function getBoxUrlParams() {
 
 function updateUrlParams() {
     const boxParams = new URLSearchParams();
-    document.querySelectorAll('.box').forEach((box) => {
-        const key = getName(box);
-        const val = getHost(box);
+    getBoxes().forEach((box) => {
+        const key = getBoxName(box);
+        const val = getBoxHost(box);
         if (key === '') return;
         boxParams.append(key, val);
     });
@@ -57,12 +61,38 @@ function updateUrlParams() {
     window.history.pushState({}, '', `?${boxParams.toString()}&${configParams.toString()}`);
 }
 
+function getInputValue(id) {
+    const input = document.getElementById(id);
+
+    if (input.type === 'checkbox') {
+        return input.checked;
+    } else if (input.type === 'text') {
+        return input.value;
+    } else {
+        console.error('Unknown input type: ' + input.type);
+        return null;
+    }
+}
+
+function setInputValue(id, value) {
+    const input = document.getElementById(id, value);
+
+    if (input.type === 'checkbox') {
+        console.assert(['0', '1'].includes(value));
+        input.checked = value === '1';
+    } else if (input.type === 'text') {
+        input.value = value;
+    } else {
+        console.error('Unknown input type: ' + input.type);
+    }
+}
+
 function show(str, isError = false) {
     const logs = document.getElementById('logs');
     logs.innerHTML =
         `
         <p ${isError ? 'class="text-error"' : ''}>
-            ${str}
+            ${new Option(str).innerHTML}
         </p>
         <div class="divider"></div>` + logs.innerHTML;
 }
@@ -71,23 +101,38 @@ function showError(str) {
     show(str, true);
 }
 
-async function executeAndShow(url) {
+async function fetchUrl(url) {
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, { signal: AbortSignal.timeout(2000) });
         const data = await response.text();
-
-        const timestamp = new Date().toLocaleTimeString();
-        const message = `[${timestamp}] ${url} Status ${response.status}. ${data.slice(0, 300)}`;
-        if (response.ok) {
-            show(message);
-        } else {
-            showError(message);
-        }
+        return {
+            status: response.status,
+            value: data,
+            error: null,
+        };
     } catch (error) {
-        const timestamp = new Date().toLocaleTimeString();
-        showError(`[${timestamp}] Error ${url}`, error);
+        return {
+            status: null,
+            value: null,
+            error: error,
+        };
     }
-    return [];
+}
+
+async function executeAndShow(url) {
+    const res = await fetchUrl(url);
+    const timestamp = new Date().toLocaleTimeString();
+    console.log(res.status);
+    const message = res.status
+        ? `[${timestamp}] ${url} Status ${res.status}: ${res.value.slice(0, 300)}`
+        : '';
+    if (res.status === 200) {
+        show(message);
+    } else if (res.status !== null) {
+        showError(message);
+    } else {
+        showError(`[${timestamp}] Error ${url}`, res.error);
+    }
 }
 
 function xml2json(xml) {
@@ -129,4 +174,16 @@ function xml2json(xml) {
     return obj;
 }
 
-export { getConfigUrlParams, getBoxUrlParams, updateUrlParams, executeAndShow, xml2json };
+export {
+    getBoxes,
+    getBoxName,
+    getBoxHost,
+    getConfigUrlParams,
+    getBoxUrlParams,
+    updateUrlParams,
+    fetchUrl,
+    getInputValue,
+    setInputValue,
+    executeAndShow,
+    xml2json,
+};
