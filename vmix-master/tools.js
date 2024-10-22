@@ -91,9 +91,7 @@ function show(str, isError = false) {
     const logs = document.getElementById('logs');
     logs.innerHTML =
         `
-        <p ${isError ? 'class="text-error"' : ''}>
-            ${new Option(str).innerHTML}
-        </p>
+        <p ${isError ? 'class="text-error"' : ''}>${new Option(str).innerHTML}</p>
         <div class="divider"></div>` + logs.innerHTML;
 }
 
@@ -119,19 +117,20 @@ async function fetchUrl(url) {
     }
 }
 
-async function executeAndShow(url) {
+async function execute(url, isShow = true) {
     const res = await fetchUrl(url);
     const timestamp = new Date().toLocaleTimeString();
-    console.log(res.status);
     const message = res.status
         ? `[${timestamp}] ${url} Status ${res.status}: ${res.value.slice(0, 300)}`
         : '';
-    if (res.status === 200) {
-        show(message);
-    } else if (res.status !== null) {
-        showError(message);
-    } else {
-        showError(`[${timestamp}] Error ${url}`, res.error);
+    if (isShow) {
+        if (res.status === 200) {
+            show(message);
+        } else if (res.status !== null) {
+            showError(message);
+        } else {
+            showError(`[${timestamp}] Error ${url}`, res.error);
+        }
     }
 }
 
@@ -184,6 +183,6 @@ export {
     fetchUrl,
     getInputValue,
     setInputValue,
-    executeAndShow,
+    execute,
     xml2json,
 };

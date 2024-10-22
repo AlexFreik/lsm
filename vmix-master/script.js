@@ -2,7 +2,7 @@ import {
     getBoxes,
     getBoxHost,
     getBoxUrlParams,
-    executeAndShow,
+    execute,
     getConfigUrlParams,
     updateUrlParams,
     setInputValue,
@@ -38,16 +38,16 @@ function executeRawRequest() {
     const request = document.getElementById('rawRequest').value;
     const boxes = getBoxUrlParams();
     boxes.forEach((vmix) => {
-        executeAndShow('http://' + vmix.value + ':8088/api/?' + request);
+        execute('http://' + vmix.value + ':8088/api/?' + request);
     });
 }
 
-setTimeout(() => {
+setInterval(() => {
     getBoxes().forEach(async (box) => {
         const info = await getVmixInfo(getBoxHost(box) + ':8088');
         updateVmixInfo(box, info);
     });
-}, 1000);
+}, 5000);
 
 (() => {
     initConfig();
@@ -58,7 +58,7 @@ setTimeout(() => {
         .forEach((input) => input.addEventListener('change', updateUrlParams));
 
     document.getElementById('renderMaster').addEventListener('click', renderVmixWeb);
-    renderVmixWeb();
+    setInterval(renderVmixWeb, 2000);
 
     const addBtn = document.getElementById('add-box');
     addBtn.addEventListener('click', () => addBox());
