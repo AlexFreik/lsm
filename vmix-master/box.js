@@ -17,6 +17,10 @@ function removeBox(btn) {
     updateUrlParams();
 }
 
+function getBox(num) {
+    return document.getElementsByClassName('box')[num - 1];
+}
+
 function getBoxNum() {
     return document.getElementsByClassName('box').length + 1;
 }
@@ -65,7 +69,7 @@ function createBox(name, host, num) {
         <span class="badge">${num}</span>
         <input type="text" placeholder="Name" value="${name}" class="name-input input input-bordered input-xs w-20">
         <input type="text" placeholder="Host" value="${host}" class="host-input input input-bordered input-xs w-32">
-        <div class="container relative max-w-full h-[150px] overflow-scroll rounded-lg border border-secondary bg-primary-content">
+        <div class="container relative max-w-full h-[150px] overflow-scroll rounded-lg border border-secondary bg-base-200 px-1">
           <button class="top-btn refresh-btn">Refresh</button>
           <button class="top-btn remove-btn">Remove</button>
           <div class="vmix-info text-sm m-1"></div>
@@ -87,4 +91,4 @@ function createBox(name, host, num) {
     return box;
 }
 
-export { createBox, createSwapBtn, getBoxNum };
+export { createBox, createSwapBtn, getBox, getBoxNum };

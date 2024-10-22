@@ -22,47 +22,6 @@
       </div>
     </div>
 
-    <div class="mx-auto my-10 max-w-3xl px-5" id="controls">
-      <div>
-        <span class="text-md">Command: </span>
-        <input
-          id="rawRequest"
-          type="text"
-          name="rawRequest"
-          placeholder="Function=Fade&Duration=1000&Input=5"
-          class="url-param input input-xs input-bordered w-[600px]"
-          value="" />
-        <br />
-        <span class="text-md">Include: </span>
-        <input
-          id="requestInclude"
-          type="text"
-          name="rawRequestInclude"
-          placeholder="1 2 3"
-          class="url-param input input-xs input-bordered w-64"
-          value="" />
-        <span class="text-md ms-3">Exclude: </span>
-        <input id="rawRequestExclude" type="text" name="rawRequest" placeholder="2 3" class="url-param input input-xs input-bordered w-64" value="" />
-        <br />
-        <button id="execute-btn" class="btn btn-secondary btn-sm mt-3">Execute</button>
-      </div>
-    </div>
-
-    <div class="flex flex-col items-center">
-      <div class="flex w-screen flex-wrap p-2" id="edit-buttons">
-        <div class="flex min-w-full flex-col items-center px-10 py-10">
-          <div>
-            <button id="add-button" class="btn btn-outline btn-secondary">Add Button</button>
-            <button id="save-buttons" class="btn btn-outline btn-secondary">Save</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="flex flex-col items-center">
-      <div class="flex w-screen flex-wrap p-2" id="buttons"></div>
-    </div>
-
     <div class="flex flex-col items-center">
       <div class="flex w-screen flex-wrap p-2" id="boxes">
         <div class="flex min-w-full items-center justify-center px-10 py-10">
@@ -75,7 +34,85 @@
       </div>
     </div>
 
-    <div class="prose mx-auto mb-8 max-w-3xl px-5">
+    <div class="collapse bg-base-200">
+      <input id="customCommands" class="url-param" type="checkbox" />
+      <div class="collapse-title text-xl font-medium">Custom Commands</div>
+      <div class="collapse-content">
+        <div class="mx-auto my-10 max-w-3xl px-5">
+          <div>
+            <span class="text-md">Command: </span>
+            <input
+              id="rawRequest"
+              type="text"
+              name="rawRequest"
+              placeholder="e.g. Function=Fade&Duration=1000&Input=5"
+              class="url-param input input-xs input-bordered w-[600px]"
+              value="" />
+            <br />
+            <span class="text-md">Include: </span>
+            <input
+              id="requestInclude"
+              type="text"
+              name="rawRequestInclude"
+              placeholder="e.g. 1 2 3"
+              class="url-param input input-xs input-bordered w-64"
+              value="" />
+            <span class="text-md ms-3">Exclude: </span>
+            <input
+              id="rawRequestExclude"
+              type="text"
+              name="rawRequest"
+              placeholder="e.g. 2 3"
+              class="url-param input input-xs input-bordered w-64"
+              value="" />
+            <br />
+            <button id="execute-btn" class="btn btn-secondary btn-sm mt-3">Execute</button>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <div class="flex w-screen flex-wrap p-2" id="edit-buttons">
+            <div class="flex min-w-full flex-col items-center px-10 py-10">
+              <div>
+                <button id="add-button" class="btn btn-outline btn-secondary">Add Button</button>
+                <button id="save-buttons" class="btn btn-outline btn-secondary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <div class="flex w-screen flex-wrap p-2" id="buttons"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse mt-3 bg-base-200 pb-5">
+      <input id="vmixWeb" class="url-param" type="checkbox" />
+      <div class="collapse-title text-xl font-medium">vMix Web</div>
+      <div class="collapse-content">
+        <div class="mx-auto my-10 max-w-3xl px-5">
+          <div>
+            <span class="text-md">Master: </span>
+            <input
+              id="master"
+              type="number"
+              min="1"
+              name="master"
+              placeholder="e.g. 1"
+              class="url-param input input-xs input-bordered w-20"
+              value="" />
+            <span class="text-md ms-3">Slaves: </span>
+            <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered w-64" value="" />
+            <button id="renderMaster" class="btn btn-secondary btn-sm ms-3">Refresh</button>
+          </div>
+        </div>
+
+        <div id="vmixButtons"></div>
+      </div>
+    </div>
+
+    <div class="prose mx-auto mb-8 mt-10 max-w-3xl px-5">
       <h2 class="text-2xl font-bold">Logs</h2>
       <div id="logs" class="textarea textarea-bordered mx-auto h-64 w-full overflow-y-scroll" placeholder=""></div>
     </div>

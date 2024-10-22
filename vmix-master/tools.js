@@ -18,10 +18,10 @@ function parseDocumentConfig() {
     document.querySelectorAll('.url-param').forEach((input) => {
         if (input.type === 'checkbox') {
             params.append('__' + input.id, input.checked ? '1' : '0');
-        } else if (input.type === 'text') {
+        } else if (input.type === 'text' || input.type === 'number') {
             params.append('__' + input.id, input.value);
         } else {
-            conole.error('unexpected type: ' + input.type);
+            console.error('unexpected type: ' + input.type);
         }
     });
     return params;
@@ -66,7 +66,7 @@ function getInputValue(id) {
 
     if (input.type === 'checkbox') {
         return input.checked;
-    } else if (input.type === 'text') {
+    } else if (input.type === 'text' || input.type === 'number') {
         return input.value;
     } else {
         console.error('Unknown input type: ' + input.type);
@@ -80,7 +80,7 @@ function setInputValue(id, value) {
     if (input.type === 'checkbox') {
         console.assert(['0', '1'].includes(value));
         input.checked = value === '1';
-    } else if (input.type === 'text') {
+    } else if (input.type === 'text' || input.type === 'number') {
         input.value = value;
     } else {
         console.error('Unknown input type: ' + input.type);

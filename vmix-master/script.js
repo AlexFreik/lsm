@@ -9,6 +9,7 @@ import {
 } from './tools.js';
 import { createBox, createSwapBtn, getBoxNum } from './box.js';
 import { getVmixInfo, updateVmixInfo } from './vmix-info.js';
+import { renderVmixWeb } from './vmix-web.js';
 
 function addBox(name = '', host = '') {
     const boxes = document.getElementById('boxes');
@@ -55,6 +56,9 @@ setTimeout(() => {
     document
         .querySelectorAll('.url-param')
         .forEach((input) => input.addEventListener('change', updateUrlParams));
+
+    document.getElementById('renderMaster').addEventListener('click', renderVmixWeb);
+    renderVmixWeb();
 
     const addBtn = document.getElementById('add-box');
     addBtn.addEventListener('click', () => addBox());

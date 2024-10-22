@@ -42,7 +42,7 @@ function updateVmixInfo(box, vmixInfo) {
     const infoDiv = box.getElementsByClassName('vmix-info');
     const info = vmixInfo.value;
     if (info === null) {
-        box.innerHTML = `vMix unavailable (${vmixInfo.error})`;
+        box.querySelector('.container').innerHTML = `vMix unavailable (${vmixInfo.error})`;
         return;
     }
     box.querySelector('.container').innerHTML = `
