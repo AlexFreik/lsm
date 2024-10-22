@@ -26,7 +26,7 @@ async function renderVmixWeb() {
             console.lo;
             innerHTML += `
                 <div class="inline-block mx-1 my-1 border border-neutral">
-                    <div class="${style} w-64 vmixInput" data-number="${i}">
+                    <div class="vmixInput ${style} w-64 cursor-pointer" data-number="${i}">
                         <span class="badge badge-neutral mx-1 my-1">${input.number}</span>
                         ${input.title.length > 25 ? input.title.slice(0, 25) + '...' : input.title}
                     </div>
