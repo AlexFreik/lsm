@@ -4113,12 +4113,8 @@ html:has(.drawer-toggle:checked) {
   top: 0px;
 }
 
-.col-span-2 {
-  grid-column: span 2 / span 2;
-}
-
-.col-span-3 {
-  grid-column: span 3 / span 3;
+.col-span-1 {
+  grid-column: span 1 / span 1;
 }
 
 .col-start-2 {
@@ -4779,10 +4775,6 @@ html:has(.drawer-toggle:checked) {
   width: 600px;
 }
 
-.w-\[700px\] {
-  width: 700px;
-}
-
 .w-\[80px\] {
   width: 80px;
 }
@@ -4848,8 +4840,8 @@ html:has(.drawer-toggle:checked) {
   cursor: pointer;
 }
 
-.grid-cols-8 {
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+.grid-cols-\[1fr_120px_1fr\] {
+  grid-template-columns: 1fr 120px 1fr;
 }
 
 .grid-cols-\[90px_auto\] {

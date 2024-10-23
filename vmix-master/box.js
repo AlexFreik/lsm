@@ -72,7 +72,7 @@ function createBox(name, host, num) {
         <div class="container relative max-w-full h-[150px] overflow-scroll rounded-lg border border-secondary bg-base-200 px-1">
           <button class="top-btn refresh-btn">Refresh</button>
           <button class="top-btn remove-btn">Remove</button>
-          <div class="vmix-info text-sm m-1"></div>
+          <div class="vmixInfo text-sm m-1"></div>
         </div>
         `;
 

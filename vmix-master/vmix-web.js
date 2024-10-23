@@ -19,6 +19,36 @@ async function renderVmixWeb() {
     } else {
         const info = vmixInfo.value;
 
+        const activeInput = info.inputs[info.active];
+        const previewInput = info.inputs[info.preview];
+        innerHTML += `
+      <div class="grid text-center grid-rows-5 grid-cols-[1fr_120px_1fr] gap-1 w-[600px] h-[200px] mx-auto mt-5">
+          <div class="row-span-4 col-span-1 bg-yellow-600 text-lg">
+              ${previewInput.title}
+          </div>
+          <div class="row-span-1 col-span-1">
+              <button id="stinger1" class="btn btn-sm btn-neutral w-24">Stinger 1</button>
+          </div>
+          <div class="row-span-4 col-span-1 bg-green-700 text-lg">
+              ${activeInput.title}
+          </div>
+          <div class="row-span-1 col-span-1">
+              <button id="fade" class="btn btn-sm btn-neutral w-24">Fade</button>
+          </div>
+          <div class="row-span-1 col-span-1">
+              <button id="cut" class="btn btn-sm btn-neutral w-24">Cut</button>
+          </div>
+          <div class="row-span-1 col-span-1">
+          </div>
+          <div class="row-span-1 col-span-1">
+            ${previewInput.duration !== '0' ? getVideoProgress(previewInput) : ''}
+          </div>
+          <div class="row-span-1 col-span-1"></div>
+          <div class="row-span-1 col-span-1">
+            ${activeInput.duration !== '0' ? getVideoProgress(activeInput) : ''}
+          </div>
+      </div>`;
+
         info.inputs.forEach((input, i) => {
             const isActive = i === info.active;
             const isPreview = i === info.preview;
@@ -28,7 +58,7 @@ async function renderVmixWeb() {
                 <div class="inline-block mx-1 my-1 border border-neutral">
                     <div class="vmixInput ${style} w-64 cursor-pointer" data-number="${i}">
                         <span class="badge badge-neutral mx-1 my-1">${input.number}</span>
-                        ${input.title.length > 25 ? input.title.slice(0, 25) + '...' : input.title}
+                        ${input.title.length > 20 ? input.title.slice(0, 20) + '...' : input.title}
                     </div>
                     <div class="m-1">
                     <span class="badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'}">1</span>
@@ -40,37 +70,6 @@ async function renderVmixWeb() {
                 </div>
             `;
         });
-
-        const activeInput = info.inputs[info.active];
-        const previewInput = info.inputs[info.preview];
-        innerHTML += `
-      <div class="grid text-center grid-rows-5 grid-cols-8 gap-1 w-[700px] h-[200px] mx-auto mt-5">
-          <div class="row-span-4 col-span-3 bg-yellow-600 text-lg">
-              ${previewInput.title}
-          </div>
-          <div class="row-span-1 col-span-2">
-              <button id="stinger1" class="btn btn-sm btn-neutral w-24">Stinger 1</button>
-          </div>
-          <div class="row-span-4 col-span-3 bg-green-700 text-lg">
-              ${activeInput.title}
-          </div>
-          <div class="row-span-1 col-span-2">
-              <button id="fade" class="btn btn-sm btn-neutral w-24">Fade</button>
-          </div>
-          <div class="row-span-1 col-span-2">
-              <button id="cut" class="btn btn-sm btn-neutral w-24">Cut</button>
-          </div>
-          <div class="row-span-1 col-span-2">
-          </div>
-          <div class="row-span-1 col-span-3">
-            ${previewInput.type === 'Video' ? getVideoProgress(previewInput) : ''}
-          </div>
-          <div class="row-span-1 col-span-2"></div>
-          <div class="row-span-1 col-span-3">
-            ${activeInput.type === 'Video' ? getVideoProgress(activeInput) : ''}
-          </div>
-      </div>
-    `;
     }
     vmixButtons.innerHTML = innerHTML;
 
@@ -109,7 +108,7 @@ function formatTime(ms) {
 }
 
 function getVideoProgress(input) {
-    console.assert(input.type === 'Video');
+    console.assert(['Video', 'AudioFile'].includes(input.type));
     const duration = parseInt(input.duration);
     const position = parseInt(input.position);
     const remaining = duration - position;

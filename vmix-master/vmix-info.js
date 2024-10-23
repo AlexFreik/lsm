@@ -42,10 +42,10 @@ function updateVmixInfo(box, vmixInfo) {
     const infoDiv = box.getElementsByClassName('vmix-info');
     const info = vmixInfo.value;
     if (info === null) {
-        box.querySelector('.container').innerHTML = `vMix unavailable (${vmixInfo.error})`;
+        box.querySelector('.vmixInfo').innerHTML = `vMix unavailable (${vmixInfo.error})`;
         return;
     }
-    box.querySelector('.container').innerHTML = `
+    box.querySelector('.vmixInfo').innerHTML = `
         <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline rounded">REC</span>
         <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
         <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>

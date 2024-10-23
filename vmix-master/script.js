@@ -58,7 +58,7 @@ setInterval(() => {
         .forEach((input) => input.addEventListener('change', updateUrlParams));
 
     document.getElementById('renderMaster').addEventListener('click', renderVmixWeb);
-    setInterval(renderVmixWeb, 2000);
+    setInterval(renderVmixWeb, 1000);
 
     const addBtn = document.getElementById('add-box');
     addBtn.addEventListener('click', () => addBox());
