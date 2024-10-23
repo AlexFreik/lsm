@@ -13,6 +13,10 @@
     }
 }
 
+.wrap {
+    overflow-wrap: break-word;
+}
+
 .swap-btn {
     animation: fadeInRight 1s ease-out;
 }

@@ -22,14 +22,14 @@ async function renderVmixWeb() {
     const active = info.inputs[info.active];
     const preview = info.inputs[info.preview];
     const screensHTML = `
-      <div class="grid text-center grid-rows-5 grid-cols-[1fr_120px_1fr] gap-1 w-[600px] h-[200px] mx-auto mt-5">
-          <div class="row-span-4 col-span-1 bg-yellow-600 text-lg">
+      <div class="grid text-center grid-rows-5 grid-cols-[250px_120px_250px] gap-1 w-[620px] h-[200px] mx-auto mt-5 wrap">
+          <div class="row-span-4 col-span-1 bg-yellow-600 text-lg font-semibold">
               ${preview.title}
           </div>
           <div class="row-span-1 col-span-1">
               <button id="stinger1" class="btn btn-sm btn-neutral w-24">Stinger 1</button>
           </div>
-          <div class="row-span-4 col-span-1 bg-green-700 text-lg">
+          <div class="row-span-4 col-span-1 bg-green-700 text-lg font-semibold">
               ${active.title}
           </div>
           <div class="row-span-1 col-span-1">

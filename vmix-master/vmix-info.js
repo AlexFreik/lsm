@@ -59,13 +59,8 @@ function updateVmixInfo(box, vmixInfo) {
                 .map(
                     (input, j) =>
                         `<li>
-                    ${j}. ${input.title} 
-                    <div
-                        class="badge badge-info gap-2 font-bold tooltip" 
-                        data-tip='${JSON.stringify(input, null, 2)}'>
-                        i
-                    </div>
-                </li>`,
+                            <span class="text-secondary">${j}.</span>&nbsp;${input.title}
+                        </li>`,
                 )
                 .join('')}
         </ol>

@@ -42,12 +42,12 @@ function executeRawRequest() {
     });
 }
 
-setInterval(() => {
+function refreshInstances() {
     getBoxes().forEach(async (box) => {
         const info = await getVmixInfo(getBoxHost(box) + ':8088');
         updateVmixInfo(box, info);
     });
-}, 5000);
+}
 
 (() => {
     initConfig();
@@ -65,4 +65,7 @@ setInterval(() => {
 
     const executeBtn = document.getElementById('execute-btn');
     executeBtn.onclick = executeRawRequest;
+
+    refreshInstances();
+    setInterval(refreshInstances, 5000);
 })();
