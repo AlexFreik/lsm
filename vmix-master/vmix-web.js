@@ -62,10 +62,10 @@ async function renderVmixWeb() {
                     ${input.title.length > 20 ? input.title.slice(0, 20) + '...' : input.title}
                 </div>
                 <div class="m-1">
-                <span class="badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'}">1</span>
-                <span class="badge ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'}">2</span>
-                <span class="badge ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'}">3</span>
-                <span class="badge ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'}">4</span>
+                <span class="overlay badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="1">1</span>
+                <span class="overlay badge ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="2">2</span>
+                <span class="overlay badge ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="3">3</span>
+                <span class="overlay badge ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="4">4</span>
                 <span class="badge ${input.muted === 'False' ? 'bg-green-700' : 'badge-neutral'}">AUDIO</span>
                 </div>
             </div>`;
@@ -119,6 +119,16 @@ async function renderVmixWeb() {
     document
         .querySelectorAll('.fadeAudioIn')
         .forEach((elem) => (elem.onclick = () => fadeAudioIn(elem.getAttribute('data-number'))));
+    document
+        .querySelectorAll('.overlay')
+        .forEach(
+            (elem) =>
+                (elem.onclick = () =>
+                    overlayInput(
+                        elem.getAttribute('data-number'),
+                        elem.getAttribute('data-overlay'),
+                    )),
+        );
 
     document.getElementById('stinger1').onclick = () => transition('Stinger1', preview.number);
     document.getElementById('fade').onclick = () => transition('Fade', preview.number);
@@ -174,6 +184,10 @@ function fadeAudioIn(inputNum) {
 
 function fadeAudioOut(inputNum) {
     masterSlaveExecute('Function=SetVolumeFade&Value=0,3000&Input=' + inputNum);
+}
+
+function overlayInput(inputNum, overlayNum) {
+    masterSlaveExecute('Function=OverlayInput' + overlayNum + '&Input=' + inputNum);
 }
 
 function masterSlaveExecute(command) {
