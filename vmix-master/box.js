@@ -21,7 +21,7 @@ function getBox(num) {
     return document.getElementsByClassName('box')[num - 1];
 }
 
-function getBoxNum() {
+function getBoxCount() {
     return document.getElementsByClassName('box').length + 1;
 }
 
@@ -66,7 +66,7 @@ function createBox(name, host, num) {
     const box = document.createElement('div');
     box.className = 'box';
     box.innerHTML = `
-        <span class="badge">${num}</span>
+        <span class="box-number badge">${num}</span>
         <input type="text" placeholder="Name" value="${name}" class="name-input input input-bordered input-xs w-20">
         <input type="text" placeholder="Host" value="${host}" class="host-input input input-bordered input-xs w-32">
         <div class="container relative max-w-full h-[150px] overflow-y-scroll rounded-lg border border-secondary bg-base-200 px-1">
@@ -91,4 +91,4 @@ function createBox(name, host, num) {
     return box;
 }
 
-export { createBox, createSwapBtn, getBox, getBoxNum };
+export { createBox, createSwapBtn, getBox, getBoxCount };

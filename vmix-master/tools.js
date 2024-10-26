@@ -1,26 +1,37 @@
 function getBoxes() {
-    return document.querySelectorAll('.box');
+    return Array.from(document.querySelectorAll('.box'));
+}
+
+function getBoxNumbers() {
+    return getBoxes().map((box) => getBoxNumber(box));
 }
 
 function getBoxName(box) {
     console.assert(box.classList.contains('box'));
-    return box.getElementsByClassName('name-input')[0].value;
+    return box.querySelector('.name-input').value;
 }
 
 function getBoxHost(box) {
     console.assert(box.classList.contains('box'));
-    return box.getElementsByClassName('host-input')[0].value;
+    return box.querySelector('.host-input').value;
+}
+
+function getBoxNumber(box) {
+    console.assert(box.classList.contains('box'));
+    return parseInt(box.querySelector('.box-number').innerHTML);
 }
 
 function getBoxFullHost(box) {
     return getFullHost(getBoxHost(box));
 }
 
-function getFullHost(host) {}
-
 function getApiUrl(host, request) {
     const fullHost = host.includes(':') ? host : host + ':8088';
     return 'http://' + fullHost + '/api/?' + request;
+}
+
+function getShortTitle(str, len = 20) {
+    return str.length > len ? str.slice(0, len / 2) + '...' + str.slice(-len / 2) : str;
 }
 
 function parseDocumentConfig() {
@@ -128,6 +139,14 @@ async function fetchUrl(url) {
     }
 }
 
+function parseNumbers(str) {
+    return str
+        .split(' ')
+        .map((num) => num.trim())
+        .filter((num) => num !== '')
+        .map((num) => parseInt(num));
+}
+
 async function execute(url, isShow = true) {
     const res = await fetchUrl(url);
     const timestamp = new Date().toLocaleTimeString();
@@ -186,9 +205,13 @@ function xml2json(xml) {
 
 export {
     getBoxes,
+    getBoxNumbers,
     getBoxName,
     getBoxHost,
+    getBoxNumber,
     getApiUrl,
+    parseNumbers,
+    getShortTitle,
     getConfigUrlParams,
     getBoxUrlParams,
     updateUrlParams,

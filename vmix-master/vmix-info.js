@@ -45,14 +45,17 @@ function updateVmixInfo(box, vmixInfo) {
         box.querySelector('.vmixInfo').innerHTML = `vMix unavailable (${vmixInfo.error})`;
         return;
     }
+    const active = info.inputs[info.active];
+    const preview = info.inputs[info.preview];
     box.querySelector('.vmixInfo').innerHTML = `
         <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline rounded">REC</span>
         <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
         <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>
         <br />
-        <span>Prog: ${info.active} || </span>
-        <span>Prev: ${info.preview} || </span>
-        ${info.overlays.map((o, i) => `<span>Over ${i}: ${o}</span>`).join('')}
+        ${info.overlays.map((o, i) => `<span>Overlay ${i}: ${o}</span>`).filter(Boolean).join('; ')}
+        <div><span class="badge bg-green-700">${active.number}</span> ${active.title}</div>
+        <div><span class="badge bg-yellow-600">${preview.number}</span> ${preview.title}</div>
+
         <div class="mt-1 font-bold">Inputs</div>
         <ol>
             ${info.inputs

@@ -1,4 +1,4 @@
-import { getBoxHost, getApiUrl, execute } from './tools.js';
+import { getBoxHost, getApiUrl, getShortTitle, parseNumbers, execute } from './tools.js';
 import { getBox } from './box.js';
 import { getVmixInfo } from './vmix-info.js';
 
@@ -59,7 +59,7 @@ async function renderVmixWeb() {
             <div class="inline-block mx-1 my-1 border border-neutral">
                 <div class="vmixInput ${style} w-64 cursor-pointer" data-number="${i}">
                     <span class="badge badge-neutral mx-1 my-1">${input.number}</span>
-                    ${input.title.length > 20 ? input.title.slice(0, 20) + '...' : input.title}
+                    ${getShortTitle(input.title)}
                 </div>
                 <div class="m-1">
                 <span class="overlay badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="1">1</span>
@@ -143,12 +143,8 @@ function getMaster() {
 }
 
 function getSlaves() {
-    return document
-        .getElementById('slaves')
-        .value.split(' ')
-        .map((num) => num.trim())
-        .filter((num) => num !== '')
-        .map((num) => parseInt(num));
+    const slaves = document.getElementById('slaves').value;
+    return parseNumbers(slaves);
 }
 
 function formatTime(ms) {
