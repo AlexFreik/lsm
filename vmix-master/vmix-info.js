@@ -1,4 +1,4 @@
-import { fetchUrl, xml2json, getInputValue } from './tools.js';
+import { fetchUrl, xml2json, getInputValue, getApiUrl } from './tools.js';
 
 class VmixInfo {
     constructor(jsonData) {
@@ -21,7 +21,7 @@ class VmixInfo {
 }
 
 async function getVmixInfo(host) {
-    const res = await fetchUrl('http://' + host + '/api');
+    const res = await fetchUrl(getApiUrl(host));
 
     if (res.status === 200) {
         const xmlData = parser.parseFromString(res.value, 'text/xml');

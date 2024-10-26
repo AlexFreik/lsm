@@ -1,4 +1,4 @@
-import { getBoxHost, execute } from './tools.js';
+import { getBoxHost, getApiUrl, execute } from './tools.js';
 import { getBox } from './box.js';
 import { getVmixInfo } from './vmix-info.js';
 
@@ -11,7 +11,7 @@ async function renderVmixWeb() {
         return;
     }
     const box = getBox(master);
-    const vmixInfo = await getVmixInfo(getBoxHost(box) + ':8088');
+    const vmixInfo = await getVmixInfo(getBoxHost(box));
 
     if (vmixInfo.error) {
         vmixContainer.innerHTML = '';
@@ -196,7 +196,7 @@ function masterSlaveExecute(command) {
     slaves.unshift(master);
     slaves
         .map((num) => getBoxHost(getBox(num)))
-        .forEach((host) => execute('http://' + host + ':8088/api/?' + command));
+        .forEach((host) => execute(getApiUrl(host, command)));
 }
 
 export { renderVmixWeb };

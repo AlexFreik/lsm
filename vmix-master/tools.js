@@ -12,6 +12,17 @@ function getBoxHost(box) {
     return box.getElementsByClassName('host-input')[0].value;
 }
 
+function getBoxFullHost(box) {
+    return getFullHost(getBoxHost(box));
+}
+
+function getFullHost(host) {}
+
+function getApiUrl(host, request) {
+    const fullHost = host.includes(':') ? host : host + ':8088';
+    return 'http://' + fullHost + '/api/?' + request;
+}
+
 function parseDocumentConfig() {
     const params = new URLSearchParams();
 
@@ -177,6 +188,7 @@ export {
     getBoxes,
     getBoxName,
     getBoxHost,
+    getApiUrl,
     getConfigUrlParams,
     getBoxUrlParams,
     updateUrlParams,

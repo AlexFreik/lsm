@@ -1,6 +1,7 @@
 import {
     getBoxes,
     getBoxHost,
+    getApiUrl,
     getBoxUrlParams,
     execute,
     getConfigUrlParams,
@@ -37,14 +38,12 @@ function initBoxes() {
 function executeRawRequest() {
     const request = document.getElementById('rawRequest').value;
     const boxes = getBoxUrlParams();
-    boxes.forEach((vmix) => {
-        execute('http://' + vmix.value + ':8088/api/?' + request);
-    });
+    boxes.forEach((vmix) => execute(getApiUrl(vmix.value, request)));
 }
 
 function refreshInstances() {
     getBoxes().forEach(async (box) => {
-        const info = await getVmixInfo(getBoxHost(box) + ':8088');
+        const info = await getVmixInfo(getBoxHost(box));
         updateVmixInfo(box, info);
     });
 }
