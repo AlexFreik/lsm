@@ -7,6 +7,7 @@ class VmixInfo {
         this.recording = jsonData.vmix.recording['#text'] === 'True';
         this.external = jsonData.vmix.external['#text'] === 'True';
         this.streaming = jsonData.vmix.streaming['#text'] === 'True';
+        this.fadeToBlack = jsonData.vmix.fadeToBlack['#text'] === 'True';
 
         this.inputs = [];
         jsonData.vmix.inputs.input.forEach(
@@ -51,6 +52,7 @@ function updateVmixInfo(box, vmixInfo) {
         <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline rounded">REC</span>
         <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
         <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>
+        <span class="badge ${info.fadeToBlack ? 'badge-error' : ''} badge-outline rounded">FTB</span>
         <br />
         ${info.overlays
             .map((o, i) => `<span>Overlay ${i}: ${o}</span>`)

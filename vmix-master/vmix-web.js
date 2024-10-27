@@ -39,6 +39,7 @@ async function renderVmixWeb() {
               <button id="cut" class="btn btn-sm btn-neutral w-24">Cut</button>
           </div>
           <div class="row-span-1 col-span-1">
+              <button id="ftb" class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24">FTB</button>
           </div>
           <div class="row-span-1 col-span-1">
             ${preview.duration !== '0' ? getVideoProgress(preview) : ''}
@@ -133,6 +134,7 @@ async function renderVmixWeb() {
     document.getElementById('stinger1').onclick = () => transition('Stinger1', preview.number);
     document.getElementById('fade').onclick = () => transition('Fade', preview.number);
     document.getElementById('cut').onclick = () => transition('Cut', preview.number);
+    document.getElementById('ftb').onclick = () => transition('FadeToBlack', '');
 }
 
 function getMixer() {}
