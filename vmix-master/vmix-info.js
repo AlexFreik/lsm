@@ -1,4 +1,4 @@
-import { fetchUrl, xml2json, getInputValue, getApiUrl } from './tools.js';
+import { fetchUrl, xml2json, getInputValue, getApiUrl, getShortTitle } from './tools.js';
 
 class VmixInfo {
     constructor(jsonData) {
@@ -52,9 +52,12 @@ function updateVmixInfo(box, vmixInfo) {
         <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
         <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>
         <br />
-        ${info.overlays.map((o, i) => `<span>Overlay ${i}: ${o}</span>`).filter(Boolean).join('; ')}
-        <div><span class="badge bg-green-700">${active.number}</span> ${active.title}</div>
-        <div><span class="badge bg-yellow-600">${preview.number}</span> ${preview.title}</div>
+        ${info.overlays
+            .map((o, i) => `<span>Overlay ${i}: ${o}</span>`)
+            .filter(Boolean)
+            .join('; ')}
+        <div><span class="badge bg-green-700">${active.number}</span> ${getShortTitle(active.title)}</div>
+        <div><span class="badge bg-yellow-600">${preview.number}</span> ${getShortTitle(preview.title)}</div>
 
         <div class="mt-1 font-bold">Inputs</div>
         <ol>

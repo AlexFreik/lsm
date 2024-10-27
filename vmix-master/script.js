@@ -72,7 +72,10 @@ function refreshInstances() {
     setInterval(renderVmixWeb, 1000);
 
     const addBtn = document.getElementById('add-box');
-    addBtn.addEventListener('click', () => addBox());
+    addBtn.addEventListener('click', addBox);
+
+    const refreshAllBtn = document.getElementById('refresh-all');
+    refreshAllBtn.addEventListener('click', refreshInstances);
 
     const executeBtn = document.getElementById('execute-btn');
     executeBtn.onclick = executeRawRequest;

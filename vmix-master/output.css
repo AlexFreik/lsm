@@ -4434,6 +4434,11 @@ html:has(.drawer-toggle:checked) {
   margin-right: 0.5rem;
 }
 
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -4505,10 +4510,6 @@ html:has(.drawer-toggle:checked) {
 
 .mb-8 {
   margin-bottom: 2rem;
-}
-
-.ml-1 {
-  margin-left: 0.25rem;
 }
 
 .ml-4 {
