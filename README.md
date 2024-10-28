@@ -2,7 +2,8 @@
 
 ## [YAD: YouTube Auto Delay](https://alexfreik.github.io/lsm/yad/)
 
-<img src="https://github.com/AlexFreik/lsm/assets/61039123/7357967a-9bc9-43e2-8514-e9769e11cf5a" width="700">
+<img width="700" alt="YAD" src="https://github.com/user-attachments/assets/3c1f0cb4-c946-4cd5-81b5-1ea3502c01be">
+
 
 Webpage where you can configure a delay for any YouTube
 stream, and it will automatically maintain it. It solves the
@@ -11,22 +12,21 @@ goes to LIVE, and as a result, participants miss this skipped fragment.
 
 ## [Live Streaming Gallery](https://alexfreik.github.io/lsm/gallery/)
 
-<img src="https://github.com/AlexFreik/lsm/assets/61039123/685a1f1d-2f54-4b38-8012-dbc215b6943e" width="700">
+<img width="700" alt="Live Streaming Gallery" src="https://github.com/user-attachments/assets/c5dc29b8-4ef5-4366-a296-395c7d9169f3">
 
-Here you can monitor multiple YouTube, Facebook, Zoom, and other streams simultaneously.
+Here you can monitor multiple YouTube, JW, Facebook, and other live broadcasts simultaneously.
 
 It provides usefull features:
 
 -   Audio VU meter, which shows audio levels on the right side.
 -   Sets lowest quality for all playing YouTube videos.
--   Blinks or beeps if currently spotlighted person in Zoom is muted.
 -   And others!
 
 ## [Gallery Chrome Extension](https://alexfreik.github.io/lsm/gallery-ext/)
 
-Because of the CORS policy, we can't access the videos with JavaScript directly.
+<img width="400" alt="Screenshot 2024-10-28 at 11 27 42" src="https://github.com/user-attachments/assets/25f017eb-ed04-4aae-8c86-cfd71ef68cd6">
 
-That is why a Chrome Extension is required to enable VU meters, lowest quality selection, and other features.
+Because of the CORS policy, we can't access the videos with JavaScript directly. That's why a Chrome Extension is required to enable VU meters, lowest quality selection, and other features.
 
 ## [VOD: Video on Demand](https://alexfreik.github.io/lsm/vod/)
 
