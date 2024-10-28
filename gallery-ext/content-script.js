@@ -19,10 +19,15 @@
         };
     });
 
-    // controls should be hidden if extension is not installed
+    // Controls should be hidden if extension is not installed
     const controlsElem = document.getElementById('controls');
     console.assert(controlsElem);
     controlsElem.classList.remove('hidden');
+
+    const installedBadge = document.getElementById('installedBadge');
+    console.assert(installedBadge);
+    installedBadge.classList.remove('badge-error');
+    installedBadge.innerHTML = 'Installed';
 
     const warningElem = document.getElementById('outdated-extension-warning');
     console.assert(warningElem);
@@ -56,16 +61,4 @@
     setQualityElem.addEventListener('click', () => {
         chrome.runtime.sendMessage({ type: m.setQuality });
     });
-
-    const zoomBlinkElem = document.getElementById('zoomBlink');
-    console.assert(zoomBlinkElem);
-    zoomBlinkElem.addEventListener('change', () =>
-        chrome.runtime.sendMessage({ type: m.zoomBlink, value: zoomBlinkElem.checked }),
-    );
-
-    const zoomBeepElem = document.getElementById('zoomBeep');
-    console.assert(zoomBeepElem);
-    zoomBeepElem.addEventListener('change', () =>
-        chrome.runtime.sendMessage({ type: m.zoomBeep, value: zoomBeepElem.checked }),
-    );
 })();

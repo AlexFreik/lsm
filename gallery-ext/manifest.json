@@ -1,6 +1,6 @@
 {
     "name": "Live Streaming Gallery",
-    "version": "0.2.1",
+    "version": "0.3.0",
     "description": "Miscellaneous features for Live Streaming Gallery",
     "permissions": ["storage", "tabs"],
     "host_permissions": [
@@ -33,17 +33,8 @@
         },
         {
             "matches": [
-                "https://alexfreik.github.io/lsm/zoom-sdk/*",
-                "http://localhost:3000/zoom-sdk/*"
-            ],
-            "js": ["messages.js", "utils.js", "zoom-iframe.js"],
-            "css": ["zoom-styles.css"],
-            "all_frames": true
-        },
-        {
-            "matches": [
                 "https://alexfreik.github.io/lsm/gallery/*",
-                "http://localhost:3000/gallery/*"
+                "http://localhost:3000/lsm/gallery/*"
             ],
             "js": ["messages.js", "content-script.js"]
         }

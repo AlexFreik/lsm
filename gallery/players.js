@@ -7,22 +7,18 @@ function getPlayer(type, videoId, boxId) {
     parseDocumentConfig().forEach((val, key) => config.append(key.substring(2), val));
     const urlParams = `gallery=1&boxId=${boxId}&${config.toString()}`;
 
-    if (type === 'CU' || type === '' || videoId === '') {
+    if (type === 'CU' || videoId === '') {
         return getCustomPlayer(videoId);
+    } else if (type === 'YT') {
+        return getYouTubePlayer(videoId, urlParams, true);
     } else if (type === 'YN') {
         return getYouTubePlayer(videoId, urlParams, false);
-    } else if (type === 'ZH') {
-        return getZoomPlayer(videoId, urlParams, true);
-    } else if (type === 'ZP') {
-        return getZoomPlayer(videoId, urlParams, false);
     } else if (type === 'JW') {
         return getJWPlayer(videoId, urlParams);
     } else if (type === 'FB') {
         return getFacebookPlayer(videoId, urlParams);
     } else if (type === 'IG') {
         return getInstagramPlayer(videoId, urlParams);
-    } else if (type === 'YT') {
-        return getYouTubePlayer(videoId, urlParams, true);
     } else {
         return getCustomPlayer('./404.html?description=Invalid video type');
     }
@@ -49,18 +45,6 @@ function getYouTubePlayer(videoId, urlParams, cookies) {
     iframe.allow =
         'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen;';
     iframe.allowfullscreen = 'true';
-    return iframe;
-}
-
-function getZoomPlayer(videoId, urlParams, isHost) {
-    const iframe = document.createElement('iframe');
-    const role = isHost ? '1' : '0';
-    const [id, pwd, tk] = videoId.split('&');
-    console.assert(id);
-
-    iframe.src = `../zoom-sdk?id=${id}&tk=${tk ? tk : ''}&pwd=${pwd ? pwd : ''}&role=${role}&${urlParams}`;
-    iframe.title = 'Zoom Web SDK Client';
-    iframe.allow = 'camera; microphone;';
     return iframe;
 }
 

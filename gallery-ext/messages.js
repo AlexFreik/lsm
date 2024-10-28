@@ -4,6 +4,4 @@ const m = {
     muteClick: 'MUTE_CLICK',
     setQuality: 'SET_QUALITY',
     autoLive: 'AUTO_LIVE',
-    zoomBlink: 'ZOOM_BLINK',
-    zoomBeep: 'ZOOM_BEEP',
 };
