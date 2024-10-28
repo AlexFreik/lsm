@@ -9,7 +9,8 @@
         "https://*.innerengineering.vualto.com/*",
         "https://*.facebook.com/v3.2/plugins/*",
         "http://alexfreik.github.io/lsm/gallery/*",
-        "http://localhost:3000/gallery/*"
+        "http://localhost:3000/lsm/gallery/*",
+        "http://localhost:3000/lsm/gallery-stable/*"
     ],
     "background": {
         "service_worker": "background.js"
@@ -34,7 +35,8 @@
         {
             "matches": [
                 "https://alexfreik.github.io/lsm/gallery/*",
-                "http://localhost:3000/lsm/gallery/*"
+                "http://localhost:3000/lsm/gallery/*",
+                "http://localhost:3000/lsm/gallery-stable/*"
             ],
             "js": ["messages.js", "content-script.js"]
         }
