@@ -12,7 +12,7 @@ function addBox(name = '', type = 'YT', videoId = '') {
 function initBoxes() {
     const urlParams = getBoxUrlParams();
     if (urlParams.length === 0) {
-        addBox('', 'YT', '');
+        addBox();
     }
     urlParams.forEach((param) => {
         addBox(param.key, param.value.substring(0, 2), param.value.substring(2));

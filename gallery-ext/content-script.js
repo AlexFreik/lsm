@@ -1,24 +1,36 @@
+function initBoxes() {
+    const boxes = Array.from(document.getElementsByClassName('box'));
+    boxes.forEach((box) => addMuteAction(box));
+}
+
+function addMuteAction(box) {
+    const boxId = box.dataset.boxId;
+    console.assert(boxId);
+    if (box.classList.contains('marked')) {
+        return;
+    }
+    const muteBtn = box.getElementsByClassName('mute-btn')[0];
+    muteBtn.onclick = (e) => {
+        const btn = e.target;
+        const mute = btn.innerHTML === 'Mute';
+        if (mute) {
+            btn.innerHTML = 'Unmute';
+            box.classList.remove('unmuted');
+        } else {
+            btn.innerHTML = 'Mute';
+            box.classList.add('unmuted');
+        }
+        chrome.runtime.sendMessage({ type: m.muteClick, value: mute, boxId: boxId });
+    };
+    box.classList.add('marked');
+}
+
 (() => {
     console.log('Hi from Content Script');
 
-    const boxes = Array.from(document.getElementsByClassName('box'));
-    boxes.forEach((box) => {
-        const boxId = box.dataset.boxId;
-        console.assert(boxId);
-        const muteBtn = box.getElementsByClassName('mute-btn')[0];
-        muteBtn.onclick = (e) => {
-            const btn = e.target;
-            const mute = btn.innerHTML === 'Mute';
-            if (mute) {
-                btn.innerHTML = 'Unmute';
-                box.classList.remove('unmuted');
-            } else {
-                btn.innerHTML = 'Mute';
-                box.classList.add('unmuted');
-            }
-            chrome.runtime.sendMessage({ type: m.muteClick, value: mute, boxId: boxId });
-        };
-    });
+    initBoxes();
+    const addBoxElem = document.getElementById('add-box');
+    addBoxElem.addEventListener('click', initBoxes);
 
     // Controls should be hidden if extension is not installed
     const controlsElem = document.getElementById('controls');

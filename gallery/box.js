@@ -96,7 +96,7 @@ function createTopBtn(name, onclick) {
     const btn = document.createElement('button');
     btn.className = 'top-btn ' + name + '-btn';
     btn.onclick = () => onclick(btn);
-    btn.appendChild(document.createTextNode(capitalizeFirst(name)));
+    btn.innerHTML = capitalizeFirst(name);
     return btn;
 }
 
