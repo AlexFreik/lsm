@@ -8,12 +8,13 @@
         const muteBtn = box.getElementsByClassName('mute-btn')[0];
         muteBtn.onclick = (e) => {
             const btn = e.target;
-            let mute = true;
-            if (btn.innerHTML === 'Mute') {
+            const mute = btn.innerHTML === 'Mute';
+            if (mute) {
                 btn.innerHTML = 'Unmute';
+                box.classList.remove('unmuted');
             } else {
-                mute = false;
                 btn.innerHTML = 'Mute';
+                box.classList.add('unmuted');
             }
             chrome.runtime.sendMessage({ type: m.muteClick, value: mute, boxId: boxId });
         };

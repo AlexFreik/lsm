@@ -2,23 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@keyframes blink {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-.blinking-border {
-    border: 5px solid red;
-    animation: blink 1s infinite;
-}
-
 @keyframes fadeInRight {
     from {
         opacity: 0;
@@ -58,6 +41,10 @@ iframe {
     @apply relative max-w-full overflow-hidden rounded-lg bg-slate-700;
     width: 290px;
     height: 150px;
+}
+
+.unmuted > .embed-container {
+    @apply border-4 border-green-500;
 }
 
 .top-btn {
