@@ -31,7 +31,7 @@ function createBox(name, type, videoId) {
     const typeInput = document.createElement('select');
     typeInput.onblur = () => updateUrlParams();
     typeInput.className = 'video-type select select-xs select-bordered w-16 max-w-xs ';
-    const options = Array(6)
+    const options = Array(7)
         .fill(null)
         .map((_) => document.createElement('option'));
     options.forEach((o) => typeInput.append(o));
@@ -48,17 +48,21 @@ function createBox(name, type, videoId) {
     options[2].text = 'JW (JW Player)';
     options[2].selected = type === 'JW';
 
-    options[3].value = 'FB';
-    options[3].text = 'FB (Facebook)';
-    options[3].selected = type === 'FB';
+    options[3].value = 'SS';
+    options[3].text = 'SS (Screen Share)';
+    options[3].selected = type === 'SS';
 
-    options[4].value = 'IG';
-    options[4].text = 'IG (Instagram)';
-    options[4].selected = type === 'IG';
+    options[4].value = 'FB';
+    options[4].text = 'FB (Facebook)';
+    options[4].selected = type === 'FB';
 
-    options[5].value = 'CU';
-    options[5].text = 'CU (Custom)';
-    options[5].selected = type === 'CU' || type === '';
+    options[5].value = 'IG';
+    options[5].text = 'IG (Instagram)';
+    options[5].selected = type === 'IG';
+
+    options[6].value = 'CU';
+    options[6].text = 'CU (Custom)';
+    options[6].selected = type === 'CU' || type === '';
 
     box.appendChild(typeInput);
 

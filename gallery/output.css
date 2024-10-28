@@ -3994,6 +3994,10 @@ html:has(.drawer-toggle:checked) {
   position: sticky;
 }
 
+.inset-0 {
+  inset: 0px;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -4654,6 +4658,14 @@ html:has(.drawer-toggle:checked) {
   width: 150px;
 }
 
+.w-\[20px\] {
+  width: 20px;
+}
+
+.w-\[259px\] {
+  width: 259px;
+}
+
 .w-\[326px\] {
   width: 326px;
 }
@@ -4741,6 +4753,10 @@ html:has(.drawer-toggle:checked) {
 
 .grid-cols-\[250px_120px_250px\] {
   grid-template-columns: 250px 120px 250px;
+}
+
+.grid-cols-\[259px_20px\] {
+  grid-template-columns: 259px 20px;
 }
 
 .grid-cols-\[90px_auto\] {
@@ -5350,4 +5366,9 @@ iframe {
   width: 100%;
   overflow: hidden;
   padding: 0px;
+}
+
+.hover\:bg-neutral:hover {
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-n,oklch(var(--n)/var(--tw-bg-opacity)));
 }

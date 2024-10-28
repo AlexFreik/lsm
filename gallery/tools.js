@@ -57,6 +57,29 @@ function generateUUID() {
     return (Math.random() + 1).toString(36).substring(2);
 }
 
+async function captureWindow(videoId) {
+    try {
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+            video: {
+                displaySurface: 'window', // Capture only a specific window
+            },
+        });
+
+        const video = document.getElementById(videoId);
+        const msg = document.getElementById('msg-' + videoId);
+        console.log(msg);
+        video.srcObject = stream;
+        msg.classList.add('hidden');
+        video.play();
+
+        stream.getVideoTracks()[0].addEventListener('ended', () => {
+            msg.classList.remove('hidden');
+        });
+    } catch (error) {
+        console.error('Error capturing window:', error);
+    }
+}
+
 export {
     getBoxUrlParams,
     getConfigUrlParams,
@@ -64,4 +87,5 @@ export {
     updateUrlParams,
     capitalizeFirst,
     generateUUID,
+    captureWindow,
 };

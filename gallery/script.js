@@ -1,7 +1,7 @@
 import { getBoxUrlParams, getConfigUrlParams, updateUrlParams } from './tools.js';
 import { createBox, createSwapBtn } from './box.js';
 
-function addBox(name = '', type = '', videoId = '') {
+function addBox(name = '', type = 'YT', videoId = '') {
     const gallery = document.getElementById('gallery');
     if (gallery.firstElementChild.classList.contains('box')) {
         gallery.insertBefore(createSwapBtn(name, type, videoId), gallery.lastElementChild);
