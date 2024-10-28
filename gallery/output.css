@@ -5285,9 +5285,9 @@ iframe {
 }
 
 .unmuted > .embed-container {
-  border-width: 4px;
-  --tw-border-opacity: 1;
-  border-color: rgb(34 197 94 / var(--tw-border-opacity));
+  outline-style: solid;
+  outline-width: 4px;
+  outline-color: #22c55e;
 }
 
 .top-btn {

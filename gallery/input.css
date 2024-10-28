@@ -44,7 +44,7 @@ iframe {
 }
 
 .unmuted > .embed-container {
-    @apply border-4 border-green-500;
+    @apply outline outline-4 outline-green-500;
 }
 
 .top-btn {
