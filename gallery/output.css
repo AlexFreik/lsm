@@ -3998,6 +3998,10 @@ html:has(.drawer-toggle:checked) {
   inset: 0px;
 }
 
+.right-0 {
+  right: 0px;
+}
+
 .top-0 {
   top: 0px;
 }
@@ -4755,10 +4759,6 @@ html:has(.drawer-toggle:checked) {
   grid-template-columns: 250px 120px 250px;
 }
 
-.grid-cols-\[259px_20px\] {
-  grid-template-columns: 259px 20px;
-}
-
 .grid-cols-\[90px_auto\] {
   grid-template-columns: 90px auto;
 }
@@ -5060,6 +5060,11 @@ html:has(.drawer-toggle:checked) {
 .bg-yellow-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
+}
+
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .p-2 {

@@ -67,11 +67,15 @@ function getJWPlayer(videoId, urlParams) {
 function getScreenShare(videoId) {
     const div = document.createElement('div');
     div.onclick = () => captureWindow(videoId);
-    div.className = 'grid grid-cols-[259px_20px] h-full cursor-pointer bg-black hover:bg-neutral';
+    div.className = 'relative  h-full  cursor-pointer bg-black hover:bg-neutral';
     div.innerHTML = `
-      <video id="${videoId}" class="w-[259px] h-full"></video>
-      <canvas id="canvas-${videoId}" class="w-[20px] h-full"></canvas>
-      <span id="msg-${videoId}"class="absolute inset-0 flex items-center justify-center text-center">Click to Share Window</span>`;
+      <video id="${videoId}" class="inline-block w-[259px] h-full object-contain"></video>
+      <canvas id="canvas-${videoId}" class="absolute top-0 right-0 w-[20px] h-full"></canvas>
+      <span
+        id="msg-${videoId}"
+        class="absolute inset-0 flex items-center justify-center text-center">
+            Click to Share Window
+      </span>`;
     return div;
 }
 

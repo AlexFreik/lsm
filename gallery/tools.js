@@ -66,6 +66,7 @@ async function captureWindow(videoId) {
         });
 
         const video = document.getElementById(videoId);
+        const canvas = document.getElementById('canvas-' + videoId);
         const msg = document.getElementById('msg-' + videoId);
         console.log(msg);
         video.srcObject = stream;
