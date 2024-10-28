@@ -1,0 +1,80 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.swap-btn {
+    animation: fadeInRight 1s ease-out;
+}
+
+.box {
+    @apply m-1 h-[180px] w-[279px];
+    animation: fadeInRight 1s ease-out;
+}
+
+input {
+    @apply m-1 bg-transparent text-sm text-slate-50;
+}
+
+iframe {
+    @apply absolute left-0 top-0 h-full w-full bg-neutral;
+    color-scheme: light;
+    width: 160% !important;
+    height: 160% !important;
+    -webkit-transform: scale(0.625);
+    transform: scale(0.625);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
+
+.embed-container {
+    @apply relative max-w-full overflow-hidden rounded-lg bg-slate-700;
+    width: 290px;
+    height: 150px;
+}
+
+.unmuted > .embed-container {
+    @apply outline outline-4 outline-green-500;
+}
+
+.top-btn {
+    @apply absolute top-1 z-10 hidden h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
+}
+
+.embed-container:hover + .top-btn {
+    @apply block;
+}
+
+.embed-container:hover > .top-btn {
+    @apply block;
+}
+
+.mute-btn {
+    @apply right-[170px] bg-secondary;
+}
+
+.expand-btn {
+    @apply right-[115px] bg-secondary;
+}
+
+.refresh-btn {
+    @apply right-[60px] bg-secondary;
+}
+
+.remove-btn {
+    @apply right-[5px] bg-red-900;
+}
+
+.expanded {
+    @apply fixed bottom-0 left-0 right-0 top-0 z-[999999] m-0 h-full w-full overflow-hidden p-0;
+}

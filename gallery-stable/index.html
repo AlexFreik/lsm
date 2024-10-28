@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gallery</title>
+    <link rel="icon" type="image/png" href="./isha-logo.png" />
+    <link rel="stylesheet" href="./output.css" />
+    <script type="module" src="./script.js" defer></script>
+  </head>
+  <body class="bg-base-100 text-base-content">
+    <div class="prose m-3 mx-auto hidden rounded-box border-2 border-error p-2 text-error" id="outdated-extension-warning">
+      <b>Warning:</b> You're using an outdated Chrome extension version "<span id="ext-version"></span>". Please
+      <a class="link" href="/lsm/gallery-ext/#update">update</a> it to the latest version "<span id="gal-version">0.3.1</span>", as some features
+      might not work properly.
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap px-1" id="gallery">
+        <div class="flex min-w-full flex-col items-center px-10 py-10">
+          <button id="add-box" class="btn btn-outline btn-secondary">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/lsm/">Live Streaming Gallery</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="#docs">Docs</a></li>
+          <li>
+            <a href="/lsm/gallery-ext/" target="_blank" t>Extension</a>
+          </li>
+          <li><a href="/lsm/yad/">YAD</a></li>
+          <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="hidden w-full px-5" id="controls">
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input type="checkbox" id="audioLevels" class="url-param toggle toggle-secondary m-0" checked />
+          <span class="text-md ms-3">Draw audio levels</span>
+        </label>
+      </div>
+      <div class="mb-4">
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input type="checkbox" id="noAudioBlink" class="url-param toggle toggle-secondary m-0" disabled />
+          <span class="text-md ms-3">Blink if no audio for over 5 seconds</span>
+        </label>
+      </div>
+      <div>
+        <label class="relative inline-flex cursor-pointer items-center">
+          <input type="checkbox" id="autoLive" class="url-param toggle toggle-secondary m-0" checked />
+          <span class="text-md ms-3">YouTube: automatically switch to LIVE</span>
+        </label>
+      </div>
+      <div class="mb-4">
+        <label class="relative inline-flex cursor-pointer items-center">
+          <button type="button" id="setQuality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
+          <span class="text-md ms-3">YouTube: Select the lowest quality (resolution) for all videos</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- <div class="my-8 px-5">
+      <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
+    </div> -->
+
+    <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-2xl text-secondary">
+          Chrome Extension
+          <span id="installedBadge" class="badge badge-success badge-error badge-lg">Not Installed</span>
+        </h2>
+        <p>
+          Because of the CORS policy, we can't access the videos with JavaScript directly.
+          <br />
+          That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE, and other features.
+        </p>
+        <div class="card-actions justify-end">
+          <a class="btn btn-outline btn-secondary" href="/lsm/gallery-ext/" target="_blank">How to Install</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="prose max-w-4xl px-5">
+      <h2 id="docs">Documentation</h2>
+      <p>Please use the latest Chrome browser and install the extension.</p>
+      <h3>Video ID</h3>
+      <ul>
+        <li>
+          <code>YT, YN (YouTube)</code> Paste video ID. For <i>https://youtube.com/watch?v=jfKfPfyJRdk</i> the ID will be <b>jfKfPfyJRdkM</b>.
+          <br />
+          <b>Note</b>: YN is privacy enhanced youtube, you will join in "incognito" mode.
+        </li>
+        <li><code>FB (Facebook)</code> Paste video ID.</li>
+        <li><code>IG (Instagram)</code> Not supported yet.</li>
+        <li>
+          <code>CU (Custom)</code> Paste any web link e.g. <i>https://alexfreik.github.io/lsm/gallery/isha-logo.png</i><br />
+          <b>Note</b>: most links won't work because of CORS restrictions in the browser.
+        </li>
+      </ul>
+    </div>
+
+    <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
+      <aside>
+        <p>Copyright © 2024 - All right reserved by LSM</p>
+      </aside>
+    </footer>
+  </body>
+</html>
