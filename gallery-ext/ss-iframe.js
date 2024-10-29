@@ -1,5 +1,5 @@
 (async () => {
-    console.log('Gallery: Hi from JW Player Iframe');
+    console.log('Gallery: Hi from Screen Share Iframe');
     if (!isGalleryIframe()) {
         console.log('Gallery: This iframe is not inside of Gallery, exiting.');
         return;
@@ -14,16 +14,6 @@
     createAudioLevels();
     window.ctx = document.getElementById('audio-meter').getContext('2d');
     draw(ctx, audioTools.analyserL, audioTools.analyserR);
-
-    // Align video to the left
-    const wrapper = querySelectorAllShadows('.vch-player')[0];
-    console.assert(wrapper);
-    wrapper.style = 'margin: 0 -10px;';
-
-    // Unmute
-    const muteBtn = querySelectorAllShadows('.svelte-2yyyz0')[1];
-    console.assert(muteBtn);
-    muteBtn.click();
 
     const urlParams = new URLSearchParams(window.location.search);
     const boxId = urlParams.get('boxId');

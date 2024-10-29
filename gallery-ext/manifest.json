@@ -1,6 +1,6 @@
 {
     "name": "Live Streaming Gallery",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "description": "Miscellaneous features for Live Streaming Gallery",
     "permissions": ["storage", "tabs"],
     "host_permissions": [
@@ -8,7 +8,8 @@
         "https://*.youtube.com/*",
         "https://*.innerengineering.vualto.com/*",
         "https://*.facebook.com/v3.2/plugins/*",
-        "http://alexfreik.github.io/lsm/gallery/*",
+        "https://alexfreik.github.io/lsm/gallery/*",
+        "https://alexfreik.github.io/lsm/gallery-stable/*",
         "http://localhost:3000/lsm/gallery/*",
         "http://localhost:3000/lsm/gallery-stable/*"
     ],
@@ -22,8 +23,18 @@
             "all_frames": true
         },
         {
-            "matches": ["https://player.controlhub.innerengineering.vualto.com/Player/Index/*"],
+            "matches": ["https://player.controlhub.innerengineering.vualto.com/player/index/*"],
             "js": ["messages.js", "utils.js", "jw-iframe.js"],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://alexfreik.github.io/lsm/gallery/screen-share.html*",
+                "https://alexfreik.github.io/lsm/gallery-stable/screen-share.html*",
+                "http://localhost:3000/lsm/gallery/screen-share.html*",
+                "http://localhost:3000/lsm/gallery-stable/screen-share.html*"
+            ],
+            "js": ["messages.js", "utils.js", "ss-iframe.js"],
             "all_frames": true
         },
         {
@@ -35,9 +46,11 @@
         {
             "matches": [
                 "https://alexfreik.github.io/lsm/gallery/*",
+                "https://alexfreik.github.io/lsm/gallery-stable/*",
                 "http://localhost:3000/lsm/gallery/*",
                 "http://localhost:3000/lsm/gallery-stable/*"
             ],
+            "exclude_matches": ["*://*/*.html*"],
             "js": ["messages.js", "content-script.js"]
         }
     ],

@@ -4658,14 +4658,6 @@ html:has(.drawer-toggle:checked) {
   width: 150px;
 }
 
-.w-\[20px\] {
-  width: 20px;
-}
-
-.w-\[259px\] {
-  width: 259px;
-}
-
 .w-\[326px\] {
   width: 326px;
 }
@@ -4753,10 +4745,6 @@ html:has(.drawer-toggle:checked) {
 
 .grid-cols-\[250px_120px_250px\] {
   grid-template-columns: 250px 120px 250px;
-}
-
-.grid-cols-\[259px_20px\] {
-  grid-template-columns: 259px 20px;
 }
 
 .grid-cols-\[90px_auto\] {
@@ -5062,6 +5050,11 @@ html:has(.drawer-toggle:checked) {
   background-color: rgb(202 138 4 / var(--tw-bg-opacity));
 }
 
+.object-contain {
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
 .p-2 {
   padding: 0.5rem;
 }
@@ -5128,6 +5121,10 @@ html:has(.drawer-toggle:checked) {
 
 .pl-0 {
   padding-left: 0px;
+}
+
+.pr-\[20px\] {
+  padding-right: 20px;
 }
 
 .text-center {

@@ -1,14 +1,14 @@
-import { parseDocumentConfig, captureWindow } from './tools.js';
+import { parseDocumentConfig } from './tools.js';
 
 function getPlayer(type, videoId, boxId) {
     console.assert(boxId);
 
     const config = new URLSearchParams();
     parseDocumentConfig().forEach((val, key) => config.append(key.substring(2), val));
-    const urlParams = `gallery=1&boxId=${boxId}&${config.toString()}`;
+    const urlParams = `boxId=${boxId}&${config.toString()}`;
 
     if (type === 'SS') {
-        return getScreenShare(boxId, '');
+        return getCustomPlayer('./screen-share.html?' + urlParams);
     } else if (type === 'CU' || videoId === '') {
         return getCustomPlayer(videoId);
     } else if (type === 'YT') {
@@ -62,21 +62,6 @@ function getJWPlayer(videoId, urlParams) {
     iframe.allow = 'encrypted-media; autoplay; fullscreen; clipboard-read; clipboard-write;';
     iframe.allowfullscreen = true;
     return iframe;
-}
-
-function getScreenShare(videoId) {
-    const div = document.createElement('div');
-    div.onclick = () => captureWindow(videoId);
-    div.className = 'relative  h-full  cursor-pointer bg-black hover:bg-neutral';
-    div.innerHTML = `
-      <video id="${videoId}" class="inline-block w-[259px] h-full object-contain"></video>
-      <canvas id="canvas-${videoId}" class="absolute top-0 right-0 w-[20px] h-full"></canvas>
-      <span
-        id="msg-${videoId}"
-        class="absolute inset-0 flex items-center justify-center text-center">
-            Click to Share Window
-      </span>`;
-    return div;
 }
 
 function getFacebookPlayer(videoId, urlParams) {

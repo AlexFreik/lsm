@@ -1,5 +1,9 @@
 console.log('Gallery: Hi from utils.js');
 
+function isGalleryIframe() {
+    return getBoxId() !== null;
+}
+
 // Create Audio Meter
 function createAudioLevels() {
     const canvas = document.createElement('canvas');
@@ -76,7 +80,6 @@ async function draw(ctx, analyserL, analyserR) {
 function getBoxId() {
     const urlParams = new URLSearchParams(window.location.search);
     const boxId = urlParams.get('boxId');
-    console.assert(boxId);
     return boxId;
 }
 
@@ -123,10 +126,7 @@ function getMax(array) {
 }
 
 (() => {
-    const galleryParam = getUrlParam('gallery');
-    console.assert([null, '1'].includes(galleryParam));
-    window.isGalleryIframe = galleryParam === '1';
-    if (!isGalleryIframe) {
+    if (!isGalleryIframe()) {
         console.log('Gallery: This iframe is not inside of Gallery, exiting.');
         return;
     }
