@@ -1,10 +1,40 @@
 console.log('Gallery: Hi from utils.js');
 
+// ===== General Purpose =====
+function isElement(element) {
+    return element instanceof Element || element instanceof HTMLDocument;
+}
+
+function sleep(ms) {
+    return new Promise((r) => setTimeout(r, ms));
+}
+
 function isGalleryIframe() {
     return getBoxId() !== null;
 }
 
-// Create Audio Meter
+function getMax(array) {
+    let max = -60;
+    for (let i = 0; i < array.length; i++) {
+        max = Math.max(max, array[i]);
+    }
+    return ((max + 60) * 5) / 3;
+}
+
+function getRMS(array) {
+    let sum = 0;
+    for (let i = 0; i < array.length; i++) {
+        const value = (array[i] - 128) / 128;
+        sum += value * value;
+    }
+    return Math.sqrt(sum / array.length) * 100;
+}
+
+function rmsToDb(rms) {
+    return rms > 0 ? 20 * Math.log10(rms) : -Infinity;
+}
+
+// ===== Audio Meter =====
 function createAudioLevels() {
     const canvas = document.createElement('canvas');
     canvas.id = 'audio-meter';
@@ -23,11 +53,14 @@ function getUrlParam(name) {
     return urlParams.get(name);
 }
 
-function getAudioTools(videoElem) {
-    const video = audioCtx.createMediaElementSource(videoElem);
+function getAudioTools(audioInput) {
+    const audioCtx = new AudioContext();
+    const audio = isElement(audioInput)
+        ? audioCtx.createMediaElementSource(audioInput)
+        : audioCtx.createMediaStreamSource(audioInput);
 
     const splitter = audioCtx.createChannelSplitter(2);
-    video.connect(splitter);
+    audio.connect(splitter);
 
     const analyserL = audioCtx.createAnalyser();
     analyserL.smoothingTimeConstant = SMOOTHING_TIME;
@@ -84,8 +117,6 @@ function getBoxId() {
 }
 
 // ===== YT Auto Quality =====
-let sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 function querySelectorAllShadows(selector, el = document.body) {
     const childShadows = Array.from(el.querySelectorAll('*'))
         .map((el) => el.shadowRoot)
@@ -117,14 +148,7 @@ async function waitForVideo() {
     }
 }
 
-function getMax(array) {
-    let max = -60;
-    for (let i = 0; i < array.length; i++) {
-        max = Math.max(max, array[i]);
-    }
-    return ((max + 60) * 5) / 3;
-}
-
+// ===== Global Vaues & Message Listeners =====
 (() => {
     if (!isGalleryIframe()) {
         console.log('Gallery: This iframe is not inside of Gallery, exiting.');
@@ -134,7 +158,6 @@ function getMax(array) {
     // ===== Global Variables =====
     window.BUFF_SIZE = 16;
     window.SMOOTHING_TIME = 0.2;
-    window.audioCtx = new AudioContext();
 
     const audioLevlesParam = getUrlParam('audioLevels');
     console.assert(['0', '1'].includes(audioLevlesParam));

@@ -68,6 +68,7 @@ function createBox(name, type, videoId) {
 
     const videoIdInput = document.createElement('input');
     videoIdInput.type = 'text';
+    videoIdInput.name = 'videoId';
     videoIdInput.onblur = () => updateUrlParams();
     videoIdInput.placeholder = 'Video ID';
     videoIdInput.value = videoId;

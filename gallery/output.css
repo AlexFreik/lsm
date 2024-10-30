@@ -4741,6 +4741,10 @@ html:has(.drawer-toggle:checked) {
   width: 259px;
 }
 
+.w-screen {
+  width: 100vw;
+}
+
 .min-w-full {
   min-width: 100%;
 }
@@ -5111,6 +5115,10 @@ html:has(.drawer-toggle:checked) {
   background-color: rgb(17 24 39 / var(--tw-bg-opacity));
 }
 
+.bg-opacity-50 {
+  --tw-bg-opacity: 0.5;
+}
+
 .object-contain {
   -o-object-fit: contain;
      object-fit: contain;
@@ -5126,6 +5134,10 @@ html:has(.drawer-toggle:checked) {
 
 .p-4 {
   padding: 1rem;
+}
+
+.p-0 {
+  padding: 0px;
 }
 
 .px-0 {

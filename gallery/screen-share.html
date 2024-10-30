@@ -7,11 +7,12 @@
     <link rel="icon" type="image/png" href="./isha-logo.png" />
     <link rel="stylesheet" href="./output.css" />
   </head>
-  <body class="h-full w-full bg-black text-base-content">
+  <body class="h-screen w-screen bg-black text-base-content">
     <div class="relative h-full w-full cursor-pointer hover:bg-neutral" onclick="captureWindow()">
-      <video class="inline-block h-full w-full object-contain pr-[20px]"></video>
-      <span class="absolute inset-0 flex h-full w-full items-center justify-center text-center"> Click to Share Window </span>
+      <video class="absolute inset-0 h-full w-full object-contain pr-[20px]"></video>
+      <span class="absolute inset-0 flex items-center justify-center text-center text-xl"> Click to Share Window </span>
     </div>
+
     <script>
       const video = document.querySelector('video');
       const span = document.querySelector('span');
@@ -19,9 +20,7 @@
       async function captureWindow() {
         try {
           const screenStream = await navigator.mediaDevices.getDisplayMedia({
-            video: {
-              displaySurface: 'window',
-            },
+            video: { displaySurface: 'window' },
           });
 
           const audioStream = await navigator.mediaDevices.getUserMedia({

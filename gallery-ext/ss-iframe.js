@@ -1,13 +1,14 @@
 (async () => {
     console.log('Gallery: Hi from Screen Share Iframe');
     if (!isGalleryIframe()) {
-        console.log('Gallery: This iframe is not inside of Gallery, exiting.');
-        return;
+        return console.log('Gallery: This iframe is not inside of Gallery, exiting.');
     }
 
-    const videoElem = await waitForVideo();
-    console.assert(videoElem);
-    const audioTools = getAudioTools(videoElem);
+    const audioStream = await navigator.mediaDevices.getUserMedia({
+        audio: { deviceId: { exact: 'default' } },
+    });
+
+    const audioTools = getAudioTools(audioStream);
     muteClick(audioTools, true);
 
     // Draw the VU meter
