@@ -1,4 +1,18 @@
-import { getVideoName, getVideoId, getType } from './box-controls.js';
+function getRowName(row) {
+    return row.querySelector('.row-name').value;
+}
+
+function getRowType(row) {
+    return row.querySelector('.row-type').value;
+}
+
+function getRowValue(row) {
+    return row.querySelector('.row-value').value;
+}
+
+function updateGalleryUrlInput() {
+    document.getElementById('gallery-url').value = window.location.href;
+}
 
 function getBoxUrlParams() {
     const url = window.location.href;
@@ -38,15 +52,16 @@ function parseDocumentConfig() {
 }
 
 function updateUrlParams() {
-    const boxParams = new URLSearchParams();
-    document.querySelectorAll('.box').forEach((box) => {
-        const key = getVideoName(box);
-        const val = getType(box) + getVideoId(box);
+    const rowParams = new URLSearchParams();
+    document.querySelectorAll('.row').forEach((row) => {
+        const key = getRowName(row);
+        const val = getRowType(row) + getRowValue(row);
         if (key === '') return;
-        boxParams.append(key, val);
+        rowParams.append(key, val);
     });
     const configParams = parseDocumentConfig();
-    window.history.pushState({}, '', `?${boxParams.toString()}&${configParams.toString()}`);
+    window.history.pushState({}, '', `?${rowParams.toString()}&${configParams.toString()}`);
+    updateGalleryUrlInput();
 }
 
 function capitalizeFirst(str) {
@@ -62,6 +77,6 @@ export {
     getConfigUrlParams,
     parseDocumentConfig,
     updateUrlParams,
-    capitalizeFirst,
     generateUUID,
+    updateGalleryUrlInput,
 };

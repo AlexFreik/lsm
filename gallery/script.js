@@ -1,19 +1,43 @@
-import { getBoxUrlParams, getConfigUrlParams, updateUrlParams } from './tools.js';
-import { createBox, createSwapBtn } from './box.js';
+import {
+    getBoxUrlParams,
+    getConfigUrlParams,
+    updateUrlParams,
+    updateGalleryUrlInput,
+} from './tools.js';
+import { createBox } from './box.js';
+import { createRow } from './row.js';
 
-function addBox(name = '', type = 'YT', videoId = '') {
-    const gallery = document.getElementById('gallery');
-    if (gallery.firstElementChild.classList.contains('box')) {
-        gallery.insertBefore(createSwapBtn(), gallery.lastElementChild);
-    }
-    gallery.insertBefore(createBox(name, type, videoId), gallery.lastElementChild);
+function addRow(name = '', type = 'YT', value = '') {
+    const dataRows = document.getElementById('data-rows');
+    dataRows.appendChild(createRow(name, type, value));
 }
 
-function initBoxes() {
+function initRows() {
+    const urlParams = getBoxUrlParams();
+    if (urlParams.length === 0) {
+        addRow();
+    }
+    urlParams.forEach((param) => {
+        addRow(param.key, param.value.substring(0, 2), param.value.substring(2));
+    });
+}
+
+function updateRows() {
+    updateUrlParams();
+    updateBoxes();
+}
+
+function addBox(name = '', type = 'YT', value = '') {
+    const gallery = document.getElementById('gallery');
+    gallery.appendChild(createBox(name, type, value));
+}
+
+function updateBoxes() {
     const urlParams = getBoxUrlParams();
     if (urlParams.length === 0) {
         addBox();
     }
+    document.getElementById('gallery').innerHTML = '';
     urlParams.forEach((param) => {
         addBox(param.key, param.value.substring(0, 2), param.value.substring(2));
     });
@@ -35,14 +59,28 @@ function initConfig() {
     });
 }
 
-initConfig(); // take all config params from URL and apply to config elements
-initBoxes(); // create all the video player boxes
-
 (() => {
-    document
-        .querySelectorAll('.url-param')
-        .forEach((input) => input.addEventListener('change', updateUrlParams));
+    updateGalleryUrlInput();
+    initConfig(); // take all config params from URL and apply to config elements
+    initRows();
+    updateBoxes();
 
-    const addBtn = document.getElementById('add-box');
-    addBtn.addEventListener('click', () => addBox());
+    document.querySelectorAll('.url-param').forEach((input) => {
+        input.addEventListener('change', updateUrlParams);
+    });
+
+    document.getElementById('update-gallery-url').addEventListener('click', () => {
+        const galleryUrl = document.getElementById('gallery-url');
+        window.location.href = galleryUrl.value;
+    });
+
+    document.getElementById('add-data-row').addEventListener('click', () => addRow());
+    document.getElementById('update-rows').addEventListener('click', () => updateRows());
+
+    const dataRows = document.getElementById('data-rows');
+    new Sortable(dataRows, {
+        animation: 150,
+        handle: '.handle', // Draggable by the entire row
+        ghostClass: 'bg-base-300', // Adds a class for the dragged item
+    });
 })();
