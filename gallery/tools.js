@@ -64,6 +64,27 @@ function updateUrlParams() {
     updateGalleryUrlInput();
 }
 
+function extractYouTubeId(str) {
+    try {
+        const url = new URL(str);
+        const vParam = url.searchParams.get('v');
+        if (vParam) {
+            // https://www.youtube.com/watch?v=12345
+            return vParam;
+        } else if (url.pathname.startsWith('/live/')) {
+            // https://www.youtube.com/live/12345
+            return url.pathname.slice(6);
+        } else if (url.origin === 'https://youtu.be') {
+            // https://youtu.be/12345
+            return url.pathname.slice(1);
+        } else {
+            return str;
+        }
+    } catch (error) {
+        return str;
+    }
+}
+
 function capitalizeFirst(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
@@ -72,11 +93,26 @@ function generateUUID() {
     return (Math.random() + 1).toString(36).substring(2);
 }
 
+async function getAvailableMics() {
+    try {
+        await navigator.mediaDevices.getUserMedia({ audio: true });
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const audioInputDevices = devices.filter((device) => device.kind === 'audioinput');
+        return audioInputDevices;
+    } catch (error) {
+        console.error('Error accessing microphones:', error);
+        alert('Could not access microphones. Please grant permissions.');
+        return [];
+    }
+}
+
 export {
     getBoxUrlParams,
     getConfigUrlParams,
     parseDocumentConfig,
     updateUrlParams,
     generateUUID,
+    extractYouTubeId,
     updateGalleryUrlInput,
+    getAvailableMics,
 };

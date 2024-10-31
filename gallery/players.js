@@ -4,7 +4,7 @@ function getPlayer(type, value, id) {
     console.assert(id);
     const config = new URLSearchParams();
     parseDocumentConfig().forEach((val, key) => config.append(key.substring(2), val));
-    const urlParams = `boxId=${id}&${config.toString()}`;
+    const urlParams = `boxId=${id}&value=${value}&${config.toString()}`;
 
     if (type === 'SS') {
         return getCustomPlayer('./screen-share.html?' + urlParams);

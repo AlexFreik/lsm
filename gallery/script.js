@@ -3,6 +3,7 @@ import {
     getConfigUrlParams,
     updateUrlParams,
     updateGalleryUrlInput,
+    getAvailableMics,
 } from './tools.js';
 import { createBox } from './box.js';
 import { createRow } from './row.js';
@@ -13,6 +14,7 @@ function addRow(name = '', type = 'YT', value = '') {
 }
 
 function initRows() {
+    document.getElementById('data-rows').innerHTML = '';
     const urlParams = getBoxUrlParams();
     if (urlParams.length === 0) {
         addRow();
@@ -33,11 +35,8 @@ function addBox(name = '', type = 'YT', value = '') {
 }
 
 function updateBoxes() {
-    const urlParams = getBoxUrlParams();
-    if (urlParams.length === 0) {
-        addBox();
-    }
     document.getElementById('gallery').innerHTML = '';
+    const urlParams = getBoxUrlParams();
     urlParams.forEach((param) => {
         addBox(param.key, param.value.substring(0, 2), param.value.substring(2));
     });
@@ -62,6 +61,7 @@ function initConfig() {
 (() => {
     updateGalleryUrlInput();
     initConfig(); // take all config params from URL and apply to config elements
+    window.mics = [];
     initRows();
     updateBoxes();
 
@@ -83,4 +83,9 @@ function initConfig() {
         handle: '.handle', // Draggable by the entire row
         ghostClass: 'bg-base-300', // Adds a class for the dragged item
     });
+})();
+
+(async () => {
+    window.mics = await getAvailableMics();
+    initRows();
 })();

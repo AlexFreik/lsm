@@ -1,4 +1,4 @@
-import { updateUrlParams } from './tools.js';
+import { updateUrlParams, extractYouTubeId } from './tools.js';
 
 function createRow(name, type, value) {
     const div = document.createElement('div');
@@ -17,36 +17,45 @@ function createRow(name, type, value) {
           <option value="FB" ${type === 'FB' ? 'selected' : ''}>FB (Facebook)</option>
           <option value="CU" ${type === 'CU' ? 'selected' : ''}>CU (Custom)</option>
         </select>
-        <input type="text" placeholder="ID" value="${value}" class="row-value input input-xs input-bordered flex-1" />
+        ${
+            type === 'SS'
+                ? `
+            <select class="row-value mic-select row-type select select-bordered select-xs mx-1 flex-1">
+                <option value="" disabled>Select Microphone</option>
+                ${window.mics.map(
+                    (mic) => `
+                    <option
+                        value="${mic.deviceId}"
+                        ${value === mic.deviceId ? 'selected' : ''}>
+                        ${mic.label}
+                    </option>`,
+                )}
+            </select>`
+                : `<input type="text" placeholder="ID" value="${value}" class="row-value input input-xs input-bordered flex-1" />`
+        }
+
         <button class="close-btn btn btn-xs btn-error">
             <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>
         </button>
     `;
-    div.querySelector('.row-value').onpaste = (e) => {
+
+    const rowTypeInput = div.querySelector('.row-type');
+    const rowValueInput = div.querySelector('.row-value');
+    const closeBtn = div.querySelector('.close-btn');
+
+    rowTypeInput.onchange = (e) => {
+        div.parentElement.replaceChild(createRow(name, rowTypeInput.value, value), div);
+    };
+
+    rowValueInput.onpaste = (e) => {
         if (type === 'YT') {
             e.preventDefault();
             const paste = e.clipboardData.getData('text');
-            try {
-                const url = new URL(paste);
-                const vParam = url.searchParams.get('v');
-                if (vParam) {
-                    // https://www.youtube.com/watch?v=12345
-                    event.target.value = vParam;
-                } else if (url.pathname.startsWith('/live/')) {
-                    // https://www.youtube.com/live/12345
-                    event.target.value = url.pathname.slice(6);
-                } else if (url.origin === 'https://youtu.be') {
-                    // https://youtu.be/12345
-                    event.target.value = url.pathname.slice(1);
-                } else {
-                    event.target.value = paste;
-                }
-            } catch (error) {
-                event.target.value = paste;
-            }
+            e.target.value = extractYouTubeId(paste);
         }
     };
-    div.querySelector('.close-btn').onclick = (e) => {
+
+    closeBtn.onclick = (e) => {
         const row = e.currentTarget.parentElement;
         const prev = row.previousElementSibling;
         const next = row.nextElementSibling;
