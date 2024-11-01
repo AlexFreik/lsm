@@ -21,9 +21,6 @@ function addMuteAction(box) {
 (() => {
     console.log('Hi from Content Script');
 
-    initBoxes();
-    document.getElementById('update-rows').addEventListener('click', initBoxes);
-
     // Controls should be hidden if extension is not installed
     const controlsElem = document.getElementById('controls');
     console.assert(controlsElem);
@@ -33,7 +30,6 @@ function addMuteAction(box) {
     console.assert(installedBadge);
     installedBadge.classList.remove('badge-error');
     installedBadge.innerHTML = 'Installed';
-
     const warningElem = document.getElementById('outdated-extension-warning');
     console.assert(warningElem);
     const extVersion = chrome.runtime.getManifest().version;
@@ -42,6 +38,9 @@ function addMuteAction(box) {
     if (extVersion !== galVersion) {
         warningElem.classList.remove('hidden');
     }
+
+    initBoxes();
+    document.getElementById('update-rows').addEventListener('click', initBoxes);
 
     const audioLevelsElem = document.getElementById('audioLevels');
     console.assert(audioLevelsElem);
