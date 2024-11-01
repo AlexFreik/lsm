@@ -1,4 +1,4 @@
-# LSM: Live Streaming Monitors
+# LSM: Live Streaming Miracles
 
 ## [YAD: YouTube Auto Delay](https://alexfreik.github.io/lsm/yad/)
 
@@ -11,7 +11,7 @@ goes to LIVE, and as a result, participants miss this skipped fragment.
 
 ## [Live Streaming Gallery](https://alexfreik.github.io/lsm/gallery/)
 
-<img width="700" alt="Live Streaming Gallery" src="https://github.com/user-attachments/assets/c5dc29b8-4ef5-4366-a296-395c7d9169f3">
+<img width="700" alt="Live Streaming Gallery" src="https://github.com/user-attachments/assets/c0d302e0-d959-4d95-9b85-f93a4c9b2fc5">
 
 Here you can monitor multiple YouTube, JW, Facebook, and other live broadcasts simultaneously.
 
