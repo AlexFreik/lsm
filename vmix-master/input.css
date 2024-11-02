@@ -17,31 +17,6 @@
     overflow-wrap: break-word;
 }
 
-.swap-btn {
-    animation: fadeInRight 1s ease-out;
-}
-
 .box {
-    @apply m-1 h-[180px] w-[279px];
     animation: fadeInRight 1s ease-out;
-}
-
-.input {
-    @apply m-1 bg-transparent text-sm text-slate-50;
-}
-
-.top-btn {
-    @apply absolute top-1 z-10 hidden h-5 w-[50px] cursor-pointer rounded-md border-none text-xs text-slate-50;
-}
-
-.container:hover > .top-btn {
-    @apply block;
-}
-
-.refresh-btn {
-    @apply right-[60px] bg-secondary;
-}
-
-.remove-btn {
-    @apply right-[5px] bg-red-900;
 }

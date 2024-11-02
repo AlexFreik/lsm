@@ -6,9 +6,31 @@
     <title>vMix Master</title>
     <link rel="icon" type="image/png" href="./isha-logo.png" />
     <link rel="stylesheet" href="./output.css" />
-    <script type="module" src="./script.js" defer></script>
+    <script src="./Sortable.min.js" defer></script>
+    <script src="./tools.js" defer></script>
+    <script src="./box.js" defer></script>
+    <script src="./vmix-info.js" defer></script>
+    <script src="./vmix-web.js" defer></script>
+    <script src="./script.js" defer></script>
   </head>
   <body class="bg-base-100 text-base-content">
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap p-1" id="boxes"></div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap p-2">
+        <div class="flex min-w-full items-center justify-center py-5">
+          <button id="add-box" class="btn btn-outline btn-secondary flex">Add Instance</button>
+          <button id="refresh-all" class="btn btn-outline btn-secondary mx-3 flex">Refresh All</button>
+          <label class="input input-bordered input-secondary flex items-center gap-2">
+            Auto Refresh (sec)
+            <input type="text" class="w-5" value="5" />
+          </label>
+        </div>
+      </div>
+    </div>
+
     <div class="navbar bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">vMix Master</a>
@@ -23,56 +45,36 @@
       </div>
     </div>
 
-    <div class="flex flex-col items-center">
-      <div class="flex w-full flex-wrap p-2" id="boxes">
-        <div class="flex min-w-full items-center justify-center px-10 py-10">
-          <button id="add-box" class="btn btn-outline btn-secondary flex">Add Instance</button>
-          <button id="refresh-all" class="btn btn-outline btn-secondary mx-3 flex">Refresh All</button>
-          <label class="input input-bordered input-secondary flex items-center gap-2">
-            Auto Refresh (sec)
-            <input type="text" class="w-5" value="5" />
-          </label>
-        </div>
-      </div>
-    </div>
-
     <div class="collapse bg-base-200">
       <input id="customCommands" class="url-param" type="checkbox" />
       <div class="collapse-title text-xl font-medium">Custom Commands</div>
       <div class="collapse-content">
         <div class="mx-auto my-10 max-w-3xl px-5">
           <div>
-            <span class="text-md">Command: </span>
-            <input
-              id="rawRequest"
-              type="text"
-              name="rawRequest"
-              placeholder="e.g. Function=Fade&Duration=1000&Input=5"
-              class="url-param input input-xs input-bordered w-[600px]"
-              value="" />
-            <br />
-            <span class="text-md">Include: </span>
-            <input id="include" type="text" name="include" placeholder="e.g. 1 2 3" class="url-param input input-xs input-bordered w-64" value="" />
-            <span class="text-md ms-3">Exclude: </span>
-            <input id="exclude" type="text" name="exclude" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered w-64" value="" />
-            <br />
+            <div class="my-1 flex items-center gap-1">
+              <span class="text-md">Command: </span>
+              <input
+                id="rawRequest"
+                type="text"
+                name="rawRequest"
+                placeholder="e.g. Function=Fade&Duration=1000&Input=5"
+                class="url-param input input-xs input-bordered flex-1"
+                value="" />
+            </div>
+            <div class="my-1 flex items-center gap-1">
+              <span class="text-md">Include: </span>
+              <input
+                id="include"
+                type="text"
+                name="include"
+                placeholder="e.g. 1 2 3"
+                class="url-param input input-xs input-bordered flex-1"
+                value="" />
+              <span class="text-md ms-3">Exclude: </span>
+              <input id="exclude" type="text" name="exclude" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" value="" />
+            </div>
             <button id="execute-btn" class="btn btn-secondary btn-sm mt-3">Execute</button>
           </div>
-        </div>
-
-        <div class="flex flex-col items-center">
-          <div class="flex w-full flex-wrap p-2" id="edit-buttons">
-            <div class="flex min-w-full flex-col items-center px-10 py-10">
-              <div>
-                <button id="add-button" class="btn btn-outline btn-secondary">Add Button</button>
-                <button id="save-buttons" class="btn btn-outline btn-secondary">Save</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="flex flex-col items-center">
-          <div class="flex w-full flex-wrap p-2" id="buttons"></div>
         </div>
       </div>
     </div>
@@ -94,7 +96,6 @@
               value="" />
             <span class="text-md ms-3">Slaves: </span>
             <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered w-64" value="" />
-            <button id="renderMaster" class="btn btn-secondary btn-sm ms-3">Refresh</button>
           </div>
         </div>
 

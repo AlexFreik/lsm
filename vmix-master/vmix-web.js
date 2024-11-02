@@ -1,7 +1,3 @@
-import { getBoxHost, getApiUrl, getShortTitle, parseNumbers, execute } from './tools.js';
-import { getBox } from './box.js';
-import { getVmixInfo } from './vmix-info.js';
-
 async function renderVmixWeb() {
     const vmixContainer = document.getElementById('vmixContainer');
 
@@ -196,5 +192,3 @@ function masterSlaveExecute(command) {
         .map((num) => getBoxHost(getBox(num)))
         .forEach((host) => execute(getApiUrl(host, command)));
 }
-
-export { renderVmixWeb };

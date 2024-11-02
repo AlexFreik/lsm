@@ -1,5 +1,3 @@
-import { fetchUrl, xml2json, getInputValue, getApiUrl, getShortTitle } from './tools.js';
-
 class VmixInfo {
     constructor(jsonData) {
         this.preview = Number(jsonData.vmix.preview['#text']);
@@ -39,6 +37,10 @@ async function getVmixInfo(host) {
     }
 }
 
+function clearVmixInfo(box) {
+    box.querySelector('.vmixInfo').innerHTML = '';
+}
+
 function updateVmixInfo(box, vmixInfo) {
     const infoDiv = box.getElementsByClassName('vmix-info');
     const info = vmixInfo.value;
@@ -49,11 +51,12 @@ function updateVmixInfo(box, vmixInfo) {
     const active = info.inputs[info.active];
     const preview = info.inputs[info.preview];
     box.querySelector('.vmixInfo').innerHTML = `
-        <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline rounded">REC</span>
-        <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
-        <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>
-        <span class="badge ${info.fadeToBlack ? 'badge-error' : ''} badge-outline rounded">FTB</span>
-        <br />
+        <div class="mb-1">
+            <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline rounded">REC</span>
+            <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
+            <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>
+            <span class="badge ${info.fadeToBlack ? 'badge-error' : ''} badge-outline rounded">FTB</span>
+        </div>
         ${info.overlays
             .map((o, i) => `<span>Overlay ${i}: ${o}</span>`)
             .filter(Boolean)
@@ -76,5 +79,3 @@ function updateVmixInfo(box, vmixInfo) {
 }
 
 const parser = new DOMParser();
-
-export { getVmixInfo, updateVmixInfo };

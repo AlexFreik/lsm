@@ -1,9 +1,19 @@
+// ===== Box Utils =====
 function getBoxes() {
     return Array.from(document.querySelectorAll('.box'));
 }
 
-function getBoxNumbers() {
-    return getBoxes().map((box) => getBoxNumber(box));
+function getBox(num) {
+    return document.getElementsByClassName('box')[num - 1];
+}
+
+function getBoxCount() {
+    return document.getElementsByClassName('box').length;
+}
+
+function getBoxNumber(box) {
+    console.assert(box.classList.contains('box'));
+    return parseInt(box.querySelector('.box-number').innerHTML);
 }
 
 function getBoxName(box) {
@@ -16,25 +26,8 @@ function getBoxHost(box) {
     return box.querySelector('.host-input').value;
 }
 
-function getBoxNumber(box) {
-    console.assert(box.classList.contains('box'));
-    return parseInt(box.querySelector('.box-number').innerHTML);
-}
-
-function getBoxFullHost(box) {
-    return getFullHost(getBoxHost(box));
-}
-
-function getApiUrl(host, request) {
-    const fullHost = host.includes(':') ? host : host + ':8088';
-    return 'http://' + fullHost + '/api/?' + request;
-}
-
-function getShortTitle(str, len = 20) {
-    return str.length > len ? str.slice(0, len / 2) + '...' + str.slice(-len / 2) : str;
-}
-
-function parseDocumentConfig() {
+// ===== Document Config & Box URL Utils =====
+function getDocumentConfig() {
     const params = new URLSearchParams();
 
     document.querySelectorAll('.url-param').forEach((input) => {
@@ -43,10 +36,28 @@ function parseDocumentConfig() {
         } else if (input.type === 'text' || input.type === 'number') {
             params.append('__' + input.id, input.value);
         } else {
-            console.error('unexpected type: ' + input.type);
+            console.error('Unexpected type: ' + input.type);
         }
     });
     return params;
+}
+
+function setInputValue(id, value) {
+    const input = document.getElementById(id, value);
+
+    if (input.type === 'checkbox') {
+        console.assert(['0', '1'].includes(value));
+        input.checked = value === '1';
+    } else if (input.type === 'text' || input.type === 'number') {
+        input.value = value;
+    } else {
+        console.error('Unknown input type: ' + input.type);
+    }
+}
+
+function updateDocumentConfig() {
+    const urlParams = getConfigUrlParams();
+    urlParams.forEach((param) => setInputValue(param.key, param.value));
 }
 
 function getConfigUrlParams() {
@@ -79,36 +90,11 @@ function updateUrlParams() {
         if (key === '') return;
         boxParams.append(key, val);
     });
-    const configParams = parseDocumentConfig();
+    const configParams = getDocumentConfig();
     window.history.pushState({}, '', `?${boxParams.toString()}&${configParams.toString()}`);
 }
 
-function getInputValue(id) {
-    const input = document.getElementById(id);
-
-    if (input.type === 'checkbox') {
-        return input.checked;
-    } else if (input.type === 'text' || input.type === 'number') {
-        return input.value;
-    } else {
-        console.error('Unknown input type: ' + input.type);
-        return null;
-    }
-}
-
-function setInputValue(id, value) {
-    const input = document.getElementById(id, value);
-
-    if (input.type === 'checkbox') {
-        console.assert(['0', '1'].includes(value));
-        input.checked = value === '1';
-    } else if (input.type === 'text' || input.type === 'number') {
-        input.value = value;
-    } else {
-        console.error('Unknown input type: ' + input.type);
-    }
-}
-
+// ===== Logging Utils =====
 function show(str, isError = false) {
     const logs = document.getElementById('logs');
     logs.innerHTML =
@@ -119,6 +105,12 @@ function show(str, isError = false) {
 
 function showError(str) {
     show(str, true);
+}
+
+// ===== vMix API Utils =====
+function getApiUrl(host, request) {
+    const fullHost = host.includes(':') ? host : host + ':8088';
+    return 'http://' + fullHost + '/api/?' + request;
 }
 
 async function fetchUrl(url) {
@@ -139,14 +131,6 @@ async function fetchUrl(url) {
     }
 }
 
-function parseNumbers(str) {
-    return str
-        .split(' ')
-        .map((num) => num.trim())
-        .filter((num) => num !== '')
-        .map((num) => parseInt(num));
-}
-
 async function execute(url, isShow = true) {
     const res = await fetchUrl(url);
     const timestamp = new Date().toLocaleTimeString();
@@ -162,6 +146,19 @@ async function execute(url, isShow = true) {
             showError(`[${timestamp}] Error ${url}`, res.error);
         }
     }
+}
+
+// ===== General Purpose Utils ====
+function getShortTitle(str, len = 20) {
+    return str.length > len ? str.slice(0, len / 2) + '...' + str.slice(-len / 2) : str;
+}
+
+function parseNumbers(str) {
+    return str
+        .split(' ')
+        .map((num) => num.trim())
+        .filter((num) => num !== '')
+        .map((num) => parseInt(num));
 }
 
 function xml2json(xml) {
@@ -202,22 +199,3 @@ function xml2json(xml) {
     }
     return obj;
 }
-
-export {
-    getBoxes,
-    getBoxNumbers,
-    getBoxName,
-    getBoxHost,
-    getBoxNumber,
-    getApiUrl,
-    parseNumbers,
-    getShortTitle,
-    getConfigUrlParams,
-    getBoxUrlParams,
-    updateUrlParams,
-    fetchUrl,
-    getInputValue,
-    setInputValue,
-    execute,
-    xml2json,
-};
