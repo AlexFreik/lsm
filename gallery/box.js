@@ -30,7 +30,7 @@ function createBox(name, type, value) {
     box.setAttribute('data-id', id);
     box.className = 'box relative w-[279px] h-[150px] overflow-hidden rounded-lg bg-slate-700 m-1';
     box.innerHTML = `
-      <div class="top-btn-container absolute left-1/2 transform -translate-x-1/2 top-1 z-10 hidden">
+      <div class="top-btn-container absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 hidden">
           <button class="expand-btn btn btn-circle btn-xs">
             <svg class="fill-current w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M32 32C14.3 32 0 46.3 0 64l0 96c0 17.7 14.3 32 32 32s32-14.3 32-32l0-64 64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L32 32zM64 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7 14.3 32 32 32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0 0-64zM320 32c-17.7 0-32 14.3-32 32s14.3 32 32 32l64 0 0 64c0 17.7 14.3 32 32 32s32-14.3 32-32l0-96c0-17.7-14.3-32-32-32l-96 0zM448 352c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 64-64 0c-17.7 0-32 14.3-32 32s14.3 32 32 32l96 0c17.7 0 32-14.3 32-32l0-96z"/></svg>
           </button>
