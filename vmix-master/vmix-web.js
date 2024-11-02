@@ -1,11 +1,18 @@
 async function renderVmixWeb() {
     const vmixContainer = document.getElementById('vmixContainer');
+    const masterInput = document.getElementById('master');
 
     const master = getMaster();
     if (master === null) {
         vmixContainer.innerHTML = '';
         return;
     }
+    if (master > getBoxCount()) {
+        vmixContainer.innerHTML = '';
+        masterInput.classList.add('input-error');
+        return;
+    }
+    masterInput.classList.remove('input-error');
     const box = getBox(master);
     const vmixInfo = await getVmixInfo(getBoxHost(box));
 

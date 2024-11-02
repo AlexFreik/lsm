@@ -2997,6 +2997,18 @@ details.collapse summary::-webkit-details-marker {
   outline-color: var(--fallback-s,oklch(var(--s)/1));
 }
 
+.input-error {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-er,oklch(var(--er)/var(--tw-border-opacity)));
+}
+
+.input-error:focus,
+    .input-error:focus-within {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-er,oklch(var(--er)/var(--tw-border-opacity)));
+  outline-color: var(--fallback-er,oklch(var(--er)/1));
+}
+
 .input:has(> input[disabled]),
   .input-disabled,
   .input:disabled,
@@ -4661,6 +4673,11 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 2rem;
 }
 
+.my-14 {
+  margin-top: 3.5rem;
+  margin-bottom: 3.5rem;
+}
+
 .-mt-2 {
   margin-top: -0.5rem;
 }
@@ -4916,6 +4933,18 @@ html:has(.drawer-toggle:checked) {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-\[500px\] {
+  width: 500px;
+}
+
+.w-\[700px\] {
+  width: 700px;
+}
+
+.w-10 {
+  width: 2.5rem;
 }
 
 .min-w-5 {
