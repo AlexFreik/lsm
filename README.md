@@ -27,6 +27,14 @@ It provides usefull features:
 
 Because of the CORS policy, we can't access the videos with JavaScript directly. That's why a Chrome Extension is required to enable VU meters, lowest quality selection, and other features.
 
+## [vMix Master](https://alexfreik.github.io/lsm/vmix-master/)
+
+<img width="700" alt="vMix Master" src="https://github.com/user-attachments/assets/5d166448-c202-458b-b1ec-8e9c7d089d0a">
+
+During live translations we often need to sync multiple vMix systems. This script uses vMix API to giv
+-   Custom Commands: you can remotely increase volume or switching on/off external.
+-   vMix Web: assign one instance as a master and control other slave instances using vMix-like web interface.
+
 ## [VOD: Video on Demand](https://alexfreik.github.io/lsm/vod/)
 
 > Not ready yet
