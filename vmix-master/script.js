@@ -13,8 +13,7 @@ function initBoxes() {
     });
 }
 
-function executeRawRequest() {
-    const request = document.getElementById('rawRequest').value;
+function customExecution(request) {
     let include = parseNumbers(document.getElementById('include').value);
     if (include.length === 0) {
         include = Array.from({ length: getBoxCount() }, (_, i) => i + 1);
@@ -53,7 +52,24 @@ function refreshInstances() {
     document.getElementById('refresh-all').addEventListener('click', refreshInstances);
 
     const executeBtn = document.getElementById('execute-btn');
-    executeBtn.onclick = executeRawRequest;
+    executeBtn.onclick = () => customExecution(document.getElementById('rawRequest').value);
+
+    document.querySelectorAll('.function-btn').forEach((btn) => {
+        btn.onclick = () => {
+            const container = btn.parentElement;
+            const inputParam = container.querySelector('.input-param');
+            const valueParam = container.querySelector('.value-param');
+
+            let request = 'Function=' + btn.innerHTML;
+            if (inputParam?.value) {
+                request += '&Input=' + inputParam.value;
+            }
+            if (valueParam?.value) {
+                request += '&Value=' + valueParam.value;
+            }
+            customExecution(request);
+        };
+    });
 
     new Sortable(document.getElementById('boxes'), {
         animation: 150,

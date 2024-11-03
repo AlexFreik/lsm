@@ -49,31 +49,77 @@
       <input id="customCommands" class="url-param" type="checkbox" />
       <div class="collapse-title text-xl font-medium">Custom Commands</div>
       <div class="collapse-content">
-        <div class="mx-auto my-10 max-w-3xl px-5">
-          <div>
-            <div class="my-1 flex items-center gap-1">
-              <span class="text-md">Command: </span>
+        <div class="mx-auto mt-10 max-w-3xl px-5">
+          <div class="my-1 flex items-center gap-1">
+            <span class="text-md">Include: </span>
+            <input id="include" type="text" name="include" placeholder="e.g. 1 2 3" class="url-param input input-xs input-bordered flex-1" />
+            <span class="text-md ms-3">Exclude: </span>
+            <input id="exclude" type="text" name="exclude" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
+          </div>
+        </div>
+
+        <div class="flex flex-col items-center">
+          <div class="flex w-full flex-wrap p-1">
+            <div class="m-1 w-full rounded-box bg-neutral p-3">
               <input
                 id="rawRequest"
                 type="text"
                 name="rawRequest"
                 placeholder="e.g. Function=Fade&Duration=1000&Input=5"
-                class="url-param input input-xs input-bordered flex-1"
-                value="" />
+                class="url-param input input-xs input-bordered w-full" />
+              <button id="execute-btn" class="btn btn-outline btn-secondary btn-sm mt-1 w-full">Raw Request</button>
             </div>
-            <div class="my-1 flex items-center gap-1">
-              <span class="text-md">Include: </span>
-              <input
-                id="include"
-                type="text"
-                name="include"
-                placeholder="e.g. 1 2 3"
-                class="url-param input input-xs input-bordered flex-1"
-                value="" />
-              <span class="text-md ms-3">Exclude: </span>
-              <input id="exclude" type="text" name="exclude" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" value="" />
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">&nbsp;</div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">StartExternal</button>
             </div>
-            <button id="execute-btn" class="btn btn-secondary btn-sm mt-3">Execute</button>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">&nbsp;</div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">StopExternal</button>
+            </div>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">&nbsp;</div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">FadeToBlack</button>
+            </div>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">
+                <input type="text" placeholder="Input" class="input-param input input-xs input-bordered w-14" />
+              </div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">Fade</button>
+            </div>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">
+                <input type="text" placeholder="Input" class="input-param input input-xs input-bordered w-14" />
+              </div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">Stinger1</button>
+            </div>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">
+                <input type="text" placeholder="0-100,ms" class="value-param input input-xs input-bordered w-20" />
+                <input type="text" placeholder="Input" class="input-param input input-xs input-bordered w-12" />
+              </div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">SetVolumeFade</button>
+            </div>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">
+                <input type="text" placeholder="Input" class="input-param input input-xs input-bordered w-14" />
+              </div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">AudioOn</button>
+            </div>
+
+            <div class="m-1 w-fit rounded-box bg-neutral p-3">
+              <div class="mx-auto w-fit">
+                <input type="text" placeholder="Input" class="input-param input input-xs input-bordered w-14" />
+              </div>
+              <button class="function-btn btn btn-outline btn-secondary btn-sm mt-1">AudioOff</button>
+            </div>
           </div>
         </div>
       </div>
