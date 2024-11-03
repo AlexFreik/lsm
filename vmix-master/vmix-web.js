@@ -30,19 +30,19 @@ async function renderVmixWeb() {
               ${preview.title}
           </div>
           <div class="row-span-1 col-span-1">
-              <button id="stinger1" class="btn btn-sm btn-neutral w-24">Stinger 1</button>
+              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Stinger1', ${preview.number})">Stinger 1</button>
           </div>
           <div class="row-span-4 col-span-1 bg-green-700 text-lg font-semibold">
               ${active.title}
           </div>
           <div class="row-span-1 col-span-1">
-              <button id="fade" class="btn btn-sm btn-neutral w-24">Fade</button>
+              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Fade', ${preview.number})">Fade</button>
           </div>
           <div class="row-span-1 col-span-1">
-              <button id="cut" class="btn btn-sm btn-neutral w-24">Cut</button>
+              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Cut', ${preview.number})">Cut</button>
           </div>
           <div class="row-span-1 col-span-1">
-              <button id="ftb" class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24">FTB</button>
+              <button class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24" onclick="transition('FadeToBlack', '')">FTB</button>
           </div>
           <div class="row-span-1 col-span-1">
             ${preview.duration !== '0' ? getVideoProgress(preview) : ''}
@@ -61,16 +61,17 @@ async function renderVmixWeb() {
         const style = isActive ? 'bg-green-700' : isPreview ? 'bg-yellow-600' : 'bg-neutral';
         inputsHTML += `
             <div class="inline-block mx-1 my-1 border border-neutral">
-                <div class="vmixInput ${style} w-64 cursor-pointer" data-number="${i}">
+                <div class="${style} w-64 cursor-pointer" onclick="previewInput(${i})">
                     <span class="badge badge-neutral mx-1 my-1">${input.number}</span>
                     ${getShortTitle(input.title)}
                 </div>
                 <div class="m-1">
-                <span class="overlay badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="1">1</span>
-                <span class="overlay badge ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="2">2</span>
-                <span class="overlay badge ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="3">3</span>
-                <span class="overlay badge ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" data-number="${i}" data-overlay="4">4</span>
-                <span class="badge ${input.muted === 'False' ? 'bg-green-700' : 'badge-neutral'}">AUDIO</span>
+                <span class="badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 1)">1</span>
+                <span class="badge ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 2)">2</span>
+                <span class="badge ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 3)">3</span>
+                <span class="badge ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 4)">4</span>
+                <span class="badge ${input.muted === 'False' ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" onclick="muteInput(${i}, ${input.muted === 'False'})" data-number="${i}">AUDIO</span>
+                <span class="badge ${input.loop === 'True' ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" onclick="loopInput(${i}, ${input.loop === 'True'})">LOOP</span>
                 </div>
             </div>`;
         if (input.volume !== undefined) {
@@ -94,9 +95,9 @@ async function renderVmixWeb() {
                   <div class="inline-block -mt-5 text-center mx-2">
                     ${Math.round(input.volume)}%
                     <br />
-                    <button class="fadeAudioOut btn btn-xs btn-outline" data-number="${i}">0%</button>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudioOut(${i})">0%</button>
                     <br />
-                    <button class="fadeAudioIn btn btn-xs btn-outline" data-number="${i}">100%</button>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudioIn(${i})">100%</button>
                     <br />
                     <span>&nbsp;</span>
                   </div>
@@ -113,31 +114,6 @@ async function renderVmixWeb() {
     mixerHTML += '</div>';
 
     vmixContainer.innerHTML = screensHTML + inputsHTML + mixerHTML;
-
-    document
-        .querySelectorAll('.vmixInput')
-        .forEach((elem) => (elem.onclick = () => previewInput(elem.getAttribute('data-number'))));
-    document
-        .querySelectorAll('.fadeAudioOut')
-        .forEach((elem) => (elem.onclick = () => fadeAudioOut(elem.getAttribute('data-number'))));
-    document
-        .querySelectorAll('.fadeAudioIn')
-        .forEach((elem) => (elem.onclick = () => fadeAudioIn(elem.getAttribute('data-number'))));
-    document
-        .querySelectorAll('.overlay')
-        .forEach(
-            (elem) =>
-                (elem.onclick = () =>
-                    overlayInput(
-                        elem.getAttribute('data-number'),
-                        elem.getAttribute('data-overlay'),
-                    )),
-        );
-
-    document.getElementById('stinger1').onclick = () => transition('Stinger1', preview.number);
-    document.getElementById('fade').onclick = () => transition('Fade', preview.number);
-    document.getElementById('cut').onclick = () => transition('Cut', preview.number);
-    document.getElementById('ftb').onclick = () => transition('FadeToBlack', '');
 }
 
 function getMixer() {}
@@ -189,6 +165,14 @@ function fadeAudioOut(inputNum) {
 
 function overlayInput(inputNum, overlayNum) {
     masterSlaveExecute('Function=OverlayInput' + overlayNum + '&Input=' + inputNum);
+}
+
+function muteInput(inputNum, on) {
+    masterSlaveExecute(`Function=${on ? 'AudioOff' : 'AudioOn'}&Input=${inputNum}`);
+}
+
+function loopInput(inputNum, on) {
+    masterSlaveExecute(`Function=${on ? 'LoopOff' : 'LoopOn'}&Input=${inputNum}`);
 }
 
 function masterSlaveExecute(command) {
