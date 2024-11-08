@@ -1,3 +1,5 @@
+const LOG_SIZE = 500;
+
 // ===== Box Utils =====
 function getBoxes() {
     return Array.from(document.querySelectorAll('.box'));
@@ -134,18 +136,31 @@ async function fetchUrl(url) {
 async function execute(url, isShow = true) {
     const res = await fetchUrl(url);
     const timestamp = new Date().toLocaleTimeString();
-    const message = res.status
-        ? `[${timestamp}] ${url} Status ${res.status}: ${res.value.slice(0, 300)}`
-        : '';
+    storeLog(url, res.status, res.value, res.error, timestamp);
     if (isShow) {
-        if (res.status === 200) {
-            show(message);
-        } else if (res.status !== null) {
-            showError(message);
-        } else {
-            showError(`[${timestamp}] Error ${url}`, res.error);
-        }
+        showLog(url, res.status, res.value, res.error, timestamp);
     }
+}
+
+// ===== Logging =====
+function showLog(url, status, value, error, time) {
+    const message = `[${time}] ${url}: ` + (value ? value.slice(0, 300) : 'Error');
+    if (status === 200) {
+        show(message);
+    } else {
+        showError(message);
+    }
+}
+
+function storeLog(url, status, value, error, time) {
+    const logs = localStorage.getItem('logs') ? JSON.parse(localStorage.getItem('logs')) : [];
+    logs.unshift({ time: time, url: url, status, value: value, error: error });
+    localStorage.setItem('logs', JSON.stringify(logs.slice(0, LOG_SIZE)));
+}
+
+function showStoredLogs() {
+    const logs = localStorage.getItem('logs') ? JSON.parse(localStorage.getItem('logs')) : [];
+    logs.reverse().forEach((log) => showLog(log.url, log.status, log.value, log.error, log.time));
 }
 
 // ===== General Purpose Utils ====

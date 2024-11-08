@@ -54,6 +54,7 @@ function setVmixButtons(e) {
     updateDocumentConfig();
     initBoxes();
     setInterval(renderVmixWeb, 1000);
+    showStoredLogs();
 
     document
         .querySelectorAll('.url-param')
@@ -72,6 +73,8 @@ function setVmixButtons(e) {
             const container = btn.parentElement;
             const inputParam = container.querySelector('.input-param');
             const valueParam = container.querySelector('.value-param');
+            const volumeParam = container.querySelector('.volume-param');
+            const msParam = container.querySelector('.ms-param');
 
             let request = 'Function=' + btn.innerHTML;
             if (inputParam?.value) {
@@ -79,6 +82,9 @@ function setVmixButtons(e) {
             }
             if (valueParam?.value) {
                 request += '&Value=' + valueParam.value;
+            }
+            if (volumeParam?.value && msParam?.value) {
+                request += '&Value=' + volumeParam + ',' + msParam;
             }
             customExecution(request);
         };
