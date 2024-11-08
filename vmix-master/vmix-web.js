@@ -1,6 +1,7 @@
 async function renderVmixWeb() {
     const vmixContainer = document.getElementById('vmixContainer');
     const masterInput = document.getElementById('master');
+    const disabled = document.getElementById('view').checked;
 
     const master = getMaster();
     if (master === null) {
@@ -30,19 +31,19 @@ async function renderVmixWeb() {
               ${preview.title}
           </div>
           <div class="row-span-1 col-span-1">
-              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Stinger1', ${preview.number})">Stinger 1</button>
+              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Stinger1', ${preview.number})" ${disabled ? 'disabled' : ''}>Stinger 1</button>
           </div>
           <div class="row-span-4 col-span-1 bg-green-700 text-lg font-semibold">
               ${active.title}
           </div>
           <div class="row-span-1 col-span-1">
-              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Fade', ${preview.number})">Fade</button>
+              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Fade', ${preview.number})" ${disabled ? 'disabled' : ''}>Fade</button>
           </div>
           <div class="row-span-1 col-span-1">
-              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Cut', ${preview.number})">Cut</button>
+              <button class="btn btn-sm btn-neutral w-24" onclick="transition('Cut', ${preview.number})" ${disabled ? 'disabled' : ''}>Cut</button>
           </div>
           <div class="row-span-1 col-span-1">
-              <button class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24" onclick="transition('FadeToBlack', '')">FTB</button>
+              <button class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24" onclick="transition('FadeToBlack', '')" ${disabled ? 'disabled' : ''}>FTB</button>
           </div>
           <div class="row-span-1 col-span-1">
             ${preview.duration !== '0' ? getVideoProgress(preview) : ''}
@@ -66,21 +67,21 @@ async function renderVmixWeb() {
                     ${getShortTitle(input.title)}
                 </div>
                 <div class="m-1">
-                <span class="badge ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 1)">1</span>
-                <span class="badge ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 2)">2</span>
-                <span class="badge ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 3)">3</span>
-                <span class="badge ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] cursor-pointer" onclick="overlayInput(${i}, 4)">4</span>
-                <span class="badge ${input.muted === 'False' ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" onclick="muteInput(${i}, ${input.muted === 'False'})" data-number="${i}">AUDIO</span>
-                <span class="badge ${input.loop === 'True' ? 'bg-green-700' : 'badge-neutral'} cursor-pointer" onclick="loopInput(${i}, ${input.loop === 'True'})">LOOP</span>
+                <span class="badge rounded ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" : onclick="overlayInput(${i}, 1)"`}>1</span>
+                <span class="badge rounded ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" onclick="overlayInput(${i}, 2)"`}>2</span>
+                <span class="badge rounded ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" onclick="overlayInput(${i}, 3)"`}>3</span>
+                <span class="badge rounded ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" onclick="overlayInput(${i}, 4)"`}>4</span>
+                <span class="badge rounded ${input.muted === 'False' ? 'bg-green-700' : 'badge-neutral'} ${disabled ? '"' : `cursor-pointer" onclick="muteInput(${i}, ${input.muted === 'False'})"`}>AUDIO</span>
+                <span class="badge rounded ${input.loop === 'True' ? 'bg-green-700' : 'badge-neutral'} ${disabled ? '"' : `cursor-pointer" onclick="loopInput(${i}, ${input.loop === 'True'})"`}>LOOP</span>
                 </div>
             </div>`;
         if (input.volume !== undefined) {
             const meterF1 = Math.round(parseFloat(input.meterF1) * 100);
             const meterF2 = Math.round(parseFloat(input.meterF2) * 100);
             mixerHTML += `
-              <div class="inline-block w-24 border border-neutral pb-1 m-1 bg-base-100">
+              <div class="inline-block w-[85px] border border-neutral pb-1 m-1 bg-base-100">
                 <div class="${input.muted === 'False' ? 'bg-green-700' : 'bg-primary-content'} mb-1">
-                  <span class="badge badge-neutral mx-1 my-1">${input.number}</span>
+                  <span class="badge badge-neutral w-[24px] ml-1 my-1">${input.number}</span>
                   ${input.title.slice(0, 5)}
                 </div>
                 <div class="relative ">
@@ -92,20 +93,20 @@ async function renderVmixWeb() {
                       <div class="bg-black" style="height: ${100 - meterF2}%"></div>
                       <div class="bg-green-500" style="height: ${meterF2}%"></div>
                   </div>
-                  <div class="inline-block -mt-5 text-center mx-2">
+                  <div class="inline-block -mt-5 text-center">
                     ${Math.round(input.volume)}%
                     <br />
-                    <button class="btn btn-xs btn-outline" onclick="fadeAudioOut(${i})">0%</button>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudioOut(${i})" ${disabled ? 'disabled' : ''}>0%</button>
                     <br />
-                    <button class="btn btn-xs btn-outline" onclick="fadeAudioIn(${i})">100%</button>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudioIn(${i})" ${disabled ? 'disabled' : ''}>100%</button>
                     <br />
                     <span>&nbsp;</span>
                   </div>
                 </div>
                 <div class="px-1">
-                    <span class="badge badge-sm ${input.audiobusses.includes('M') ? 'bg-green-700' : 'badge-neutral'}">M</span>
-                    <span class="badge badge-sm ${input.audiobusses.includes('A') ? 'bg-green-700' : 'badge-neutral'}">A</span>
-                    <span class="badge badge-sm ${input.audiobusses.includes('B') ? 'bg-green-700' : 'badge-neutral'}">B</span>
+                    <span class="badge badge-sm rounded w-[22px] ${input.audiobusses.includes('M') ? 'bg-green-700' : 'badge-neutral'}">M</span>
+                    <span class="badge badge-sm rounded w-[22px] ${input.audiobusses.includes('A') ? 'bg-green-700' : 'badge-neutral'}">A</span>
+                    <span class="badge badge-sm rounded w-[22px] ${input.audiobusses.includes('B') ? 'bg-green-700' : 'badge-neutral'}">B</span>
                 </div>
               </div>`;
         }

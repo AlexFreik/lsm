@@ -14,10 +14,7 @@ function initBoxes() {
 }
 
 function customExecution(request) {
-    let include = parseNumbers(document.getElementById('include').value);
-    if (include.length === 0) {
-        include = Array.from({ length: getBoxCount() }, (_, i) => i + 1);
-    }
+    const include = parseNumbers(document.getElementById('include').value);
     const exclude = parseNumbers(document.getElementById('exclude').value);
     const boxes = getBoxes().filter((box) => {
         const num = getBoxNumber(box);
@@ -39,6 +36,20 @@ function refreshInstances() {
     });
 }
 
+function setVmixButtons(e) {
+    const disabled = e.currentTarget.checked;
+    document
+        .getElementById('custom-commands-container')
+        .querySelectorAll('button')
+        .forEach((btn) => {
+            if (disabled) {
+                btn.disabled = true;
+            } else {
+                btn.removeAttribute('disabled');
+            }
+        });
+}
+
 (() => {
     updateDocumentConfig();
     initBoxes();
@@ -50,6 +61,8 @@ function refreshInstances() {
 
     document.getElementById('add-box').addEventListener('click', () => addBox());
     document.getElementById('refresh-all').addEventListener('click', refreshInstances);
+
+    document.getElementById('view').addEventListener('click', setVmixButtons);
 
     const executeBtn = document.getElementById('execute-btn');
     executeBtn.onclick = () => customExecution(document.getElementById('rawRequest').value);

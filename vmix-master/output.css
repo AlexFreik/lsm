@@ -3384,6 +3384,13 @@ details.collapse summary::-webkit-details-marker {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
+.swap-rotate input:checked ~ .swap-off,
+.swap-active:where(.swap-rotate) .swap-off,
+.swap-rotate input:indeterminate ~ .swap-off {
+  --tw-rotate: -45deg;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
 .swap-rotate input:checked ~ .swap-on,
 .swap-active:where(.swap-rotate) .swap-on,
 .swap-rotate input:indeterminate ~ .swap-indeterminate {
@@ -3395,6 +3402,14 @@ details.collapse summary::-webkit-details-marker {
 .swap-flip .swap-indeterminate,
 .swap-flip input:indeterminate ~ .swap-on {
   transform: rotateY(180deg);
+  backface-visibility: hidden;
+  opacity: 1;
+}
+
+.swap-flip input:checked ~ .swap-off,
+.swap-active:where(.swap-flip) .swap-off,
+.swap-flip input:indeterminate ~ .swap-off {
+  transform: rotateY(-180deg);
   backface-visibility: hidden;
   opacity: 1;
 }
@@ -4177,8 +4192,20 @@ html:has(.drawer-toggle:checked) {
   bottom: 0.25rem;
 }
 
+.bottom-3 {
+  bottom: 0.75rem;
+}
+
 .left-1\/2 {
   left: 50%;
+}
+
+.right-1 {
+  right: 0.25rem;
+}
+
+.right-3 {
+  right: 0.75rem;
 }
 
 .top-0 {
@@ -4618,11 +4645,6 @@ html:has(.drawer-toggle:checked) {
   margin-right: 0.25rem;
 }
 
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
-}
-
 .mx-3 {
   margin-left: 0.75rem;
   margin-right: 0.75rem;
@@ -4697,12 +4719,12 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 1.25rem;
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
 .ml-0 {
   margin-left: 0px;
+}
+
+.ml-1 {
+  margin-left: 0.25rem;
 }
 
 .ml-4 {
@@ -4777,8 +4799,8 @@ html:has(.drawer-toggle:checked) {
   height: 1rem;
 }
 
-.h-64 {
-  height: 16rem;
+.h-5 {
+  height: 1.25rem;
 }
 
 .h-\[150px\] {
@@ -4927,6 +4949,10 @@ html:has(.drawer-toggle:checked) {
 
 .w-\[80px\] {
   width: 80px;
+}
+
+.w-\[85px\] {
+  width: 85px;
 }
 
 .w-fit {
@@ -5503,6 +5529,14 @@ html:has(.drawer-toggle:checked) {
 
 .opacity-100 {
   opacity: 1;
+}
+
+.opacity-80 {
+  opacity: 0.8;
+}
+
+.opacity-90 {
+  opacity: 0.9;
 }
 
 .shadow-xl {
