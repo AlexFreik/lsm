@@ -70,7 +70,7 @@ function setVmixButtons(e) {
 
     document.querySelectorAll('.function-btn').forEach((btn) => {
         btn.onclick = () => {
-            const container = btn.parentElement;
+            const container = btn.parentElement.parentElement;
             const inputParam = container.querySelector('.input-param');
             const valueParam = container.querySelector('.value-param');
             const volumeParam = container.querySelector('.volume-param');
@@ -84,7 +84,7 @@ function setVmixButtons(e) {
                 request += '&Value=' + valueParam.value;
             }
             if (volumeParam?.value && msParam?.value) {
-                request += '&Value=' + volumeParam + ',' + msParam;
+                request += '&Value=' + volumeParam.value + ',' + msParam.value;
             }
             customExecution(request);
         };
