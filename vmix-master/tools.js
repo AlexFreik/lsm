@@ -46,6 +46,10 @@ function getDocumentConfig() {
 
 function setInputValue(id, value) {
     const input = document.getElementById(id, value);
+    console.assert(input !== null, 'Can\'t find element with ID "' + id + '"');
+    if (input === null) {
+        return;
+    }
 
     if (input.type === 'checkbox') {
         console.assert(['0', '1'].includes(value));
@@ -110,7 +114,7 @@ function showError(str) {
 }
 
 // ===== vMix API Utils =====
-function getApiUrl(host, request) {
+function getApiUrl(host, request = '') {
     const fullHost = host.includes(':') ? host : host + ':8088';
     return 'http://' + fullHost + '/api/?' + request;
 }
@@ -166,6 +170,19 @@ function showStoredLogs() {
 // ===== General Purpose Utils ====
 function getShortTitle(str, len = 20) {
     return str.length > len ? str.slice(0, len / 2) + '...' + str.slice(-len / 2) : str;
+}
+
+function getResponsiveTitle(str) {
+    let splitIndex = Math.ceil(str.length * 0.5);
+    while (splitIndex < str.length && !/[a-zA-Z0-9]/.test(str[splitIndex])) {
+        splitIndex++;
+    }
+    const left = str.slice(0, splitIndex);
+    const right = str.slice(splitIndex);
+    return (
+        `<span class="overflow-hidden whitespace-nowrap text-ellipsis">${left}</span>` +
+        `<span class="overflow-hidden whitespace-nowrap text-clip" style="direction: rtl">${right}</span>`
+    );
 }
 
 function parseNumbers(str) {

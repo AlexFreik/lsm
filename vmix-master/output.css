@@ -4204,8 +4204,8 @@ html:has(.drawer-toggle:checked) {
   right: 0.25rem;
 }
 
-.right-3 {
-  right: 0.75rem;
+.right-5 {
+  right: 1.25rem;
 }
 
 .top-0 {
@@ -4723,10 +4723,6 @@ html:has(.drawer-toggle:checked) {
   margin-left: 0px;
 }
 
-.ml-1 {
-  margin-left: 0.25rem;
-}
-
 .ml-4 {
   margin-left: 1rem;
 }
@@ -4951,8 +4947,8 @@ html:has(.drawer-toggle:checked) {
   width: 80px;
 }
 
-.w-\[85px\] {
-  width: 85px;
+.w-\[95px\] {
+  width: 95px;
 }
 
 .w-fit {
@@ -5212,6 +5208,18 @@ html:has(.drawer-toggle:checked) {
 
 .overflow-y-scroll {
   overflow-y: scroll;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+}
+
+.text-clip {
+  text-overflow: clip;
+}
+
+.whitespace-nowrap {
+  white-space: nowrap;
 }
 
 .rounded {
@@ -5535,8 +5543,8 @@ html:has(.drawer-toggle:checked) {
   opacity: 0.8;
 }
 
-.opacity-90 {
-  opacity: 0.9;
+.opacity-95 {
+  opacity: 0.95;
 }
 
 .shadow-xl {

@@ -15,17 +15,18 @@ function initBoxes() {
 
 function customExecution(request) {
     const include = parseNumbers(document.getElementById('include').value);
-    const exclude = parseNumbers(document.getElementById('exclude').value);
-    const boxes = getBoxes().filter((box) => {
-        const num = getBoxNumber(box);
-        return include.includes(num) && !exclude.includes(num);
-    });
-
-    boxes.forEach((box) => execute(getApiUrl(getBoxHost(box), request)));
+    getBoxes()
+        .filter((box) => include.includes(getBoxNumber(box)))
+        .forEach((box) => execute(getApiUrl(getBoxHost(box), request)));
 }
 
 function refreshInstances() {
+    const master = getMaster();
+
     getBoxes().forEach(async (box) => {
+        if (getBoxNumber(box) === master) {
+            return;
+        }
         const host = getBoxHost(box);
         if (host === '') {
             clearVmixInfo(box);

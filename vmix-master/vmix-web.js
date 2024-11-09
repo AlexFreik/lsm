@@ -14,8 +14,15 @@ async function renderVmixWeb() {
         return;
     }
     masterInput.classList.remove('input-error');
+
     const box = getBox(master);
-    const vmixInfo = await getVmixInfo(getBoxHost(box));
+    const host = getBoxHost(box);
+    if (host === '') {
+        vmixContainer.innerHTML = '';
+        return;
+    }
+    const vmixInfo = await getVmixInfo(host);
+    updateVmixInfo(box, vmixInfo);
 
     if (vmixInfo.error) {
         vmixContainer.innerHTML = '';
@@ -46,11 +53,11 @@ async function renderVmixWeb() {
               <button class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24" onclick="transition('FadeToBlack', '')" ${disabled ? 'disabled' : ''}>FTB</button>
           </div>
           <div class="row-span-1 col-span-1">
-            ${preview.duration !== '0' ? getVideoProgress(preview) : ''}
+            ${getVideoProgress(preview)}
           </div>
           <div class="row-span-1 col-span-1"></div>
           <div class="row-span-1 col-span-1">
-            ${active.duration !== '0' ? getVideoProgress(active) : ''}
+            ${getVideoProgress(active)}
           </div>
       </div>`;
 
@@ -62,9 +69,9 @@ async function renderVmixWeb() {
         const style = isActive ? 'bg-green-700' : isPreview ? 'bg-yellow-600' : 'bg-neutral';
         inputsHTML += `
             <div class="inline-block mx-1 my-1 border border-neutral">
-                <div class="${style} w-64 cursor-pointer" onclick="previewInput(${i})">
-                    <span class="badge badge-neutral mx-1 my-1">${input.number}</span>
-                    ${getShortTitle(input.title)}
+                <div class="${style} w-64 cursor-pointer whitespace-nowrap overflow-hidden flex" onclick="previewInput(${i})">
+                    <span class="badge badge-neutral mx-1 my-1 w-[24px]">${input.number}</span>
+                    ${getResponsiveTitle(input.title)}
                 </div>
                 <div class="m-1">
                 <span class="badge rounded ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" : onclick="overlayInput(${i}, 1)"`}>1</span>
@@ -79,11 +86,10 @@ async function renderVmixWeb() {
             const meterF1 = Math.round(parseFloat(input.meterF1) * 100);
             const meterF2 = Math.round(parseFloat(input.meterF2) * 100);
             mixerHTML += `
-              <div class="inline-block w-[85px] border border-neutral pb-1 m-1 bg-base-100">
-                <div class="${input.muted === 'False' ? 'bg-green-700' : 'bg-primary-content'} mb-1">
-                  <span class="badge badge-neutral w-[24px] ml-1 my-1">${input.number}</span>
-                  ${input.title.slice(0, 5)}
-                </div>
+              <div class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100">
+                <div class="whitespace-nowrap overflow-hidden ${input.muted === 'False' ? 'bg-green-700' : 'bg-primary-content'} mb-1">
+                  <span class="badge badge-neutral w-[24px] mx-1 my-1">${input.number}</span>${input.title}
+                    </div>
                 <div class="relative ">
                   <div class="inline-block h-24 w-1">
                       <div class="bg-black" style="height: ${100 - meterF1}%"></div>
@@ -96,11 +102,11 @@ async function renderVmixWeb() {
                   <div class="inline-block -mt-5 text-center">
                     ${Math.round(input.volume)}%
                     <br />
-                    <button class="btn btn-xs btn-outline" onclick="fadeAudioOut(${i})" ${disabled ? 'disabled' : ''}>0%</button>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 0)" ${disabled ? 'disabled' : ''}>0%</button>
                     <br />
-                    <button class="btn btn-xs btn-outline" onclick="fadeAudioIn(${i})" ${disabled ? 'disabled' : ''}>100%</button>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 91)" ${disabled ? 'disabled' : ''}>70%</button>
                     <br />
-                    <span>&nbsp;</span>
+                    <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 100)" ${disabled ? 'disabled' : ''}>100%</button>
                   </div>
                 </div>
                 <div class="px-1">
@@ -140,14 +146,6 @@ function formatTime(ms) {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-function getVideoProgress(input) {
-    console.assert(['Video', 'AudioFile'].includes(input.type));
-    const duration = parseInt(input.duration);
-    const position = parseInt(input.position);
-    const remaining = duration - position;
-    return `${formatTime(position)} / ${formatTime(duration)} / ${formatTime(remaining)}`;
-}
-
 function previewInput(inputNum) {
     masterSlaveExecute('Function=PreviewInput&Input=' + inputNum);
 }
@@ -156,12 +154,8 @@ function transition(type, inputNum) {
     masterSlaveExecute('Function=' + type + '&Input=' + inputNum);
 }
 
-function fadeAudioIn(inputNum) {
-    masterSlaveExecute('Function=SetVolumeFade&Value=100,3000&Input=' + inputNum);
-}
-
-function fadeAudioOut(inputNum) {
-    masterSlaveExecute('Function=SetVolumeFade&Value=0,3000&Input=' + inputNum);
+function fadeAudio(inputNum, vol) {
+    masterSlaveExecute('Function=SetVolumeFade&Value=' + vol + ',3000&Input=' + inputNum);
 }
 
 function overlayInput(inputNum, overlayNum) {

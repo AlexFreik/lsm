@@ -78,4 +78,13 @@ function updateVmixInfo(box, vmixInfo) {
     `;
 }
 
+function getVideoProgress(input) {
+    if (input.duration === '0') return '';
+    console.assert(['Video', 'AudioFile'].includes(input.type));
+    const duration = parseInt(input.duration);
+    const position = parseInt(input.position);
+    const remaining = duration - position;
+    return `${formatTime(position)} / ${formatTime(duration)} / ${formatTime(remaining)}`;
+}
+
 const parser = new DOMParser();
