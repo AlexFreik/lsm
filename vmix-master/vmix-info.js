@@ -84,7 +84,6 @@ function updateVmixInfo(box, vmixInfo) {
                 .join('')}
         </ol>
     `;
-    console.log(active.duration, active);
 }
 
 function formatTimeMMSS(ms) {
