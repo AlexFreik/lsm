@@ -61,8 +61,16 @@ function updateVmixInfo(box, vmixInfo) {
             .map((o, i) => `<span>Overlay ${i}: ${o}</span>`)
             .filter(Boolean)
             .join('; ')}
-        <div><span class="badge bg-green-700">${active.number}</span> ${getShortTitle(active.title)}</div>
-        <div><span class="badge bg-yellow-600">${preview.number}</span> ${getShortTitle(preview.title)}</div>
+        <div>
+          <span class="badge bg-green-700 w-[24px]">${active.number}</span>
+          ${active.duration !== '0' ? `<div class="text-xs w-[77px] mr-1 inline-block">${getShortVideoProgress(active)}</div>` : ''}
+          <span class="whitespace-nowrap overflow-hidden inline-flex w-[143px]">${getResponsiveTitle(active.title)}</span>
+        </div>
+        <div>
+          <span class="badge bg-yellow-600 w-[24px]">${preview.number}</span>
+          ${preview.duration !== '0' ? `<div class="text-xs w-[77px] mr-1 inline-block">${getShortVideoProgress(preview)}</div>` : ''}
+          <span class="whitespace-nowrap overflow-hidden inline-flex w-[143px]">${getResponsiveTitle(preview.title)}</span>
+        </div>
 
         <div class="mt-1 font-bold">Inputs</div>
         <ol>
@@ -76,15 +84,25 @@ function updateVmixInfo(box, vmixInfo) {
                 .join('')}
         </ol>
     `;
+    console.log(active.duration, active);
 }
 
-function getVideoProgress(input) {
+function formatTimeMMSS(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const pad = (num) => String(num).padStart(2, '0');
+    return `${pad(minutes)}:${pad(seconds)}`;
+}
+
+function getShortVideoProgress(input) {
     if (input.duration === '0') return '';
     console.assert(['Video', 'AudioFile'].includes(input.type));
     const duration = parseInt(input.duration);
     const position = parseInt(input.position);
     const remaining = duration - position;
-    return `${formatTime(position)} / ${formatTime(duration)} / ${formatTime(remaining)}`;
+    return `${formatTimeMMSS(duration)} | ${formatTimeMMSS(remaining)}`;
 }
 
 const parser = new DOMParser();

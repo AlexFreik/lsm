@@ -4727,6 +4727,10 @@ html:has(.drawer-toggle:checked) {
   margin-left: 1rem;
 }
 
+.mr-1 {
+  margin-right: 0.25rem;
+}
+
 .ms-3 {
   margin-inline-start: 0.75rem;
 }
@@ -4899,6 +4903,10 @@ html:has(.drawer-toggle:checked) {
   width: 24rem;
 }
 
+.w-\[140px\] {
+  width: 140px;
+}
+
 .w-\[150px\] {
   width: 150px;
 }
@@ -4943,6 +4951,10 @@ html:has(.drawer-toggle:checked) {
   width: 750px;
 }
 
+.w-\[77px\] {
+  width: 77px;
+}
+
 .w-\[80px\] {
   width: 80px;
 }
@@ -4962,6 +4974,14 @@ html:has(.drawer-toggle:checked) {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-\[143px\] {
+  width: 143px;
+}
+
+.w-\[145px\] {
+  width: 145px;
 }
 
 .min-w-5 {
@@ -5487,6 +5507,11 @@ html:has(.drawer-toggle:checked) {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-xs {
+  font-size: 0.75rem;
+  line-height: 1rem;
 }
 
 .font-bold {

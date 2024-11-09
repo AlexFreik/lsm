@@ -69,7 +69,7 @@ async function renderVmixWeb() {
         const style = isActive ? 'bg-green-700' : isPreview ? 'bg-yellow-600' : 'bg-neutral';
         inputsHTML += `
             <div class="inline-block mx-1 my-1 border border-neutral">
-                <div class="${style} w-64 cursor-pointer whitespace-nowrap overflow-hidden flex" onclick="previewInput(${i})">
+                <div class="${style} w-64 whitespace-nowrap overflow-hidden flex ${disabled ? '"' : `cursor-pointer" disabled onclick="previewInput(${i})"`}">
                     <span class="badge badge-neutral mx-1 my-1 w-[24px]">${input.number}</span>
                     ${getResponsiveTitle(input.title)}
                 </div>
@@ -144,6 +144,15 @@ function formatTime(ms) {
     // Pad hours, minutes, and seconds with leading zero if needed
     const pad = (num) => String(num).padStart(2, '0');
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+}
+
+function getVideoProgress(input) {
+    if (input.duration === '0') return '';
+    console.assert(['Video', 'AudioFile'].includes(input.type));
+    const duration = parseInt(input.duration);
+    const position = parseInt(input.position);
+    const remaining = duration - position;
+    return `${formatTime(position)} / ${formatTime(duration)} / ${formatTime(remaining)}`;
 }
 
 function previewInput(inputNum) {
