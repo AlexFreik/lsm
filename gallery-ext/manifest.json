@@ -23,7 +23,7 @@
             "all_frames": true
         },
         {
-            "matches": ["https://player.controlhub.innerengineering.vualto.com/player/index/*"],
+            "matches": ["https://player.controlhub.innerengineering.vualto.com/Player/Index/*"],
             "js": ["messages.js", "utils.js", "jw-iframe.js"],
             "all_frames": true
         },
