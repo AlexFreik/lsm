@@ -19,6 +19,7 @@ class VmixInfo {
     }
 }
 
+const parser = new DOMParser();
 async function getVmixInfo(host) {
     const res = await fetchUrl(getApiUrl(host));
 
@@ -37,11 +38,14 @@ async function getVmixInfo(host) {
     }
 }
 
-function clearVmixInfo(box) {
-    box.querySelector('.vmixInfo').innerHTML = '';
-}
+function renderVmixInfo(box) {
+    const boxNum = getBoxNumber(box);
+    const vmixInfo = vmixInfos[boxNum];
 
-function updateVmixInfo(box, vmixInfo) {
+    if (vmixInfo === null) {
+        box.querySelector('.vmixInfo').innerHTML = '';
+        return;
+    }
     const infoDiv = box.getElementsByClassName('vmix-info');
     const info = vmixInfo.value;
     if (info === null) {
@@ -103,5 +107,3 @@ function getShortVideoProgress(input) {
     const remaining = duration - position;
     return `${formatTimeMMSS(duration)} | ${formatTimeMMSS(remaining)}`;
 }
-
-const parser = new DOMParser();

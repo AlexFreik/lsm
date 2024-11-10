@@ -3,28 +3,16 @@ async function renderVmixWeb() {
     const masterInput = document.getElementById('master');
     const disabled = document.getElementById('view').checked;
 
-    const master = getMaster();
+    const master = getBox(getMaster());
     if (master === null) {
-        vmixContainer.innerHTML = '';
-        return;
-    }
-    if (master > getBoxCount()) {
         vmixContainer.innerHTML = '';
         masterInput.classList.add('input-error');
         return;
     }
     masterInput.classList.remove('input-error');
 
-    const box = getBox(master);
-    const host = getBoxHost(box);
-    if (host === '') {
-        vmixContainer.innerHTML = '';
-        return;
-    }
-    const vmixInfo = await getVmixInfo(host);
-    updateVmixInfo(box, vmixInfo);
-
-    if (vmixInfo.error) {
+    const vmixInfo = getBoxVmixInfo(master);
+    if (vmixInfo === null || vmixInfo.error) {
         vmixContainer.innerHTML = '';
         return;
     }
@@ -122,8 +110,6 @@ async function renderVmixWeb() {
 
     vmixContainer.innerHTML = screensHTML + inputsHTML + mixerHTML;
 }
-
-function getMixer() {}
 
 function getMaster() {
     const master = parseInt(document.getElementById('master').value);

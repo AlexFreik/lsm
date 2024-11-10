@@ -4903,8 +4903,8 @@ html:has(.drawer-toggle:checked) {
   width: 24rem;
 }
 
-.w-\[140px\] {
-  width: 140px;
+.w-\[143px\] {
+  width: 143px;
 }
 
 .w-\[150px\] {
@@ -4947,6 +4947,10 @@ html:has(.drawer-toggle:checked) {
   width: 620px;
 }
 
+.w-\[700px\] {
+  width: 700px;
+}
+
 .w-\[750px\] {
   width: 750px;
 }
@@ -4974,14 +4978,6 @@ html:has(.drawer-toggle:checked) {
 
 .w-screen {
   width: 100vw;
-}
-
-.w-\[143px\] {
-  width: 143px;
-}
-
-.w-\[145px\] {
-  width: 145px;
 }
 
 .min-w-5 {

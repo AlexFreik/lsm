@@ -6,7 +6,11 @@ function getBoxes() {
 }
 
 function getBox(num) {
-    return document.getElementsByClassName('box')[num - 1];
+    const boxes = getBoxes();
+    if (num < 1 || num > boxes.length) {
+        return null;
+    }
+    return boxes[num - 1];
 }
 
 function getBoxCount() {
@@ -26,6 +30,11 @@ function getBoxName(box) {
 function getBoxHost(box) {
     console.assert(box.classList.contains('box'));
     return box.querySelector('.host-input').value;
+}
+
+function getBoxVmixInfo(box) {
+    console.assert(box.classList.contains('box'));
+    return vmixInfos[getBoxNumber(box)];
 }
 
 // ===== Document Config & Box URL Utils =====
@@ -168,6 +177,10 @@ function showStoredLogs() {
 }
 
 // ===== General Purpose Utils ====
+function sleep(ms) {
+    return new Promise((r) => setTimeout(r, ms));
+}
+
 function getShortTitle(str, len = 20) {
     return str.length > len ? str.slice(0, len / 2) + '...' + str.slice(-len / 2) : str;
 }

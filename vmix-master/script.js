@@ -20,21 +20,39 @@ function customExecution(request) {
         .forEach((box) => execute(getApiUrl(getBoxHost(box), request)));
 }
 
-function refreshInstances() {
+async function refreshInstance(box) {
+    const num = getBoxNumber(box);
+    const host = getBoxHost(box);
+    if (host === '') {
+        vmixInfos[num] = null;
+    } else {
+        vmixInfos[num] = await getVmixInfo(host);
+    }
+    renderVmixInfo(box);
+    if (num === getMaster()) {
+        renderVmixWeb();
+    }
+}
+
+async function refreshInstances(cnt = 0, masterCnt = 0) {
     const master = getMaster();
 
-    getBoxes().forEach(async (box) => {
-        if (getBoxNumber(box) === master) {
-            return;
+    if (cnt === 0 && refreshRate !== -1) {
+        getBoxes().forEach(async (box) => refreshInstance(box));
+    }
+
+    if (masterCnt === 0 && masterRefreshRate !== -1) {
+        const masterBox = getBox(master);
+        if ((cnt !== 0 || refreshRate === -1) && masterBox !== null) {
+            refreshInstance(masterBox);
+        } else if (masterBox === null) {
+            renderVmixWeb();
         }
-        const host = getBoxHost(box);
-        if (host === '') {
-            clearVmixInfo(box);
-        } else {
-            const info = await getVmixInfo(host);
-            updateVmixInfo(box, info);
-        }
-    });
+    }
+    await sleep(1000);
+    requestAnimationFrame(() =>
+        refreshInstances((cnt + 1) % refreshRate, (masterCnt + 1) % masterRefreshRate),
+    );
 }
 
 function setVmixButtons(e) {
@@ -51,10 +69,20 @@ function setVmixButtons(e) {
         });
 }
 
+function updateRefreshRates() {
+    const val1 = document.getElementById('refresh-rate').value;
+    refreshRate = val1 === '' ? -1 : Math.max(1, val1);
+    const val2 = document.getElementById('master-refresh-rate').value;
+    masterRefreshRate = val2 === '' ? -1 : Math.max(1, val2);
+}
+
+let refreshRate = -1;
+let masterRefreshRate = -1;
+const vmixInfos = [];
+
 (() => {
     updateDocumentConfig();
     initBoxes();
-    setInterval(renderVmixWeb, 1000);
     showStoredLogs();
 
     document
@@ -62,7 +90,15 @@ function setVmixButtons(e) {
         .forEach((input) => input.addEventListener('change', updateUrlParams));
 
     document.getElementById('add-box').addEventListener('click', () => addBox());
-    document.getElementById('refresh-all').addEventListener('click', refreshInstances);
+    document
+        .getElementById('refresh-all')
+        .addEventListener('click', () => getBoxes().forEach(updateVmixInfo));
+
+    updateRefreshRates();
+    document.getElementById('refresh-rate').addEventListener('change', updateRefreshRates);
+    document.getElementById('master-refresh-rate').addEventListener('change', updateRefreshRates);
+
+    refreshInstances();
 
     document.getElementById('view').addEventListener('click', setVmixButtons);
 
@@ -100,7 +136,4 @@ function setVmixButtons(e) {
             updateUrlParams();
         },
     });
-
-    refreshInstances();
-    setInterval(refreshInstances, 5000);
 })();
