@@ -92,7 +92,7 @@ const vmixInfos = [];
     document.getElementById('add-box').addEventListener('click', () => addBox());
     document
         .getElementById('refresh-all')
-        .addEventListener('click', () => getBoxes().forEach(updateVmixInfo));
+        .addEventListener('click', () => getBoxes().forEach(refreshInstance));
 
     updateRefreshRates();
     document.getElementById('refresh-rate').addEventListener('change', updateRefreshRates);
