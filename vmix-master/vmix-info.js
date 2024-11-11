@@ -65,15 +65,15 @@ function renderVmixInfo(box) {
             .map((o, i) => `<span>Overlay ${i}: ${o}</span>`)
             .filter(Boolean)
             .join('; ')}
-        <div>
+        <div class="flex gap-1 items-center">
           <span class="badge bg-green-700 w-[24px]">${active.number}</span>
-          ${active.duration !== '0' ? `<div class="text-xs w-[77px] mr-1 inline-block">${getShortVideoProgress(active)}</div>` : ''}
-          <span class="whitespace-nowrap overflow-hidden inline-flex w-[143px]">${getResponsiveTitle(active.title)}</span>
+          ${active.duration !== '0' ? `<div class="text-xs w-[80px] inline-block text-center">${getShortInputProgress(active)}</div>` : ''}
+          <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(active.title)}</span>
         </div>
-        <div>
+        <div class="flex gap-1 items-center">
           <span class="badge bg-yellow-600 w-[24px]">${preview.number}</span>
-          ${preview.duration !== '0' ? `<div class="text-xs w-[77px] mr-1 inline-block">${getShortVideoProgress(preview)}</div>` : ''}
-          <span class="whitespace-nowrap overflow-hidden inline-flex w-[143px]">${getResponsiveTitle(preview.title)}</span>
+          ${preview.duration !== '0' ? `<div class="text-xs w-[77px] inline-block text-center">${getShortInputProgress(preview)}</div>` : ''}
+          <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(preview.title)}</span>
         </div>
 
         <div class="mt-1 font-bold">Inputs</div>
@@ -99,11 +99,16 @@ function formatTimeMMSS(ms) {
     return `${pad(minutes)}:${pad(seconds)}`;
 }
 
-function getShortVideoProgress(input) {
+function getShortInputProgress(input) {
     if (input.duration === '0') return '';
-    console.assert(['Video', 'AudioFile'].includes(input.type));
+
+    console.assert(['Video', 'AudioFile', 'Photos'].includes(input.type));
     const duration = parseInt(input.duration);
     const position = parseInt(input.position);
     const remaining = duration - position;
+
+    if (input.type === 'Photos') {
+        return `${position} / ${duration} / ${remaining}`;
+    }
     return `${formatTimeMMSS(duration)} | ${formatTimeMMSS(remaining)}`;
 }

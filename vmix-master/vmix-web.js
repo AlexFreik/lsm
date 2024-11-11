@@ -41,11 +41,11 @@ async function renderVmixWeb() {
               <button class="${info.fadeToBlack ? 'btn-error' : 'btn-neutral'} btn btn-sm w-24" onclick="transition('FadeToBlack', '')" ${disabled ? 'disabled' : ''}>FTB</button>
           </div>
           <div class="row-span-1 col-span-1">
-            ${getVideoProgress(preview)}
+            ${getInputProgress(preview)}
           </div>
           <div class="row-span-1 col-span-1"></div>
           <div class="row-span-1 col-span-1">
-            ${getVideoProgress(active)}
+            ${getInputProgress(active)}
           </div>
       </div>`;
 
@@ -132,12 +132,16 @@ function formatTime(ms) {
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-function getVideoProgress(input) {
+function getInputProgress(input) {
     if (input.duration === '0') return '';
-    console.assert(['Video', 'AudioFile'].includes(input.type));
+    console.assert(['Video', 'AudioFile', 'Photos'].includes(input.type));
     const duration = parseInt(input.duration);
     const position = parseInt(input.position);
     const remaining = duration - position;
+
+    if (input.type === 'Photos') {
+        return `${position} / ${duration} / ${remaining}`;
+    }
     return `${formatTime(position)} / ${formatTime(duration)} / ${formatTime(remaining)}`;
 }
 

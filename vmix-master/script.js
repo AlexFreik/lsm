@@ -34,25 +34,20 @@ async function refreshInstance(box) {
     }
 }
 
-async function refreshInstances(cnt = 0, masterCnt = 0) {
-    const master = getMaster();
-
+async function refreshInstances(cnt = 0) {
     if (cnt === 0 && refreshRate !== -1) {
         getBoxes().forEach(async (box) => refreshInstance(box));
     }
 
-    if (masterCnt === 0 && masterRefreshRate !== -1) {
-        const masterBox = getBox(master);
-        if ((cnt !== 0 || refreshRate === -1) && masterBox !== null) {
-            refreshInstance(masterBox);
-        } else if (masterBox === null) {
-            renderVmixWeb();
-        }
+    const masterBox = getBox(getMaster());
+    if (cnt !== 0 && masterBox !== null) {
+        refreshInstance(masterBox);
+    } else if (masterBox === null) {
+        renderVmixWeb();
     }
+
     await sleep(1000);
-    requestAnimationFrame(() =>
-        refreshInstances((cnt + 1) % refreshRate, (masterCnt + 1) % masterRefreshRate),
-    );
+    requestAnimationFrame(() => refreshInstances((cnt + 1) % refreshRate));
 }
 
 function setVmixButtons(e) {
@@ -72,12 +67,9 @@ function setVmixButtons(e) {
 function updateRefreshRates() {
     const val1 = document.getElementById('refresh-rate').value;
     refreshRate = val1 === '' ? -1 : Math.max(1, val1);
-    const val2 = document.getElementById('master-refresh-rate').value;
-    masterRefreshRate = val2 === '' ? -1 : Math.max(1, val2);
 }
 
 let refreshRate = -1;
-let masterRefreshRate = -1;
 const vmixInfos = [];
 
 (() => {
@@ -96,7 +88,6 @@ const vmixInfos = [];
 
     updateRefreshRates();
     document.getElementById('refresh-rate').addEventListener('change', updateRefreshRates);
-    document.getElementById('master-refresh-rate').addEventListener('change', updateRefreshRates);
 
     refreshInstances();
 
