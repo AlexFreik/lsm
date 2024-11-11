@@ -204,10 +204,14 @@
       </div>
     </div>
 
-    <div class="fixed bottom-1 right-1 h-[200px] w-[500px]">
-      <div id="logs" class="textarea textarea-bordered h-full w-full overflow-y-scroll opacity-80"></div>
+    <div class="collapse collapse-arrow fixed bottom-1 right-1 w-[700px] bg-base-300 opacity-90">
+      <input type="checkbox" checked />
+      <div class="collapse-title text-xl font-medium">Logs</div>
+      <div class="collapse-content px-0">
+        <div id="logs" class="mx-auto h-[250px] w-[685px] overflow-y-scroll"></div>
+      </div>
 
-      <label class="badge swap badge-neutral absolute bottom-3 right-5 rounded py-3 opacity-95">
+      <label class="badge swap badge-neutral absolute bottom-3 right-9 rounded py-3 opacity-95">
         <!-- this hidden checkbox controls the state -->
         <input id="view" type="checkbox" class="url-param" />
 

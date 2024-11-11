@@ -110,16 +110,17 @@ function updateUrlParams() {
 }
 
 // ===== Logging Utils =====
-function show(str, isError = false) {
+function show(header, msg, isError = false) {
     const logs = document.getElementById('logs');
     logs.innerHTML =
         `
-        <p ${isError ? 'class="text-error"' : ''}>${new Option(str).innerHTML}</p>
-        <div class="divider"></div>` + logs.innerHTML;
+        <div class="divider mb-1 mt-3 text-secondary">${header}</div>
+        <p ${isError ? 'class="text-error"' : ''}>${new Option(msg).innerHTML}</p>` +
+        logs.innerHTML;
 }
 
-function showError(str) {
-    show(str, true);
+function showError(header, msg) {
+    show(header, msg, true);
 }
 
 // ===== vMix API Utils =====
@@ -157,11 +158,11 @@ async function execute(url, isShow = true) {
 
 // ===== Logging =====
 function showLog(url, status, value, error, time) {
-    const message = `[${time}] ${url}: ` + (value ? value.slice(0, 300) : 'Error');
+    const message = `[${time}]: ` + (value ? value.slice(0, 300) : 'Error');
     if (status === 200) {
-        show(message);
+        show(url, message);
     } else {
-        showError(message);
+        showError(url, message);
     }
 }
 
