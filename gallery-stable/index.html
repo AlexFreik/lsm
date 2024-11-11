@@ -4,23 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gallery</title>
-    <link rel="icon" type="image/png" href="./isha-logo.png" />
+    <link rel="icon" type="image/png" href="./128.png" />
     <link rel="stylesheet" href="./output.css" />
     <script type="module" src="./script.js" defer></script>
+    <script src="./Sortable.min.js"></script>
   </head>
   <body class="bg-base-100 text-base-content">
-    <div class="prose m-3 mx-auto hidden rounded-box border-2 border-error p-2 text-error" id="outdated-extension-warning">
-      <b>Warning:</b> You're using an outdated Chrome extension version "<span id="ext-version"></span>". Please
-      <a class="link" href="/lsm/gallery-ext/#update">update</a> it to the latest version "<span id="gal-version">0.3.1</span>", as some features
-      might not work properly.
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap" id="gallery"></div>
     </div>
 
-    <div class="flex flex-col items-center">
-      <div class="flex w-full flex-wrap px-1" id="gallery">
-        <div class="flex min-w-full flex-col items-center px-10 py-10">
-          <button id="add-box" class="btn btn-outline btn-secondary">+</button>
-        </div>
-      </div>
+    <div class="prose m-3 mx-auto hidden rounded-box border-2 border-error p-2 text-error" id="outdated-extension-warning">
+      <b>Warning:</b> You're using an outdated Chrome extension version "<span id="ext-version"></span>". Please
+      <a class="link" href="/lsm/gallery-ext/#update">update</a> it to the latest version "<span id="gal-version">1.0.0</span>", as some features
+      might not work properly.
     </div>
 
     <div class="navbar bg-base-100">
@@ -39,7 +36,20 @@
       </div>
     </div>
 
-    <div class="hidden w-full px-5" id="controls">
+    <div class="divider mx-auto my-10 w-[750px]">Controls</div>
+
+    <div class="m-auto hidden w-[750px] px-1" id="controls">
+      <div class="mb-4 flex items-center gap-1">
+        <input id="gallery-url" type="text" placeholder="URL" class="input input-xs input-bordered ml-0 flex-1" />
+
+        <button id="update-gallery-url" class="btn btn-secondary btn-xs">
+          <svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            <path
+              d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z" />
+          </svg>
+        </button>
+      </div>
+
       <div>
         <label class="relative inline-flex cursor-pointer items-center">
           <input type="checkbox" id="audioLevels" class="url-param toggle toggle-secondary m-0" checked />
@@ -60,47 +70,51 @@
       </div>
       <div class="mb-4">
         <label class="relative inline-flex cursor-pointer items-center">
-          <button type="button" id="setQuality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
+          <button id="setQuality" class="btn btn-outline btn-secondary btn-xs">Lowest Quality</button>
           <span class="text-md ms-3">YouTube: Select the lowest quality (resolution) for all videos</span>
         </label>
       </div>
     </div>
 
+    <div class="divider mx-auto my-10 w-[750px]">Data Rows</div>
+
+    <div id="data-rows" class="m-auto w-[750px] px-1"></div>
+
+    <div class="m-auto w-[750px] px-1">
+      <button id="add-data-row" class="btn btn-outline btn-secondary btn-xs mt-3">Add</button>
+      <button id="update-rows" class="btn btn-outline btn-secondary btn-xs mt-3">Update</button>
+    </div>
+
+    <div id="docs" class="divider mx-auto my-10 w-[750px]">Documentation</div>
+
     <!-- <div class="my-8 px-5">
       <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
     </div> -->
 
-    <div class="card mx-auto mt-10 max-w-md bg-neutral shadow-xl">
-      <div class="card-body">
-        <h2 class="card-title text-2xl text-secondary">
-          Chrome Extension
-          <span id="installedBadge" class="badge badge-success badge-error badge-lg">Not Installed</span>
-        </h2>
-        <p>
-          Because of the CORS policy, we can't access the videos with JavaScript directly.
-          <br />
-          That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE, and other features.
-        </p>
-        <div class="card-actions justify-end">
-          <a class="btn btn-outline btn-secondary" href="/lsm/gallery-ext/" target="_blank">How to Install</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="prose max-w-4xl px-5">
-      <h2 id="docs">Documentation</h2>
+    <div class="prose m-auto w-[750px] max-w-[750px] px-1">
       <p>Please use the latest Chrome browser and install the extension.</p>
+
+      <h3>
+        Chrome Extension
+        <span id="installedBadge" class="badge badge-success badge-error badge-lg">Not Installed</span>
+      </h3>
+      <p>
+        Because of the CORS policy, we can't access the videos with JavaScript directly.
+        <br />
+        That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE, and other features.
+        <a class="link" href="/lsm/gallery-ext/" target="_blank">Click here to install.</a>
+      </p>
       <h3>Video ID</h3>
       <ul>
         <li>
-          <code>YT, YN (YouTube)</code> Paste video ID. For <i>https://youtube.com/watch?v=jfKfPfyJRdk</i> the ID will be <b>jfKfPfyJRdkM</b>.
+          <code>YT, YN (YouTube)</code> For <i>https://youtube.com/watch?v=jfKfPfyJRdk</i> the ID will be <b>jfKfPfyJRdkM</b>.
           <br />
           <b>Note</b>: YN is privacy enhanced youtube, you will join in "incognito" mode.
         </li>
         <li><code>FB (Facebook)</code> Paste video ID.</li>
         <li><code>IG (Instagram)</code> Not supported yet.</li>
         <li>
-          <code>CU (Custom)</code> Paste any web link e.g. <i>https://alexfreik.github.io/lsm/gallery/isha-logo.png</i><br />
+          <code>CU (Custom)</code> Any web link e.g. <i>https://alexfreik.github.io/lsm/gallery/128.png</i><br />
           <b>Note</b>: most links won't work because of CORS restrictions in the browser.
         </li>
       </ul>

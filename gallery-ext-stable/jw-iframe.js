@@ -1,6 +1,6 @@
 (async () => {
     console.log('Gallery: Hi from JW Player Iframe');
-    if (!isGalleryIframe) {
+    if (!isGalleryIframe()) {
         console.log('Gallery: This iframe is not inside of Gallery, exiting.');
         return;
     }

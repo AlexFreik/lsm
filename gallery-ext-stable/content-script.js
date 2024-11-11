@@ -1,24 +1,25 @@
+function initBoxes() {
+    const boxes = Array.from(document.getElementsByClassName('box'));
+    boxes.forEach((box) => addMuteAction(box));
+}
+
+function addMuteAction(box) {
+    const boxId = box.getAttribute('data-id');
+    console.assert(boxId);
+    const muteBtn = box.querySelector('.mute-btn');
+    muteBtn.onclick = (e) => {
+        const mute = box.classList.contains('unmuted');
+        if (mute) {
+            box.classList.remove('unmuted');
+        } else {
+            box.classList.add('unmuted');
+        }
+        chrome.runtime.sendMessage({ type: m.muteClick, value: mute, boxId: boxId });
+    };
+}
+
 (() => {
     console.log('Hi from Content Script');
-
-    const boxes = Array.from(document.getElementsByClassName('box'));
-    boxes.forEach((box) => {
-        const boxId = box.dataset.boxId;
-        console.assert(boxId);
-        const muteBtn = box.getElementsByClassName('mute-btn')[0];
-        muteBtn.onclick = (e) => {
-            const btn = e.target;
-            const mute = btn.innerHTML === 'Mute';
-            if (mute) {
-                btn.innerHTML = 'Unmute';
-                box.classList.remove('unmuted');
-            } else {
-                btn.innerHTML = 'Mute';
-                box.classList.add('unmuted');
-            }
-            chrome.runtime.sendMessage({ type: m.muteClick, value: mute, boxId: boxId });
-        };
-    });
 
     // Controls should be hidden if extension is not installed
     const controlsElem = document.getElementById('controls');
@@ -29,7 +30,6 @@
     console.assert(installedBadge);
     installedBadge.classList.remove('badge-error');
     installedBadge.innerHTML = 'Installed';
-
     const warningElem = document.getElementById('outdated-extension-warning');
     console.assert(warningElem);
     const extVersion = chrome.runtime.getManifest().version;
@@ -38,6 +38,9 @@
     if (extVersion !== galVersion) {
         warningElem.classList.remove('hidden');
     }
+
+    initBoxes();
+    document.getElementById('update-rows').addEventListener('click', initBoxes);
 
     const audioLevelsElem = document.getElementById('audioLevels');
     console.assert(audioLevelsElem);

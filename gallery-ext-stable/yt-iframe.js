@@ -32,7 +32,7 @@ async function setQualityYT(quality) {
 
 (async () => {
     console.log('Gallery: Hi from YouTube Iframe');
-    if (!isGalleryIframe) {
+    if (!isGalleryIframe()) {
         console.log('Gallery: This iframe is not inside Gallery, exiting.');
         return;
     }
