@@ -91,7 +91,7 @@
       <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
     </div> -->
 
-    <div class="prose m-auto w-[750px] max-w-[750px] px-1">
+    <div class="prose m-auto w-[760px] max-w-[750px] px-1">
       <p>Please use the latest Chrome browser and install the extension.</p>
 
       <h3>
@@ -104,15 +104,27 @@
         That is why a Chrome Extension is required to enable VU meters, automatic quality adjustment, always staying on LIVE, and other features.
         <a class="link" href="/lsm/gallery-ext/" target="_blank">Click here to install.</a>
       </p>
-      <h3>Video ID</h3>
+
+      <h3>Value</h3>
       <ul>
         <li>
-          <code>YT, YN (YouTube)</code> For <i>https://youtube.com/watch?v=jfKfPfyJRdk</i> the ID will be <b>jfKfPfyJRdkM</b>.
+          <code>YT, YN (YouTube)</code> For <i>https://youtube.com/watch?v=jfKfPfyJRdk</i> the value will be <b>jfKfPfyJRdkM</b>.
           <br />
           <b>Note</b>: YN is privacy enhanced youtube, you will join in "incognito" mode.
         </li>
+        <li><code>JW (JW Player)</code> Paste video ID.</li>
+        <li>
+          <code>SS (Screen Share)</code>Select the audio input.
+          <br />
+          <b>Note</b>: Note: Chrome tries to improve the audio (noise reduction, auto gain) by default, which ironically makes the audio worse. So we
+          need to disable this by going to <a class="link">chrome://flags</a> and selecting "Disabled" for these three flags:
+          <ol>
+            <li>Allow WebRTC to adjust the input volume,</li>
+            <li>WebRTC downmix capture audio method,</li>
+            <li>Chrome-wide echo cancellation.</li>
+          </ol>
+        </li>
         <li><code>FB (Facebook)</code> Paste video ID.</li>
-        <li><code>IG (Instagram)</code> Not supported yet.</li>
         <li>
           <code>CU (Custom)</code> Any web link e.g. <i>https://alexfreik.github.io/lsm/gallery/128.png</i><br />
           <b>Note</b>: most links won't work because of CORS restrictions in the browser.
