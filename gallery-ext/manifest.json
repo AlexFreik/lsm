@@ -1,6 +1,6 @@
 {
     "name": "Live Streaming Gallery",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "description": "Miscellaneous features for Live Streaming Gallery",
     "permissions": ["storage", "tabs"],
     "host_permissions": [

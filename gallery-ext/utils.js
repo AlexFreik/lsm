@@ -13,27 +13,6 @@ function isGalleryIframe() {
     return getBoxId() !== null;
 }
 
-function getMax(array) {
-    let max = -60;
-    for (let i = 0; i < array.length; i++) {
-        max = Math.max(max, array[i]);
-    }
-    return ((max + 60) * 5) / 3;
-}
-
-function getRMS(array) {
-    let sum = 0;
-    for (let i = 0; i < array.length; i++) {
-        const value = (array[i] - 128) / 128;
-        sum += value * value;
-    }
-    return Math.sqrt(sum / array.length) * 100;
-}
-
-function rmsToDb(rms) {
-    return rms > 0 ? 20 * Math.log10(rms) : -Infinity;
-}
-
 // ===== Audio Meter =====
 function createAudioLevels() {
     const canvas = document.createElement('canvas');
@@ -89,25 +68,72 @@ function muteClick(audioTools, mute) {
 }
 
 async function draw(ctx, analyserL, analyserR) {
-    const arrayL = new Float32Array(BUFF_SIZE);
-    const arrayR = new Float32Array(BUFF_SIZE);
-    analyserL.getFloatFrequencyData(arrayL);
-    analyserR.getFloatFrequencyData(arrayR);
-    ctx.clearRect(0, 0, 100, 100); // Clear the canvas
+    const timeDataL = new Float32Array(analyserL.fftSize);
+    const timeDataR = new Float32Array(analyserR.fftSize);
 
-    let maxL = getMax(arrayL),
-        maxR = getMax(arrayR);
+    analyserL.getFloatTimeDomainData(timeDataL);
+    analyserR.getFloatTimeDomainData(timeDataR);
 
-    ctx.fillStyle = 'green';
-    ctx.fillRect(0, 100 - maxL, 50, maxL);
-    ctx.fillRect(50, 100 - maxR, 100, maxR);
+    // Clear the canvas
+    ctx.clearRect(0, 0, 100, 100);
 
-    while (!audioLevels) {
-        await sleep(2000);
-    }
+    // Calculate RMS dB levels for both channels
+    const dBLevelL = calculateRMSdB(timeDataL);
+    const dBLevelR = calculateRMSdB(timeDataR);
 
-    await sleep(200);
+    // Draw segmented dB meter for each channel
+    drawDbMeter(ctx, 0, dBLevelL); // Left channel
+    drawDbMeter(ctx, 50, dBLevelR); // Right channel
+
+    await sleep(100); // Delay for smoother updates (if desired)
     requestAnimationFrame(() => draw(ctx, analyserL, analyserR));
+}
+
+// Draw the segmented dB meter with peak indicator
+function drawDbMeter(ctx, xOffset, dB) {
+    const canvasHeight = 100;
+
+    // Define dB ranges and colors
+    const dbRanges = [
+        { min: -60, max: -36, frac: 0.35, color: '#008000' },
+        { min: -36, max: -18, frac: 0.25, color: '#00c000' },
+        { min: -18, max: -6, frac: 0.25, color: '#00ff00' },
+        { min: -6, max: -1, frac: 0.12, color: '#ffff00' },
+        { min: -1, max: 0, frac: 0.03, color: '#ff0000' },
+    ];
+
+    let accumulatedHeight = 0; // Track filled height
+
+    dbRanges.forEach((range) => {
+        if (dB >= range.min) {
+            const rangeHeight = range.frac * canvasHeight;
+
+            // Calculate the portion of this range to be filled
+            const filledFraction = Math.min(dB, range.max) - range.min;
+            const filledHeight = (filledFraction / (range.max - range.min)) * rangeHeight;
+
+            // Draw the segment for this range
+            ctx.fillStyle = range.color;
+            ctx.fillRect(
+                xOffset,
+                canvasHeight - accumulatedHeight - filledHeight,
+                50,
+                filledHeight,
+            );
+            accumulatedHeight += rangeHeight;
+        }
+    });
+}
+
+// Helper to calculate RMS and convert to dB
+function calculateRMSdB(dataArray) {
+    let sum = 0;
+    for (let i = 0; i < dataArray.length; i++) {
+        sum += dataArray[i] ** 2;
+    }
+    const rms = Math.sqrt(sum / dataArray.length) * 2.3; // Apply gain
+    const dB = 20 * Math.log10(rms + 1e-10); // Avoid log(0) error
+    return dB;
 }
 
 function getBoxId() {
@@ -156,8 +182,8 @@ async function waitForVideo() {
     }
 
     // ===== Global Variables =====
-    window.BUFF_SIZE = 16;
-    window.SMOOTHING_TIME = 0.2;
+    window.BUFF_SIZE = 64;
+    window.SMOOTHING_TIME = 0.8;
 
     const audioLevlesParam = getUrlParam('audioLevels');
     console.assert(['0', '1'].includes(audioLevlesParam));
