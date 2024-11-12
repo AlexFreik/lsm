@@ -105,6 +105,17 @@
         <a class="link" href="/lsm/gallery-ext/" target="_blank">Click here to install.</a>
       </p>
 
+      <h3>Chrome Flags</h3>
+      Chrome tries to improve the audio inputs (noise reduction, auto gain) by default, which ironically makes the audio worse. So we need to disable
+      this by going to <a class="link">chrome://flags</a> and selecting "Disabled" for these three flags:
+      <ol>
+        <li>Allow WebRTC to adjust the input volume,</li>
+        <li>WebRTC downmix capture audio method,</li>
+        <li>Chrome-wide echo cancellation.</li>
+      </ol>
+
+      This is only needed if we are using Screen Share with an audio input. Audio from YT, JW, etc. will work fine without disabling the flags.
+
       <h3>Value</h3>
       <ul>
         <li>
@@ -116,13 +127,7 @@
         <li>
           <code>SS (Screen Share)</code>Select the audio input.
           <br />
-          <b>Note</b>: Note: Chrome tries to improve the audio (noise reduction, auto gain) by default, which ironically makes the audio worse. So we
-          need to disable this by going to <a class="link">chrome://flags</a> and selecting "Disabled" for these three flags:
-          <ol>
-            <li>Allow WebRTC to adjust the input volume,</li>
-            <li>WebRTC downmix capture audio method,</li>
-            <li>Chrome-wide echo cancellation.</li>
-          </ol>
+          <b>Note:</b> Don't forget to disable the Chrome flags.
         </li>
         <li><code>FB (Facebook)</code> Paste video ID.</li>
         <li>
