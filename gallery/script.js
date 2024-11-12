@@ -5,13 +5,8 @@ import {
     updateGalleryUrlInput,
     getAvailableMics,
 } from './tools.js';
-import { createBox } from './box.js';
-import { createRow } from './row.js';
-
-function addRow(name = '', type = 'YT', value = '') {
-    const dataRows = document.getElementById('data-rows');
-    dataRows.appendChild(createRow(name, type, value));
-}
+import { addBox } from './box.js';
+import { addRow } from './row.js';
 
 function initRows() {
     document.getElementById('data-rows').innerHTML = '';
@@ -27,11 +22,6 @@ function initRows() {
 function updateRows() {
     updateUrlParams();
     updateBoxes();
-}
-
-function addBox(name = '', type = 'YT', value = '') {
-    const gallery = document.getElementById('gallery');
-    gallery.appendChild(createBox(name, type, value));
 }
 
 function updateBoxes() {

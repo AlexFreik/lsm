@@ -107,6 +107,9 @@ async function getAvailableMics() {
 }
 
 export {
+    getRowName,
+    getRowType,
+    getRowValue,
     getBoxUrlParams,
     getConfigUrlParams,
     parseDocumentConfig,
