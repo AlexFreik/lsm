@@ -95,7 +95,7 @@ function drawDbMeter(ctx, xOffset, dB) {
 
     // Define dB ranges and colors
     const dbRanges = [
-        { min: -200, max: -90, frac: 0.07, color: '#008000' },
+        { min: -91, max: -90, frac: 0.07, color: '#008000' },
         { min: -90, max: -36, frac: 0.28, color: '#008000' },
         { min: -36, max: -18, frac: 0.25, color: '#00c000' },
         { min: -18, max: -6, frac: 0.25, color: '#00ff00' },
