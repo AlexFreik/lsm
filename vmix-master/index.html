@@ -174,14 +174,14 @@
       <div class="collapse-title text-xl font-medium">vMix Web</div>
       <div class="collapse-content">
         <div class="mx-auto my-10 flex w-[500px] items-center gap-1 px-5">
-          <span class="text-md">Master: </span>
+          <span class="text-md">Master:</span>
           <input id="master" type="number" min="1" name="master" placeholder="e.g. 1" class="url-param input input-xs input-bordered w-16" />
-          <span class="text-md ms-3">Slaves: </span>
+          <span class="text-md ms-3">Slaves:</span>
           <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
         </div>
 
         <div id="vmixContainer">
-          <div class="wrap mx-auto mt-5 grid h-[200px] w-[620px] grid-cols-[250px_120px_250px] grid-rows-5 gap-1 text-center">
+          <div id="vmix-screens" class="wrap mx-auto mt-5 grid h-[200px] w-[620px] grid-cols-[250px_120px_250px] grid-rows-5 gap-1 text-center">
             <div id="preview-title" class="col-span-1 row-span-4 bg-yellow-600 text-lg font-semibold"></div>
             <div class="col-span-1 row-span-1">
               <button class="btn btn-neutral btn-sm w-24" onclick="transition('Stinger1')">Stinger 1</button>
@@ -204,14 +204,14 @@
       </div>
     </div>
 
-    <div class="collapse collapse-arrow fixed bottom-1 right-1 w-[700px] bg-base-300 opacity-90">
-      <input type="checkbox" checked />
-      <div class="collapse-title text-xl font-medium">Logs</div>
-      <div class="collapse-content px-0">
-        <div id="logs" class="mx-auto h-[250px] w-[685px] overflow-y-scroll"></div>
+    <div class="collapse fixed bottom-1 right-1 w-[700px]">
+      <input type="checkbox" class="min-h-0" checked />
+      <div class="collapse-title min-h-0 bg-neutral py-1 text-xl font-medium opacity-90">Logs</div>
+      <div class="collapse-content bg-base-300 px-0 opacity-80">
+        <div id="logs" class="mx-auto h-[280px] w-[685px] overflow-y-scroll"></div>
       </div>
 
-      <label class="badge swap badge-neutral absolute bottom-3 right-9 rounded py-3 opacity-95">
+      <label class="badge swap badge-neutral absolute bottom-1 right-9 rounded py-3 opacity-95">
         <!-- this hidden checkbox controls the state -->
         <input id="view" type="checkbox" class="url-param" />
 
@@ -227,7 +227,7 @@
       </label>
     </div>
 
-    <div class="prose mx-auto max-w-3xl px-5">
+    <div class="prose mx-auto mt-5 max-w-3xl px-5">
       <h2>Documentation</h2>
       You can read official vMix API documentation here:
       <a target="_blank" href="https://www.vmix.com/help25/index.htm?DeveloperAPI.html">vmix.com/help25/index.htm?DeveloperAPI.html</a>
