@@ -4162,30 +4162,6 @@ html:has(.drawer-toggle:checked) {
   position: absolute;
 }
 
-.range-xs {
-  height: 1rem;
-}
-
-.range-xs::-webkit-slider-runnable-track {
-  height: 0.25rem;
-}
-
-.range-xs::-moz-range-track {
-  height: 0.25rem;
-}
-
-.range-xs::-webkit-slider-thumb {
-  height: 1rem;
-  width: 1rem;
-  --filler-offset: 0.4rem;
-}
-
-.range-xs::-moz-range-thumb {
-  height: 1rem;
-  width: 1rem;
-  --filler-offset: 0.4rem;
-}
-
 .select-sm {
   height: 2rem;
   min-height: 2rem;
@@ -4982,6 +4958,10 @@ html:has(.drawer-toggle:checked) {
   height: 20px;
 }
 
+.h-\[22px\] {
+  height: 22px;
+}
+
 .h-\[23px\] {
   height: 23px;
 }
@@ -5133,10 +5113,6 @@ html:has(.drawer-toggle:checked) {
 
 .w-\[500px\] {
   width: 500px;
-}
-
-.w-\[50px\] {
-  width: 50px;
 }
 
 .w-\[685px\] {
@@ -5531,11 +5507,6 @@ html:has(.drawer-toggle:checked) {
   border-color: var(--fallback-s,oklch(var(--s)/var(--tw-border-opacity)));
 }
 
-.border-success {
-  --tw-border-opacity: 1;
-  border-color: var(--fallback-su,oklch(var(--su)/var(--tw-border-opacity)));
-}
-
 .bg-base-100 {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-b1,oklch(var(--b1)/var(--tw-bg-opacity)));
@@ -5673,10 +5644,6 @@ html:has(.drawer-toggle:checked) {
 
 .pl-0 {
   padding-left: 0px;
-}
-
-.pl-\[16px\] {
-  padding-left: 16px;
 }
 
 .pl-\[18px\] {
