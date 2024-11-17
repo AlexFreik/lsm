@@ -24,9 +24,9 @@ async function refreshInstance(box) {
     const num = getBoxNumber(box);
     const host = getBoxHost(box);
     if (host === '') {
-        vmixInfos[num] = null;
+        setVmixInfo(num, null);
     } else {
-        vmixInfos[num] = await getVmixInfo(host);
+        setVmixInfo(num, await fetchVmixInfo(host));
     }
     renderVmixInfo(box);
     if (num === getMaster()) {
@@ -50,10 +50,20 @@ async function refreshInstances(cnt = 0) {
     requestAnimationFrame(() => refreshInstances((cnt + 1) % refreshRate));
 }
 
-function setVmixButtons(e) {
-    const disabled = e.currentTarget.checked;
+function setVmixButtons() {
+    const disabled = document.getElementById('view-mode').checked;
     document
         .getElementById('custom-commands-container')
+        .querySelectorAll('button')
+        .forEach((btn) => {
+            if (disabled) {
+                btn.disabled = true;
+            } else {
+                btn.removeAttribute('disabled');
+            }
+        });
+    document
+        .getElementById('vmix-container')
         .querySelectorAll('button')
         .forEach((btn) => {
             if (disabled) {
@@ -76,6 +86,8 @@ const vmixInfos = [];
     updateDocumentConfig();
     initBoxes();
     showStoredLogs();
+    prerenderVmixWeb();
+    setVmixButtons();
 
     document
         .querySelectorAll('.url-param')
@@ -91,7 +103,7 @@ const vmixInfos = [];
 
     refreshInstances();
 
-    document.getElementById('view').addEventListener('click', setVmixButtons);
+    document.getElementById('view-mode').addEventListener('click', setVmixButtons);
 
     const executeBtn = document.getElementById('execute-btn');
     executeBtn.onclick = () => customExecution(document.getElementById('rawRequest').value);

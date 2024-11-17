@@ -6,8 +6,9 @@ function getBoxes() {
 }
 
 function getBox(num) {
+    console.assert(num === null || Number.isInteger(num));
     const boxes = getBoxes();
-    if (num < 1 || num > boxes.length) {
+    if (!Number.isInteger(num) || num < 1 || num > boxes.length) {
         return null;
     }
     return boxes[num - 1];
@@ -34,7 +35,7 @@ function getBoxHost(box) {
 
 function getBoxVmixInfo(box) {
     console.assert(box.classList.contains('box'));
-    return vmixInfos[getBoxNumber(box)];
+    return getVmixInfo(getBoxNumber(box));
 }
 
 // ===== Document Config & Box URL Utils =====
@@ -114,7 +115,9 @@ function show(header, msg, isError = false) {
     const logs = document.getElementById('logs');
     logs.innerHTML =
         `
-        <div class="divider mb-1 mt-3 text-secondary">${header}</div>
+        <div class="divider mb-1 mt-3 text-secondary">
+          ${getShortText(header, 80)}
+        </div>
         <p ${isError ? 'class="text-error"' : ''}>${new Option(msg).innerHTML}</p>` +
         logs.innerHTML;
 }
@@ -158,7 +161,7 @@ async function execute(url, isShow = true) {
 
 // ===== Logging =====
 function showLog(url, status, value, error, time) {
-    const message = `[${time}]: ` + (value ? value.slice(0, 300) : 'Error');
+    const message = `[${time}]: ` + (value ? getShortText(value, 300) : 'Error');
     if (status === 200) {
         show(url, message);
     } else {
@@ -177,12 +180,12 @@ function showStoredLogs() {
     logs.reverse().forEach((log) => showLog(log.url, log.status, log.value, log.error, log.time));
 }
 
-// ===== General Purpose Utils ====
+// ===== General Purpose Utils =====
 function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
 }
 
-function getShortTitle(str, len = 20) {
+function getShortText(str, len) {
     return str.length > len ? str.slice(0, len / 2) + '...' + str.slice(-len / 2) : str;
 }
 

@@ -20,7 +20,7 @@ class VmixInfo {
 }
 
 const parser = new DOMParser();
-async function getVmixInfo(host) {
+async function fetchVmixInfo(host) {
     const res = await fetchUrl(getApiUrl(host));
 
     if (res.status === 200) {
@@ -38,9 +38,22 @@ async function getVmixInfo(host) {
     }
 }
 
+function getVmixInfo(number) {
+    console.assert(number === null || Number.isInteger(number));
+    if (number === null || getBox(number) === null) {
+        return null;
+    }
+    return vmixInfos[number];
+}
+
+function setVmixInfo(number, info) {
+    console.assert(Number.isInteger(number));
+    vmixInfos[number] = info;
+}
+
 function renderVmixInfo(box) {
     const boxNum = getBoxNumber(box);
-    const vmixInfo = vmixInfos[boxNum];
+    const vmixInfo = getVmixInfo(boxNum);
 
     if (vmixInfo === null) {
         box.querySelector('.vmixInfo').innerHTML = '';
@@ -66,12 +79,12 @@ function renderVmixInfo(box) {
             .filter(Boolean)
             .join('; ')}
         <div class="flex gap-1 items-center">
-          <span class="badge bg-green-700 w-[24px]">${active.number}</span>
+          <span class="badge badge-success w-[24px] h-[16px]">${active.number}</span>
           ${active.duration !== '0' ? `<div class="text-xs w-[80px] inline-block text-center">${getShortInputProgress(active)}</div>` : ''}
           <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(active.title)}</span>
         </div>
         <div class="flex gap-1 items-center">
-          <span class="badge bg-yellow-600 w-[24px]">${preview.number}</span>
+          <span class="badge badge-warning w-[24px] h-[16px] py-0">${preview.number}</span>
           ${preview.duration !== '0' ? `<div class="text-xs w-[77px] inline-block text-center">${getShortInputProgress(preview)}</div>` : ''}
           <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(preview.title)}</span>
         </div>

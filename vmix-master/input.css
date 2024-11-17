@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --vmix-active: 0.53 0.14 150.06;
+    --vmix-preview: 0.68 0.14 75.82;
+}
+
 @keyframes fadeInRight {
     from {
         opacity: 0;
@@ -19,4 +24,16 @@
 
 .box {
     animation: fadeInRight 1s ease-out;
+}
+
+.btn-error:disabled {
+    background-color: oklch(var(--er) / var(--tw-bg-opacity));
+}
+
+.btn-warning:disabled {
+    background-color: oklch(var(--wa) / var(--tw-bg-opacity));
+}
+
+.btn-success:disabled {
+    background-color: oklch(var(--su) / var(--tw-bg-opacity));
 }
