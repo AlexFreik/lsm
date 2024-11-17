@@ -11,12 +11,12 @@ function prerenderVmixWeb() {
               <span class="input-title whitespace-nowrap overflow-hidden inline-flex flex-1"></span>
             </button>
             <div class="m-1">
-            <button class="overlay1-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 1)"}>1</button>
-            <button class="overlay2-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 2)"}>2</button>
-            <button class="overlay3-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 3)"}>3</button>
-            <button class="overlay4-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 4)"}>4</button>
+            <button class="overlay1-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 1)">1</button>
+            <button class="overlay2-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 2)">2</button>
+            <button class="overlay3-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 3)">3</button>
+            <button class="overlay4-btn btn btn-neutral w-[22px] h-[20px] min-h-0 p-0 rounded" onclick="overlayInput(${i}, 4)">4</button>
             <button class="audio-btn btn btn-neutral w-fit h-[20px] min-h-0 px-2 rounded" onclick="muteInput(${i})">AUDIO</button>
-            <button class="loop-btn btn btn-neutral w-fit h-[20px] min-h-0 px-2 rounded" onclick="loopInput(${i})"}>LOOP</button>
+            <button class="loop-btn btn btn-neutral w-fit h-[20px] min-h-0 px-2 rounded" onclick="loopInput(${i})">LOOP</button>
             </div>
           </div>`;
 
@@ -26,7 +26,7 @@ function prerenderVmixWeb() {
               <span class="badge badge-neutral w-[24px] ml-1 mr-0 my-1">${i}</span>
               <span class="mixer-title whitespace-nowrap overflow-hidden text-sm p-0"></span>
             </div>
-            <div class="pl-[16px]">
+            <div class="relative pl-[16px]">
               <div class="inline-block h-24 w-1 hidden">
                 <div class="bg-black" style="height: 100%"></div>
                 <div class="bg-success" style="height: 0%"></div>
@@ -35,17 +35,17 @@ function prerenderVmixWeb() {
                 <div class="bg-black" style="height: 100%"></div>
                 <div class="bg-success" style="height: 0%"></div>
               </div>
-              <canvas id="volume-canvas-${i}" class="absolute left-0 top-0 w-[16px] h-full"></canvas>
+              <canvas class="volume-canvas absolute left-0 top-0 w-[16px] h-full" width="100" height="100"></canvas>
               <div class="inline-block text-center">
-                <div id="volume-${i}">100%</div>
-                <input id="volume-input-${i}" type="number" min="1" placeholder="1-100" class="input input-xs input-bordered w-16" value="100">
-                <button class="btn btn-xs" onclick="fadeAudio(${i})"}>Fade</button>
+                <div class="volume-value">100%</div>
+                <input id="volume-${i}" type="number" min="1" max="100" placeholder="1-100" class="input input-xs input-bordered w-16 mt-1" value="100">
+                <button class="btn btn-sm btn-neutral h-[24px] min-h-0 rounded mt-1" onclick="fadeAudio(${i})">Fade</button>
               </div>
             </div>
-            <div class="px-1">
-              <button class="badge badge-sm rounded w-[22px] badge-neutral">M</button>
-              <button class="badge badge-sm rounded w-[22px] badge-neutral">A</button>
-              <button class="badge badge-sm rounded w-[22px] badge-neutral">B</button>
+            <div class="px-1 mt-1">
+              <button class="bus-M btn btn-sm w-[22px] h-[20px] min-h-0 rounded" onclick="toggleAudioBus(${i}, 'M')">M</button>
+              <button class="bus-A btn btn-sm w-[22px] h-[20px] min-h-0 rounded" onclick="toggleAudioBus(${i}, 'A')">A</button>
+              <button class="bus-B btn btn-sm w-[22px] h-[20px] min-h-0 rounded" onclick="toggleAudioBus(${i}, 'B')">B</button>
             </div>
           </div>`;
     }
@@ -135,75 +135,19 @@ async function renderVmixWeb() {
         const mixerHeader = mixerElem.querySelector('.mixer-header');
         setColor(mixerHeader, input.muted === 'False', false, 'bg');
 
-        //      const isActive = i === info.active;
-        //      const isPreview = i === info.preview;
-        //      if (input.volume !== undefined) {
-        //          const meterF1 = Math.round(parseFloat(input.meterF1) * 100);
-        //          const meterF2 = Math.round(parseFloat(input.meterF2) * 100);
-        //          mixersHTML += `
-        //            <div class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100">
-        //              <div class="whitespace-nowrap overflow-hidden ${input.muted === 'False' ? 'bg-green-700' : 'bg-primary-content'} mb-1">
-        //                <span class="badge badge-neutral w-[24px] mx-1 my-1">${input.number}</span>${input.title}
-        //                  </div>
-        //              <div class="relative ">
-        //                <div class="inline-block h-24 w-1">
-        //                    <div class="bg-black" style="height: ${100 - meterF1}%"></div>
-        //                    <div class="bg-green-500" style="height: ${meterF1}%"></div>
-        //                </div>
-        //                <div class="inline-block h-24 w-1">
-        //                    <div class="bg-black" style="height: ${100 - meterF2}%"></div>
-        //                    <div class="bg-green-500" style="height: ${meterF2}%"></div>
-        //                </div>
-        //                <div class="inline-block -mt-5 text-center">
-        //                  ${Math.round(input.volume)}%
-        //                  <br />
-        //                  <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 0)" ${disabled ? 'disabled' : ''}>0%</button>
-        //                  <br />
-        //                  <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 91)" ${disabled ? 'disabled' : ''}>70%</button>
-        //                  <br />
-        //                  <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 100)" ${disabled ? 'disabled' : ''}>100%</button>
-        //                </div>
-        //              </div>
-        //              <div class="px-1">
-        //                  <span class="badge badge-sm rounded w-[22px] ${input.audiobusses.includes('M') ? 'bg-green-700' : 'badge-neutral'}">M</span>
-        //                  <span class="badge badge-sm rounded w-[22px] ${input.audiobusses.includes('A') ? 'bg-green-700' : 'badge-neutral'}">A</span>
-        //                  <span class="badge badge-sm rounded w-[22px] ${input.audiobusses.includes('B') ? 'bg-green-700' : 'badge-neutral'}">B</span>
-        //              </div>
-        //            </div>`;
-        //      }
+        const canvas = mixerElem.querySelector('.volume-canvas');
+        drawAudioLevels(canvas, input);
+
+        const volumeValue = mixerElem.querySelector('.volume-value');
+        volumeValue.innerHTML = Math.round(input.volume) + '%';
+
+        const busM = mixerElem.querySelector('.bus-M');
+        setColor(busM, input.audiobusses.includes('M'));
+        const busA = mixerElem.querySelector('.bus-A');
+        setColor(busA, input.audiobusses.includes('A'));
+        const busB = mixerElem.querySelector('.bus-B');
+        setColor(busB, input.audiobusses.includes('B'));
     });
-}
-
-function setColor(elem, active, preview = false, type = 'btn') {
-    // bg-neutral bg-success bg-warning
-    // btn-neutral btn-success btn-warning
-    if (active) {
-        elem.classList.remove(type + '-neutral');
-        elem.classList.add(type + '-success');
-        elem.classList.remove(type + '-warning');
-    } else if (preview) {
-        elem.classList.remove(type + '-neutral');
-        elem.classList.remove(type + '-success');
-        elem.classList.add(type + '-warning');
-    } else {
-        elem.classList.add(type + '-neutral');
-        elem.classList.remove(type + '-success');
-        elem.classList.remove(type + '-warning');
-    }
-}
-
-function hideVmixWeb() {
-    const vmixContainer = document.getElementById('vmix-container');
-    if (!vmixContainer.classList.contains('hidden')) {
-        vmixContainer.classList.add('hidden');
-    }
-}
-
-function showVmixWeb() {
-    const vmixContainer = document.getElementById('vmix-container');
-    if (vmixContainer.classList.contains('hidden')) {
-        vmixContainer.classList.remove('hidden');
-    }
 }
 
 function getMaster() {
@@ -219,6 +163,20 @@ function getMasterInfo() {
         return null;
     }
     return info;
+}
+
+function hideVmixWeb() {
+    const vmixContainer = document.getElementById('vmix-container');
+    if (!vmixContainer.classList.contains('hidden')) {
+        vmixContainer.classList.add('hidden');
+    }
+}
+
+function showVmixWeb() {
+    const vmixContainer = document.getElementById('vmix-container');
+    if (vmixContainer.classList.contains('hidden')) {
+        vmixContainer.classList.remove('hidden');
+    }
 }
 
 function getSlaves() {
@@ -250,6 +208,35 @@ function getInputProgress(input) {
     return `${formatTime(position)} / ${formatTime(duration)} / ${formatTime(remaining)}`;
 }
 
+function setColor(elem, active, preview = false, type = 'btn') {
+    // bg-neutral bg-success bg-warning
+    // btn-neutral btn-success btn-warning
+    if (active) {
+        elem.classList.remove(type + '-neutral');
+        elem.classList.add(type + '-success');
+        elem.classList.remove(type + '-warning');
+    } else if (preview) {
+        elem.classList.remove(type + '-neutral');
+        elem.classList.remove(type + '-success');
+        elem.classList.add(type + '-warning');
+    } else {
+        elem.classList.add(type + '-neutral');
+        elem.classList.remove(type + '-success');
+        elem.classList.remove(type + '-warning');
+    }
+}
+
+function drawAudioLevels(canvas, input) {
+    const ctx = canvas.getContext('2d');
+    const left = parseFloat(input.meterF1);
+    const right = parseFloat(input.meterF2);
+    ctx.clearRect(0, 0, 100, 100);
+    ctx.fillStyle = input.muted === 'True' ? '#0ca5e9' : '#2dd4bf';
+    ctx.fillRect(0, 100 - left * 100, 48, 100);
+    ctx.fillRect(52, 100 - right * 100, 100, 100);
+}
+
+// ===== vMix Web Commands =====
 function previewInput(inputNum) {
     masterSlaveExecute('Function=PreviewInput&Input=' + inputNum);
 }
@@ -264,8 +251,19 @@ function transition(type) {
     masterSlaveExecute('Function=' + type + inputParam);
 }
 
-function fadeAudio(inputNum, vol) {
-    masterSlaveExecute('Function=SetVolumeFade&Value=' + vol + ',3000&Input=' + inputNum);
+function fadeAudio(inputNum) {
+    const volume = document.getElementById('volume-' + inputNum).value;
+    masterSlaveExecute('Function=SetVolumeFade&Value=' + volume + ',3000&Input=' + inputNum);
+}
+
+function toggleAudioBus(inputNum, bus) {
+    const info = getMasterInfo();
+    if (info === null) {
+        return;
+    }
+    const on = info.inputs[inputNum].audiobusses.includes(bus);
+    const func = on ? 'AudioBusOff' : 'AudioBusOn';
+    masterSlaveExecute(`Function=${func}&Value=${bus}&Input=${inputNum}`);
 }
 
 function overlayInput(inputNum, overlayNum) {

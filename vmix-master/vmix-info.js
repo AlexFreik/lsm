@@ -68,39 +68,52 @@ function renderVmixInfo(box) {
     const active = info.inputs[info.active];
     const preview = info.inputs[info.preview];
     box.querySelector('.vmixInfo').innerHTML = `
-        <div class="mb-1">
-            <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline rounded">REC</span>
-            <span class="badge ${info.external ? 'badge-error' : ''} badge-outline rounded">EXT</span>
-            <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline rounded">STREAM</span>
-            <span class="badge ${info.fadeToBlack ? 'badge-error' : ''} badge-outline rounded">FTB</span>
-        </div>
+      <div class="mb-1">
+        <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline px-1 rounded">REC</span>
+        <span class="badge ${info.external ? 'badge-error' : ''} badge-outline px-1 rounded">EXT</span>
+        <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline px-1 rounded">STREAM</span>
+        <span class="badge ${info.fadeToBlack ? 'badge-error' : ''} badge-outline px-1 rounded">FTB</span>
         ${info.overlays
-            .map((o, i) => `<span>Overlay ${i}: ${o}</span>`)
+            .map(
+                (o, i) =>
+                    `<span class="badge badge-success badge-outline px-1 rounded"> ${i}: ${o}</span>`,
+            )
             .filter(Boolean)
-            .join('; ')}
-        <div class="flex gap-1 items-center">
-          <span class="badge badge-success w-[24px] h-[16px]">${active.number}</span>
-          ${active.duration !== '0' ? `<div class="text-xs w-[80px] inline-block text-center">${getShortInputProgress(active)}</div>` : ''}
-          <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(active.title)}</span>
-        </div>
-        <div class="flex gap-1 items-center">
-          <span class="badge badge-warning w-[24px] h-[16px] py-0">${preview.number}</span>
-          ${preview.duration !== '0' ? `<div class="text-xs w-[77px] inline-block text-center">${getShortInputProgress(preview)}</div>` : ''}
-          <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(preview.title)}</span>
-        </div>
+            .join('\n')}
+      </div>
+      <div class="flex gap-1 items-center">
+        <span class="badge badge-success w-[24px] h-[16px]">${active.number}</span>
+        ${active.duration !== '0' ? `<div class="text-xs w-[80px] inline-block text-center">${getShortInputProgress(active)}</div>` : ''}
+        <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(active.title)}</span>
+      </div>
+      <div class="flex gap-1 items-center">
+        <span class="badge badge-warning w-[24px] h-[16px] py-0">${preview.number}</span>
+        ${preview.duration !== '0' ? `<div class="text-xs w-[77px] inline-block text-center">${getShortInputProgress(preview)}</div>` : ''}
+        <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(preview.title)}</span>
+      </div>
+      <div class="divider my-0">Audio</div>
+      ${info.inputs
+          .filter((input) => input.muted === 'False')
+          .map(
+              (input) => `
+              <div class="flex gap-1">
+                <span class="badge badge-success h-[16px] py-0">${input.audiobusses}</span>
+                ${input.number}.
+                <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(input.title)}</span>
+              </div>
+              `,
+          )
+          .join('')}
 
-        <div class="mt-1 font-bold">Inputs</div>
-        <ol>
-            ${info.inputs
-                .map(
-                    (input, j) =>
-                        `<li>
-                            <span class="text-secondary">${j}.</span>&nbsp;${input.title}
-                        </li>`,
-                )
-                .join('')}
-        </ol>
-    `;
+      <div class="divider my-0">Inputs</div>
+      <ol>
+        ${info.inputs
+            .map(
+                (input, i) =>
+                    `<li><span class="text-secondary">${i}.</span>&nbsp;${input.title}</li>`,
+            )
+            .join('')}
+      </ol>`;
 }
 
 function formatTimeMMSS(ms) {
@@ -115,7 +128,7 @@ function formatTimeMMSS(ms) {
 function getShortInputProgress(input) {
     if (input.duration === '0') return '';
 
-    console.assert(['Video', 'AudioFile', 'Photos'].includes(input.type));
+    console.assert(['Video', 'AudioFile', 'Photos'].includes(input.type), input.type);
     const duration = parseInt(input.duration);
     const position = parseInt(input.position);
     const remaining = duration - position;
