@@ -14,23 +14,6 @@
     <script src="./script.js" defer></script>
   </head>
   <body class="bg-base-100 text-base-content">
-    <div class="flex flex-col items-center">
-      <div class="flex w-full flex-wrap p-1" id="boxes"></div>
-    </div>
-
-    <div class="flex flex-col items-center">
-      <div class="flex w-full flex-wrap p-2">
-        <div class="flex min-w-full items-center justify-center py-5">
-          <button id="add-box" class="btn btn-outline btn-secondary flex">Add Instance</button>
-          <button id="refresh-all" class="btn btn-outline btn-secondary mx-3 flex">Refresh All</button>
-          <label class="input input-bordered input-secondary flex items-center gap-2">
-            Refresh Rate (sec)
-            <input id="refresh-rate" class="url-param w-12" name="refreshRate" type="number" min="1" value="5" placeholder="sec" />
-          </label>
-        </div>
-      </div>
-    </div>
-
     <div class="navbar bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">vMix Master</a>
@@ -45,7 +28,66 @@
       </div>
     </div>
 
-    <div class="collapse bg-base-200">
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap p-2">
+        <div class="flex min-w-full items-center justify-center">
+          <button id="add-box" class="btn btn-outline btn-secondary flex">Add Instance</button>
+          <button id="refresh-all" class="btn btn-outline btn-secondary mx-3 flex">Refresh All</button>
+          <label class="input input-bordered input-secondary flex items-center gap-2">
+            Refresh Rate (sec)
+            <input id="refresh-rate" class="url-param w-12" name="refreshRate" type="number" min="1" value="5" placeholder="sec" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap p-1" id="boxes"></div>
+    </div>
+
+    <div class="collapse mt-3 bg-base-200">
+      <input id="vmixWeb" class="url-param" type="checkbox" />
+      <div class="collapse-title text-xl font-medium">vMix Web</div>
+      <div class="collapse-content px-1">
+        <div class="mx-auto mb-5 flex w-[500px] items-center gap-1 px-5">
+          <span class="text-md">Master:</span>
+          <input id="master" type="number" min="1" name="master" placeholder="e.g. 1" class="url-param input input-xs input-bordered w-16" />
+          <span class="text-md ms-3">Slaves:</span>
+          <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
+        </div>
+
+        <div id="vmix-container" class="pb-5">
+          <div
+            id="vmix-screens"
+            class="wrap mx-auto mt-3 grid h-[80px] w-[995px] grid-cols-[400px_90px_90px_400px] grid-rows-[25px_25px_20px] gap-1 text-center">
+            <div id="preview-title" class="col-span-1 row-span-2 mr-1 bg-warning text-lg font-semibold text-primary-content"></div>
+            <div class="col-span-1 row-span-1">
+              <button class="btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('Stinger1')">Stinger 1</button>
+            </div>
+            <div class="col-span-1 row-span-1">
+              <button class="btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('Fade')">Fade</button>
+            </div>
+            <div id="active-title" class="col-span-1 row-span-2 ml-1 bg-success text-lg font-semibold text-primary-content"></div>
+            <div class="col-span-1 row-span-1">
+              <button class="btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('Cut')">Cut</button>
+            </div>
+            <div class="col-span-1 row-span-1">
+              <button class="ftb-btn btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('FadeToBlack')">FTB</button>
+            </div>
+            <div id="preview-progress" class="col-span-1 row-span-1"></div>
+            <div class="col-span-1 row-span-1"></div>
+            <div class="col-span-1 row-span-1"></div>
+            <div id="active-progress" class="col-span-1 row-span-1"></div>
+          </div>
+
+          <div id="vmix-inputs" class="mt-2"></div>
+
+          <div id="vmix-mixers" class="mt-5"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse mt-3 bg-base-200">
       <input id="customCommands" class="url-param" type="checkbox" />
       <div class="collapse-title text-xl font-medium">Custom Commands</div>
       <div id="custom-commands-container" class="collapse-content">
@@ -165,45 +207,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="collapse mt-3 bg-base-200 pb-5">
-      <input id="vmixWeb" class="url-param" type="checkbox" />
-      <div class="collapse-title text-xl font-medium">vMix Web</div>
-      <div class="collapse-content">
-        <div class="mx-auto my-10 flex w-[500px] items-center gap-1 px-5">
-          <span class="text-md">Master:</span>
-          <input id="master" type="number" min="1" name="master" placeholder="e.g. 1" class="url-param input input-xs input-bordered w-16" />
-          <span class="text-md ms-3">Slaves:</span>
-          <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
-        </div>
-
-        <div id="vmix-container">
-          <div id="vmix-screens" class="wrap mx-auto mt-5 grid h-[200px] w-[620px] grid-cols-[250px_120px_250px] grid-rows-5 gap-1 text-center">
-            <div id="preview-title" class="col-span-1 row-span-4 bg-warning text-lg font-semibold text-primary-content"></div>
-            <div class="col-span-1 row-span-1">
-              <button class="btn btn-neutral btn-sm w-24" onclick="transition('Stinger1')">Stinger 1</button>
-            </div>
-            <div id="active-title" class="col-span-1 row-span-4 bg-success text-lg font-semibold text-primary-content"></div>
-            <div class="col-span-1 row-span-1">
-              <button class="btn btn-neutral btn-sm w-24" onclick="transition('Fade')">Fade</button>
-            </div>
-            <div class="col-span-1 row-span-1">
-              <button class="btn btn-neutral btn-sm w-24" onclick="transition('Cut')">Cut</button>
-            </div>
-            <div class="col-span-1 row-span-1">
-              <button class="ftb-btn btn btn-neutral btn-sm w-24" onclick="transition('FadeToBlack')">FTB</button>
-            </div>
-            <div id="preview-video-progress" class="col-span-1 row-span-1"></div>
-            <div class="col-span-1 row-span-1"></div>
-            <div id="active-video-progress" class="col-span-1 row-span-1"></div>
-          </div>
-
-          <div id="vmix-inputs"></div>
-
-          <div id="vmix-mixers" class="mt-5"></div>
         </div>
       </div>
     </div>

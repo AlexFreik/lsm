@@ -22,31 +22,30 @@ function prerenderVmixWeb() {
 
         mixersHTML += `
           <div id="mixer-${i}" class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100 hidden">
-            <div class="whitespace-nowrap overflow-hidden bg-primary-content mb-1">
-              <span class="badge badge-neutral w-[24px] mx-1 my-1">${i}</span></div>
-            <div class="relative ">
-              <div class="inline-block h-24 w-1">
+            <div class="mixer-header whitespace-nowrap overflow-hidden p-0">
+              <span class="badge badge-neutral w-[24px] ml-1 mr-0 my-1">${i}</span>
+              <span class="mixer-title whitespace-nowrap overflow-hidden text-sm p-0"></span>
+            </div>
+            <div class="pl-[16px]">
+              <div class="inline-block h-24 w-1 hidden">
                 <div class="bg-black" style="height: 100%"></div>
                 <div class="bg-success" style="height: 0%"></div>
               </div>
-              <div class="inline-block h-24 w-1">
+              <div class="inline-block h-24 w-1 hidden">
                 <div class="bg-black" style="height: 100%"></div>
                 <div class="bg-success" style="height: 0%"></div>
               </div>
-              <div class="inline-block -mt-5 text-center">
-                100%
-                <br />
-                <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 0)"}>0%</button>
-                <br />
-                <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 91)"}>69%</button>
-                <br />
-                <button class="btn btn-xs btn-outline" onclick="fadeAudio(${i}, 100)"}>100%</button>
+              <canvas id="volume-canvas-${i}" class="absolute left-0 top-0 w-[16px] h-full"></canvas>
+              <div class="inline-block text-center">
+                <div id="volume-${i}">100%</div>
+                <input id="volume-input-${i}" type="number" min="1" placeholder="1-100" class="input input-xs input-bordered w-16" value="100">
+                <button class="btn btn-xs" onclick="fadeAudio(${i})"}>Fade</button>
               </div>
             </div>
             <div class="px-1">
-              <span class="badge badge-sm rounded w-[22px] badge-neutral">M</span>
-              <span class="badge badge-sm rounded w-[22px] badge-neutral">A</span>
-              <span class="badge badge-sm rounded w-[22px] badge-neutral">B</span>
+              <button class="badge badge-sm rounded w-[22px] badge-neutral">M</button>
+              <button class="badge badge-sm rounded w-[22px] badge-neutral">A</button>
+              <button class="badge badge-sm rounded w-[22px] badge-neutral">B</button>
             </div>
           </div>`;
     }
@@ -78,9 +77,13 @@ async function renderVmixWeb() {
 
     const active = info.inputs[info.active];
     const preview = info.inputs[info.preview];
+
     const screensElem = document.getElementById('vmix-screens');
     document.getElementById('active-title').innerHTML = active.title;
     document.getElementById('preview-title').innerHTML = preview.title;
+    document.getElementById('active-progress').innerHTML = getInputProgress(active);
+    document.getElementById('preview-progress').innerHTML = getInputProgress(preview);
+
     const ftbBtn = screensElem.querySelector('.ftb-btn');
     if (info.fadeToBlack) {
         ftbBtn.classList.remove('btn-neutral');
@@ -94,6 +97,7 @@ async function renderVmixWeb() {
     for (let i = inputLength; i <= INPUTS_SIZE; i++) {
         document.getElementById('input-' + i).classList.add('hidden');
     }
+
     info.inputs.forEach((input, i) => {
         const inputElem = document.getElementById('input-' + i);
         inputElem.classList.remove('hidden');
@@ -112,27 +116,27 @@ async function renderVmixWeb() {
 
         const audioBtn = inputElem.querySelector('.audio-btn');
         setColor(audioBtn, input.muted === 'False');
+        if (input.volume === undefined) {
+            audioBtn.classList.add('invisible');
+        } else {
+            audioBtn.classList.remove('invisible');
+        }
         const loopBtn = inputElem.querySelector('.loop-btn');
         setColor(loopBtn, input.loop === 'True');
 
+        const mixerElem = document.getElementById('mixer-' + i);
+        if (input.volume === undefined) {
+            mixerElem.classList.add('hidden');
+            return;
+        }
+        mixerElem.classList.remove('hidden');
+
+        mixerElem.querySelector('.mixer-title').innerHTML = input.title;
+        const mixerHeader = mixerElem.querySelector('.mixer-header');
+        setColor(mixerHeader, input.muted === 'False', false, 'bg');
+
         //      const isActive = i === info.active;
         //      const isPreview = i === info.preview;
-        //      const style = isActive ? 'bg-green-700' : isPreview ? 'bg-yellow-600' : 'bg-neutral';
-        //      inputsHTML += `
-        //          <div class="inline-block mx-1 my-1 border border-neutral">
-        //              <div class="${style} w-64 whitespace-nowrap overflow-hidden flex ${disabled ? '"' : `cursor-pointer" disabled onclick="previewInput(${i})"`}">
-        //                  <span class="badge badge-neutral mx-1 my-1 w-[24px]">${input.number}</span>
-        //                  ${getResponsiveTitle(input.title)}</span>
-        //              </div>
-        //              <div class="m-1">
-        //              <span class="badge rounded ${info.overlays[1] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" : onclick="overlayInput(${i}, 1)"`}>1</span>
-        //              <span class="badge rounded ${info.overlays[2] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" onclick="overlayInput(${i}, 2)"`}>2</span>
-        //              <span class="badge rounded ${info.overlays[3] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" onclick="overlayInput(${i}, 3)"`}>3</span>
-        //              <span class="badge rounded ${info.overlays[4] === i ? 'bg-green-700' : 'badge-neutral'} w-[22px] ${disabled ? '"' : `cursor-pointer" onclick="overlayInput(${i}, 4)"`}>4</span>
-        //              <span class="badge rounded ${input.muted === 'False' ? 'bg-green-700' : 'badge-neutral'} ${disabled ? '"' : `cursor-pointer" onclick="muteInput(${i}, ${input.muted === 'False'})"`}>AUDIO</span>
-        //              <span class="badge rounded ${input.loop === 'True' ? 'bg-green-700' : 'badge-neutral'} ${disabled ? '"' : `cursor-pointer" onclick="loopInput(${i}, ${input.loop === 'True'})"`}>LOOP</span>
-        //              </div>
-        //          </div>`;
         //      if (input.volume !== undefined) {
         //          const meterF1 = Math.round(parseFloat(input.meterF1) * 100);
         //          const meterF2 = Math.round(parseFloat(input.meterF2) * 100);
@@ -170,19 +174,21 @@ async function renderVmixWeb() {
     });
 }
 
-function setColor(elem, active, preview = false) {
+function setColor(elem, active, preview = false, type = 'btn') {
+    // bg-neutral bg-success bg-warning
+    // btn-neutral btn-success btn-warning
     if (active) {
-        elem.classList.remove('btn-neutral');
-        elem.classList.add('btn-success');
-        elem.classList.remove('btn-warning');
+        elem.classList.remove(type + '-neutral');
+        elem.classList.add(type + '-success');
+        elem.classList.remove(type + '-warning');
     } else if (preview) {
-        elem.classList.remove('btn-neutral');
-        elem.classList.remove('btn-success');
-        elem.classList.add('btn-warning');
+        elem.classList.remove(type + '-neutral');
+        elem.classList.remove(type + '-success');
+        elem.classList.add(type + '-warning');
     } else {
-        elem.classList.add('btn-neutral');
-        elem.classList.remove('btn-success');
-        elem.classList.remove('btn-warning');
+        elem.classList.add(type + '-neutral');
+        elem.classList.remove(type + '-success');
+        elem.classList.remove(type + '-warning');
     }
 }
 

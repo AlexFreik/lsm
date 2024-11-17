@@ -2,11 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --vmix-active: 0.53 0.14 150.06;
-    --vmix-preview: 0.68 0.14 75.82;
-}
-
 @keyframes fadeInRight {
     from {
         opacity: 0;
@@ -36,4 +31,8 @@
 
 .btn-success:disabled {
     background-color: oklch(var(--su) / var(--tw-bg-opacity));
+}
+
+.mixer-header.bg-success {
+    @apply font-semibold text-primary-content;
 }
