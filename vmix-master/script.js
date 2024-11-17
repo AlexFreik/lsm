@@ -74,6 +74,16 @@ function setVmixButtons() {
         });
 }
 
+function setMixerVisibility() {
+    const show = document.getElementById('show-mixer').checked;
+    const mixerElem = document.getElementById('vmix-mixers');
+    if (show) {
+        mixerElem.classList.remove('hidden');
+    } else {
+        mixerElem.classList.add('hidden');
+    }
+}
+
 function updateRefreshRates() {
     const val1 = document.getElementById('refresh-rate').value;
     refreshRate = val1 === '' ? -1 : Math.max(1, val1);
@@ -88,6 +98,7 @@ const vmixInfos = [];
     showStoredLogs();
     prerenderVmixWeb();
     setVmixButtons();
+    setMixerVisibility();
 
     document
         .querySelectorAll('.url-param')
@@ -100,10 +111,10 @@ const vmixInfos = [];
 
     updateRefreshRates();
     document.getElementById('refresh-rate').addEventListener('change', updateRefreshRates);
-
     refreshInstances();
 
     document.getElementById('view-mode').addEventListener('click', setVmixButtons);
+    document.getElementById('show-mixer').addEventListener('click', setMixerVisibility);
 
     const executeBtn = document.getElementById('execute-btn');
     executeBtn.onclick = () => customExecution(document.getElementById('rawRequest').value);

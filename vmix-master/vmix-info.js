@@ -16,6 +16,9 @@ class VmixInfo {
         jsonData.vmix.overlays.overlay
             .filter((o) => o['#text'] !== undefined)
             .forEach((o) => (this.overlays[Number(o['@attributes'].number)] = Number(o['#text'])));
+
+        this.audio = {};
+        Object.entries(jsonData.vmix.audio).forEach(([k, v]) => (this.audio[k] = v['@attributes']));
     }
 }
 
