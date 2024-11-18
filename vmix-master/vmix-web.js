@@ -2,89 +2,39 @@ const INPUTS_SIZE = 100;
 
 function prerenderVmixWeb() {
     let inputsHTML = '';
-    let mixersHTML = `
-          <div id="mixer-master" class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100">
-            <div class="mixer-header p-0 bg-success text-center">
-              <span class="badge my-1">Master</span>
-            </div>
-            <div class="relative pl-[18px]">
-              <canvas class="volume-canvas absolute left-0 top-0 w-[16px] h-full" width="100" height="100"></canvas>
-              <div class="inline-block text-center ml-1">
-                <div class="volume-value mt-1">&nbsp;</div>
+    let mixersHTML = ``;
+    ['M', 'A', 'B'].forEach(
+        (bus) =>
+            (mixersHTML += `
+      <div id="mixer-${bus}" class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100 hidden">
+        <div class="mixer-header p-0 bg-success text-center">
+          <span class="badge my-1">${getBusName(bus, true)}</span>
+        </div>
+        <div class="relative pl-[18px]">
+          <canvas class="volume-canvas absolute left-0 top-0 w-[16px] h-full" width="100" height="100"></canvas>
+          <div class="inline-block text-center ml-1">
+            <div class="volume-value mt-1">&nbsp;</div>
 
-                <div class="flex items-center gap-1 mt-2">
-                  <input id="volume-M" type="text" placeholder="Vol" class="input input-xs input-bordered w-[40px]" value="100">
-                  <button class="btn btn-sm btn-neutral w-[24px] h-[24px] min-h-0 rounded p-1" onclick="setBusVolume('M')">
-                    <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-                  </button>
-                </div>
-
-                <div class="flex items-center gap-1 mt-1">&nbsp;</div>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2 w-fit mx-auto px-1 mt-2 h-[20px]">
-              <button class="mute-btn btn btn-sm w-[22px] h-[22px] min-h-0 rounded p-0" onclick="toggleBusAudio('M')">
-                <svg class="fill-current w-4 h-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/></svg>
+            <div class="flex items-center gap-1 mt-2">
+              <input id="volume-${bus}" type="text" placeholder="Vol" class="input input-xs input-bordered w-[40px]" value="100">
+              <button class="btn btn-sm btn-neutral w-[24px] h-[24px] min-h-0 rounded p-1" onclick="setBusVolume('${bus}')">
+                <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
               </button>
             </div>
+
+            <div class="flex items-center gap-1 mt-1">&nbsp;</div>
           </div>
+        </div>
 
-          <div id="mixer-busA" class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100">
-            <div class="mixer-header p-0 bg-success text-center">
-              <span class="badge my-1">Bus A</span>
-            </div>
+        <div class="flex items-center gap-2 w-fit mx-auto px-1 mt-2 h-[20px]">
+          <button class="mute-btn btn btn-sm w-[22px] h-[22px] min-h-0 rounded p-0" onclick="toggleBusAudio('${bus}')">
+            <svg class="fill-current w-4 h-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/></svg>
+          </button>
+          ${bus === 'M' ? '' : `<button class="bus-M btn btn-sm w-[22px] h-[20px] min-h-0 rounded" onclick="toggleSendToMaster('${bus}')">M</button>`}
+        </div>
+      </div>`),
+    );
 
-            <div class="relative pl-[18px]">
-              <canvas class="volume-canvas absolute left-0 top-0 w-[16px] h-full" width="100" height="100"></canvas>
-              <div class="inline-block text-center ml-1">
-                <div class="volume-value mt-1">&nbsp;</div>
-
-                <div class="flex items-center gap-1 mt-2">
-                  <input id="volume-A" type="text" placeholder="Vol" class="input input-xs input-bordered w-[40px]" value="100">
-                  <button class="btn btn-sm btn-neutral w-[24px] h-[24px] min-h-0 rounded p-1" onclick="setBusVolume('A')">
-                    <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-                  </button>
-                </div>
-                <div class="flex items-center gap-1 mt-1">&nbsp;</div>
-              </div>
-            </div>
-
-            <div class="flex items-center gap-2 w-fit mx-auto px-1 mt-2 h-[22px]">
-              <button class="mute-btn btn btn-sm w-[22px] h-[22px] min-h-0 rounded p-0" onclick="toggleBusAudio('A')">
-                <svg class="fill-current w-4 h-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/></svg>
-              </button>
-              <button class="bus-M btn btn-sm w-[22px] h-[20px] min-h-0 rounded" onclick="toggleSendToMaster('A')">M</button>
-            </div>
-          </div>
-
-          <div id="mixer-busB" class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100">
-            <div class="mixer-header p-0 bg-success text-center">
-              <span class="badge my-1">Bus B</span>
-            </div>
-            <div class="relative pl-[18px]">
-              <canvas class="volume-canvas absolute left-0 top-0 w-[16px] h-full" width="100" height="100"></canvas>
-              <div class="inline-block text-center ml-1">
-                <div class="volume-value mt-1">&nbsp;</div>
-
-                <div class="flex items-center gap-1 mt-2">
-                  <input id="volume-B" type="text" placeholder="Vol" class="input input-xs input-bordered w-[40px]" value="100">
-                  <button class="btn btn-sm btn-neutral w-[24px] h-[24px] min-h-0 rounded p-1" onclick="setBusVolume('B')">
-                    <svg class="fill-current w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-                  </button>
-                </div>
-                <div class="flex items-center gap-1 mt-1">&nbsp;</div>
-              </div>
-
-            </div>
-            <div class="flex items-center gap-2 w-fit mx-auto px-1 mt-2 h-[24px]">
-              <button class="mute-btn btn btn-sm w-[22px] h-[22px] min-h-0 rounded p-0" onclick="toggleBusAudio('B')">
-                <svg class="fill-current w-4 h-4 inline-block" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><path d="M533.6 32.5C598.5 85.2 640 165.8 640 256s-41.5 170.7-106.4 223.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C557.5 398.2 592 331.2 592 256s-34.5-142.2-88.7-186.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM473.1 107c43.2 35.2 70.9 88.9 70.9 149s-27.7 113.8-70.9 149c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C475.3 341.3 496 301.1 496 256s-20.7-85.3-53.2-111.8c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zm-60.5 74.5C434.1 199.1 448 225.9 448 256s-13.9 56.9-35.4 74.5c-10.3 8.4-25.4 6.8-33.8-3.5s-6.8-25.4 3.5-33.8C393.1 284.4 400 271 400 256s-6.9-28.4-17.7-37.3c-10.3-8.4-11.8-23.5-3.5-33.8s23.5-11.8 33.8-3.5zM301.1 34.8C312.6 40 320 51.4 320 64l0 384c0 12.6-7.4 24-18.9 29.2s-25 3.1-34.4-5.3L131.8 352 64 352c-35.3 0-64-28.7-64-64l0-64c0-35.3 28.7-64 64-64l67.8 0L266.7 40.1c9.4-8.4 22.9-10.4 34.4-5.3z"/></svg>
-              </button>
-              <button class="bus-M btn btn-sm w-[22px] h-[20px] min-h-0 rounded" onclick="toggleSendToMaster('B')">M</button>
-            </div>
-          </div>
-        `;
     for (let i = 1; i <= INPUTS_SIZE; i++) {
         inputsHTML += `
           <div id="input-${i}" class="inline-block mx-1 my-1 border border-neutral hidden">
@@ -187,17 +137,25 @@ async function renderVmixWeb() {
         document.getElementById('input-' + i).classList.add('hidden');
     }
 
-    Object.entries(info.audio).forEach(([k, v]) => {
-        const mixerElem = document.getElementById('mixer-' + k);
+    ['M', 'A', 'B'].forEach((bus) => {
+        const mixerElem = document.getElementById('mixer-' + bus);
+        const busInfo = info.audio[getBusName(bus)];
+        if (busInfo === undefined) {
+            mixerElem.classList.add('hidden');
+            return;
+        }
+        const busHeader = mixerElem.querySelector('.mixer-header');
+        setColor(busHeader, busInfo.muted === 'False', false, 'bg');
+        mixerElem.classList.remove('hidden');
         const volumeElem = mixerElem.querySelector('.volume-value');
-        volumeElem.innerHTML = Math.round(v.volume) + '%';
+        volumeElem.innerHTML = Math.round(busInfo.volume) + '%';
         const volumeCanvas = mixerElem.querySelector('.volume-canvas');
-        drawAudioLevels(volumeCanvas, v);
+        drawAudioLevels(volumeCanvas, busInfo);
         const muteBtn = mixerElem.querySelector('.mute-btn');
-        setColor(muteBtn, v.muted === 'False');
-        if (k !== 'master') {
+        setColor(muteBtn, busInfo.muted === 'False');
+        if (bus !== 'M') {
             const sendToMasterBtn = mixerElem.querySelector('.bus-M');
-            setColor(sendToMasterBtn, v.sendToMaster === 'True');
+            setColor(sendToMasterBtn, busInfo.sendToMaster === 'True');
         }
     });
 
@@ -285,6 +243,12 @@ function showVmixWeb() {
 function getSlaves() {
     const slaves = document.getElementById('slaves').value;
     return parseNumbers(slaves);
+}
+
+function getBusName(bus, capital = false) {
+    const name = { M: 'master', A: 'busA', B: 'busB' }[bus];
+    console.assert(name !== undefined, bus);
+    return capital ? name.charAt(0).toUpperCase() + name.slice(1) : name;
 }
 
 function formatTime(ms) {
@@ -384,8 +348,7 @@ function toggleSendToMaster(bus) {
     if (info === null) {
         return;
     }
-    const fullName = { M: 'master', A: 'busA', B: 'busB' };
-    const on = info.audio[fullName[bus]].sendToMaster === 'True';
+    const on = info.audio[getBusName(bus)].sendToMaster === 'True';
     masterSlaveExecute(`Function=BusXSendToMaster${on ? 'Off' : 'On'}&Value=${bus}`);
 }
 
@@ -396,11 +359,7 @@ function toggleBusAudio(bus) {
     }
     const fullName = { M: 'master', A: 'busA', B: 'busB' };
     const on = info.audio[fullName[bus]].muted === 'False';
-    if (bus === 'M') {
-        masterSlaveExecute(`Function=MasterAudio${on ? 'Off' : 'On'}`);
-    } else {
-        masterSlaveExecute(`Function=Bus${bus}Audio${on ? 'Off' : 'On'}`);
-    }
+    masterSlaveExecute(`Function=${getBusName(bus, true)}Audio${on ? 'Off' : 'On'}`);
 }
 
 function setBusVolume(bus) {
@@ -409,11 +368,7 @@ function setBusVolume(bus) {
         return;
     }
     const value = document.getElementById('volume-' + bus).value;
-    if (bus === 'M') {
-        masterSlaveExecute(`Function=SetMasterVolume&Value=${value}`);
-    } else {
-        masterSlaveExecute(`Function=SetBus${bus}Volume&Value=${value}`);
-    }
+    masterSlaveExecute(`Function=Set${getBusName(bus, true)}Volume&Value=${value}`);
 }
 
 function overlayInput(inputNum, overlayNum) {
