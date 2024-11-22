@@ -2,10 +2,10 @@ const INPUTS_SIZE = 100;
 
 function prerenderVmixWeb() {
     let inputsHTML = '';
-    let mixersHTML = ``;
+    let mixerHTML = ``;
     ['M', 'A', 'B'].forEach(
         (bus) =>
-            (mixersHTML += `
+            (mixerHTML += `
       <div id="mixer-${bus}" class="inline-block w-[95px] border border-neutral pb-1 m-1 bg-base-100 hidden">
         <div class="mixer-header p-0 bg-success text-center">
           <span class="badge my-1">${getBusName(bus, true)}</span>
@@ -52,7 +52,7 @@ function prerenderVmixWeb() {
             </div>
           </div>`;
 
-        mixersHTML += `
+        mixerHTML += `
           <div id="mixer-${i}" class="inline-block w-[120px] border border-neutral pb-1 m-1 bg-base-100 hidden">
             <div class="mixer-header whitespace-nowrap overflow-hidden p-0">
               <span class="badge badge-neutral w-[24px] ml-1 mr-0 my-1">${i}</span>
@@ -90,7 +90,7 @@ function prerenderVmixWeb() {
     }
 
     document.getElementById('vmix-inputs').innerHTML = inputsHTML;
-    document.getElementById('vmix-mixers').innerHTML = mixersHTML;
+    document.getElementById('vmix-mixer').innerHTML = mixerHTML;
 }
 
 async function renderVmixWeb() {
@@ -245,19 +245,12 @@ function getSlaves() {
     return parseNumbers(slaves);
 }
 
-function getBusName(bus, capital = false) {
-    const name = { M: 'master', A: 'busA', B: 'busB' }[bus];
-    console.assert(name !== undefined, bus);
-    return capital ? name.charAt(0).toUpperCase() + name.slice(1) : name;
-}
-
 function formatTime(ms) {
     const totalSeconds = Math.floor(ms / 1000);
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
-    // Pad hours, minutes, and seconds with leading zero if needed
     const pad = (num) => String(num).padStart(2, '0');
     return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
@@ -398,6 +391,7 @@ function masterSlaveExecute(command) {
     const slaves = getSlaves();
     slaves.unshift(master);
     slaves
+        .filter((val, i, arr) => arr.indexOf(val) === i)
         .map((num) => getBoxHost(getBox(num)))
         .forEach((host) => execute(getApiUrl(host, command)));
 }

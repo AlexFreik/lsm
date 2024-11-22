@@ -112,7 +112,7 @@ function updateUrlParams() {
 
 // ===== Logging Utils =====
 function show(header, msg, isError = false) {
-    const logs = document.getElementById('logs');
+    const logs = document.querySelector('.logs');
     logs.innerHTML =
         `
         <div class="divider mb-1 mt-3 text-secondary">

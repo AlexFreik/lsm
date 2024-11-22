@@ -13,13 +13,6 @@ function initBoxes() {
     });
 }
 
-function customExecution(request) {
-    const include = parseNumbers(document.getElementById('include').value);
-    getBoxes()
-        .filter((box) => include.includes(getBoxNumber(box)))
-        .forEach((box) => execute(getApiUrl(getBoxHost(box), request)));
-}
-
 async function refreshInstance(box) {
     const num = getBoxNumber(box);
     const host = getBoxHost(box);
@@ -51,9 +44,9 @@ async function refreshInstances(cnt = 0) {
 }
 
 function setVmixButtons() {
-    const disabled = document.getElementById('view-mode').checked;
+    const disabled = !document.getElementById('view-mode').checked;
     document
-        .getElementById('custom-commands-container')
+        .querySelector('.custom-functions-container')
         .querySelectorAll('button')
         .forEach((btn) => {
             if (disabled) {
@@ -74,14 +67,18 @@ function setVmixButtons() {
         });
 }
 
-function setMixerVisibility() {
-    const show = document.getElementById('show-mixer').checked;
-    const mixerElem = document.getElementById('vmix-mixers');
-    if (show) {
-        mixerElem.classList.remove('hidden');
-    } else {
-        mixerElem.classList.add('hidden');
-    }
+function showElements() {
+    document.querySelectorAll('.show-toggle').forEach((elem) => {
+        const name = elem.id.slice('show-'.length);
+        const show = elem.checked;
+        document.querySelectorAll('.' + name).forEach((e) => {
+            if (show) {
+                e.classList.remove('hidden');
+            } else {
+                e.classList.add('hidden');
+            }
+        });
+    });
 }
 
 function updateRefreshRates() {
@@ -95,14 +92,19 @@ const vmixInfos = [];
 (() => {
     updateDocumentConfig();
     initBoxes();
-    showStoredLogs();
+    renderCustomFunctions();
     prerenderVmixWeb();
+    showStoredLogs();
     setVmixButtons();
-    setMixerVisibility();
+    showElements();
 
     document
         .querySelectorAll('.url-param')
         .forEach((input) => input.addEventListener('change', updateUrlParams));
+
+    document
+        .querySelectorAll('.show-toggle')
+        .forEach((elem) => elem.addEventListener('click', showElements));
 
     document.getElementById('add-box').addEventListener('click', () => addBox());
     document
@@ -114,32 +116,6 @@ const vmixInfos = [];
     refreshInstances();
 
     document.getElementById('view-mode').addEventListener('click', setVmixButtons);
-    document.getElementById('show-mixer').addEventListener('click', setMixerVisibility);
-
-    const executeBtn = document.getElementById('execute-btn');
-    executeBtn.onclick = () => customExecution(document.getElementById('rawRequest').value);
-
-    document.querySelectorAll('.function-btn').forEach((btn) => {
-        btn.onclick = () => {
-            const container = btn.parentElement.parentElement;
-            const inputParam = container.querySelector('.input-param');
-            const valueParam = container.querySelector('.value-param');
-            const volumeParam = container.querySelector('.volume-param');
-            const msParam = container.querySelector('.ms-param');
-
-            let request = 'Function=' + btn.innerHTML;
-            if (inputParam?.value) {
-                request += '&Input=' + inputParam.value;
-            }
-            if (valueParam?.value) {
-                request += '&Value=' + valueParam.value;
-            }
-            if (volumeParam?.value && msParam?.value) {
-                request += '&Value=' + volumeParam.value + ',' + msParam.value;
-            }
-            customExecution(request);
-        };
-    });
 
     new Sortable(document.getElementById('boxes'), {
         animation: 150,

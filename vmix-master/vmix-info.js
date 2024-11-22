@@ -72,14 +72,14 @@ function renderVmixInfo(box) {
     const preview = info.inputs[info.preview];
     box.querySelector('.vmixInfo').innerHTML = `
       <div class="mb-1">
-        <span class="badge ${info.recording ? 'badge-error' : ''} badge-outline px-1 rounded">REC</span>
-        <span class="badge ${info.external ? 'badge-error' : ''} badge-outline px-1 rounded">EXT</span>
-        <span class="badge ${info.stream ? 'badge-error' : ''} badge-outline px-1 rounded">STREAM</span>
-        <span class="badge ${info.fadeToBlack ? 'badge-error' : ''} badge-outline px-1 rounded">FTB</span>
+        ${info.recording ? '<span class="badge badge-error badge-outline px-1 rounded">REC</span>' : ''}
+        ${info.external ? '<span class="badge badge-error badge-outline px-1 rounded">EXT</span>' : ''}
+        ${info.stream ? '<span class="badge badge-error badge-outline px-1 rounded">STREAM</span>' : ''}
+         ${info.fadeToBlack ? '<span class="badge badge-error badge-outline px-1 rounded">FTB</span>' : ''}
         ${info.overlays
             .map(
                 (o, i) =>
-                    `<span class="badge badge-success badge-outline px-1 rounded"> ${i}: ${o}</span>`,
+                    `<span class="badge badge-success badge-outline px-1 rounded"> ${'<'.repeat(i)}${o}${'>'.repeat(i)}</span>`,
             )
             .filter(Boolean)
             .join('\n')}
@@ -91,17 +91,32 @@ function renderVmixInfo(box) {
       </div>
       <div class="flex gap-1 items-center">
         <span class="badge badge-warning w-[24px] h-[16px] py-0">${preview.number}</span>
-        ${preview.duration !== '0' ? `<div class="text-xs w-[77px] inline-block text-center">${getShortInputProgress(preview)}</div>` : ''}
+        ${preview.duration !== '0' ? `<div class="text-xs min-w-[77px] inline-block text-center">${getShortInputProgress(preview)}</div>` : ''}
         <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(preview.title)}</span>
       </div>
       <div class="divider my-0">Audio</div>
+      ${['M', 'A', 'B']
+          .map((bus) => {
+              const busInfo = info.audio[getBusName(bus)];
+              if (busInfo === undefined || busInfo.muted === 'True') {
+                  return '';
+              }
+              return `
+            <div class="gap-1 inline-block w-fit">
+                <span class="${busInfo.sendToMaster === 'True' ? 'text-error' : 'text-secondary'}">${bus}:</span>
+                <span>${busInfo.volume}%</span>
+              </div>`;
+          })
+          .filter((str) => str !== '')
+          .join('<span class="mx-1">|</span>')}
       ${info.inputs
           .filter((input) => input.muted === 'False')
           .map(
               (input) => `
-              <div class="flex gap-1">
-                <span class="badge badge-success h-[16px] py-0">${input.audiobusses}</span>
-                ${input.number}.
+              <div class="flex items-center gap-1">
+                <span class="text-secondary">${input.number}.</span>
+                <span>${input.volume}%</span>
+                <span class="badge badge-success h-[16px] px-1 py-0">${input.audiobusses}</span>
                 <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(input.title)}</span>
               </div>
               `,
@@ -119,13 +134,20 @@ function renderVmixInfo(box) {
       </ol>`;
 }
 
+function getBusName(bus, capital = false) {
+    const name = { M: 'master', A: 'busA', B: 'busB' }[bus];
+    console.assert(name !== undefined, bus);
+    return capital ? name.charAt(0).toUpperCase() + name.slice(1) : name;
+}
+
 function formatTimeMMSS(ms) {
     const totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
     const seconds = totalSeconds % 60;
 
     const pad = (num) => String(num).padStart(2, '0');
-    return `${pad(minutes)}:${pad(seconds)}`;
+    return `${hours === 0 ? '' : hours + ':'}${pad(minutes)}:${pad(seconds)}`;
 }
 
 function getShortInputProgress(input) {
