@@ -184,6 +184,11 @@ async function renderVmixWeb() {
         }
         const loopBtn = inputElem.querySelector('.loop-btn');
         setColor(loopBtn, input.loop === 'True');
+        if (input.type === 'Image') {
+            loopBtn.classList.add('invisible');
+        } else {
+            loopBtn.classList.remove('invisible');
+        }
 
         const mixerElem = document.getElementById('mixer-' + i);
         if (input.volume === undefined) {

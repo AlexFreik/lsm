@@ -4750,8 +4750,8 @@ html:has(.drawer-toggle:checked) {
   height: 16px;
 }
 
-.h-\[180px\] {
-  height: 180px;
+.h-\[200px\] {
+  height: 200px;
 }
 
 .h-\[20px\] {
@@ -4827,8 +4827,8 @@ html:has(.drawer-toggle:checked) {
   width: 4rem;
 }
 
-.w-20 {
-  width: 5rem;
+.w-24 {
+  width: 6rem;
 }
 
 .w-3 {
