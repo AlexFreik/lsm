@@ -104,7 +104,7 @@ function renderVmixInfo(box) {
               return `
             <div class="gap-1 inline-block w-fit">
                 <span class="${busInfo.sendToMaster === 'True' ? 'text-error' : 'text-secondary'}">${bus}:</span>
-                <span>${busInfo.volume}%</span>
+                <span>${getVolumeInfo(busInfo)}</span>
               </div>`;
           })
           .filter((str) => str !== '')
@@ -115,7 +115,7 @@ function renderVmixInfo(box) {
               (input) => `
               <div class="flex items-center gap-1">
                 <span class="text-secondary">${input.number}.</span>
-                <span>${input.volume}%</span>
+                <span>${getVolumeInfo(input)}</span>
                 <span class="badge badge-success h-[16px] px-1 py-0">${input.audiobusses}</span>
                 <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(input.title)}</span>
               </div>
@@ -162,4 +162,12 @@ function getShortInputProgress(input) {
         return `${position} / ${duration} / ${remaining}`;
     }
     return `${formatTimeMMSS(duration)} | ${formatTimeMMSS(remaining)}`;
+}
+
+function getVolumeInfo(input) {
+    let gain = '';
+    if (input.gainDb !== undefined && input.gainDb !== '0') {
+        gain = ' | ' + input.gainDb + 'dB';
+    }
+    return Math.round(input.volume) + '%' + gain;
 }
