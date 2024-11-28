@@ -103,7 +103,7 @@ function renderVmixInfo(box) {
               }
               return `
             <div class="gap-1 inline-block w-fit">
-                <span class="${busInfo.sendToMaster === 'True' ? 'text-error' : 'text-secondary'}">${bus}:</span>
+                <span class="${bus === 'M' || busInfo.sendToMaster === 'True' ? 'text-error' : 'text-secondary'}">${bus}:</span>
                 <span>${getVolumeInfo(busInfo)}</span>
               </div>`;
           })

@@ -4634,6 +4634,11 @@ html:has(.drawer-toggle:checked) {
   margin-bottom: 2rem;
 }
 
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
 .-mt-2 {
   margin-top: -0.5rem;
 }
@@ -4803,6 +4808,10 @@ html:has(.drawer-toggle:checked) {
   height: 100vh;
 }
 
+.h-8 {
+  height: 2rem;
+}
+
 .min-h-0 {
   min-height: 0px;
 }
@@ -4958,6 +4967,10 @@ html:has(.drawer-toggle:checked) {
 
 .w-screen {
   width: 100vw;
+}
+
+.w-px {
+  width: 1px;
 }
 
 .min-w-5 {
@@ -5350,6 +5363,11 @@ html:has(.drawer-toggle:checked) {
 .bg-warning {
   --tw-bg-opacity: 1;
   background-color: var(--fallback-wa,oklch(var(--wa)/var(--tw-bg-opacity)));
+}
+
+.bg-gray-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(209 213 219 / var(--tw-bg-opacity));
 }
 
 .fill-current {
