@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en" data-theme="night">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>vMix Master</title>
+    <link rel="icon" type="image/png" href="./logo.svg" />
+    <link rel="stylesheet" href="./output.css" />
+    <script src="./Sortable.min.js" defer></script>
+    <script src="./tools.js" defer></script>
+    <script src="./box.js" defer></script>
+    <script src="./vmix-info.js" defer></script>
+    <script src="./vmix-web.js" defer></script>
+    <script src="./custom-functions.js" defer></script>
+    <script src="./script.js" defer></script>
+  </head>
+  <body class="bg-base-100 text-base-content">
+    <div class="navbar focus bg-base-100">
+      <div class="flex-1">
+        <a class="btn btn-ghost text-xl" href="/lsm/">vMix Master</a>
+      </div>
+      <div class="flex-none">
+        <ul class="menu menu-horizontal px-1">
+          <li><a href="/lsm/vmix-master/duration-timer.txt">Duration Timer</a></li>
+          <li><a href="/lsm/gallery/">Gallery</a></li>
+          <li><a href="/lsm/yad/">YAD</a></li>
+          <li><a href="https://github.com/AlexFreik/lsm/" target="_blank">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="focus flex flex-col items-center">
+      <div class="flex w-full flex-wrap p-2">
+        <div class="flex min-w-full items-center justify-center">
+          <button id="add-box" class="btn btn-outline btn-secondary flex">Add Instance</button>
+          <button id="refresh-all" class="btn btn-outline btn-secondary mx-3 flex">Refresh All</button>
+          <label class="input input-bordered input-secondary flex items-center gap-2">
+            Refresh Rate (sec)
+            <input id="refresh-rate" class="url-param w-12" name="refreshRate" type="number" min="1" value="5" placeholder="sec" />
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-full flex-wrap p-1" id="boxes"></div>
+    </div>
+
+    <div class="vmix-web divider focus">vMix Web</div>
+    <div class="vmix-web">
+      <div class="mx-auto mb-5 flex w-[500px] items-center gap-1 px-5">
+        <span class="text-md">Master:</span>
+        <input id="master" type="number" min="1" name="master" placeholder="e.g. 1" class="url-param input input-xs input-bordered w-16" />
+        <span class="text-md ms-3">Slaves:</span>
+        <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
+      </div>
+
+      <div id="vmix-container" class="vmix-web pb-5">
+        <div
+          id="vmix-screens"
+          class="wrap mx-auto mt-3 grid h-[80px] w-[995px] grid-cols-[400px_90px_90px_400px] grid-rows-[25px_25px_20px] gap-1 text-center">
+          <div id="preview-title" class="col-span-1 row-span-2 mr-1 bg-warning text-lg font-semibold text-primary-content"></div>
+          <div class="col-span-1 row-span-1">
+            <button class="btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('Stinger1')">Stinger 1</button>
+          </div>
+          <div class="col-span-1 row-span-1">
+            <button class="btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('Fade')">Fade</button>
+          </div>
+          <div id="active-title" class="col-span-1 row-span-2 ml-1 bg-success text-lg font-semibold text-primary-content"></div>
+          <div class="col-span-1 row-span-1">
+            <button class="btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('Cut')">Cut</button>
+          </div>
+          <div class="col-span-1 row-span-1">
+            <button class="ftb-btn btn btn-neutral btn-sm h-[23px] min-h-0 w-[85px] px-1" onclick="transition('FadeToBlack')">FTB</button>
+          </div>
+          <div id="preview-progress" class="col-span-1 row-span-1"></div>
+          <div class="col-span-1 row-span-1"></div>
+          <div class="col-span-1 row-span-1"></div>
+          <div id="active-progress" class="col-span-1 row-span-1"></div>
+        </div>
+
+        <div id="vmix-inputs" class="mt-2"></div>
+
+        <div id="vmix-mixer" class="vmix-mixer mt-5"></div>
+      </div>
+    </div>
+
+    <div class="custom-functions divider focus mt-5">Custom Functions</div>
+    <div class="custom-functions px-5">
+      <div class="mx-auto my-1 flex w-fit items-center gap-1">
+        <span class="text-md">Include: </span>
+        <input id="include" type="text" name="include" placeholder="e.g. 1 2 3" class="url-param input input-xs input-bordered w-[300px]" />
+      </div>
+
+      <div class="flex flex-col items-center">
+        <div class="custom-functions-container flex w-fit flex-wrap p-1">
+          <div class="m-1 w-fit rounded-box bg-neutral p-3">
+            <div class="mx-auto w-fit">
+              <input
+                id="rawRequest"
+                type="text"
+                name="rawRequest"
+                placeholder="e.g. Function=Fade&Duration=1000&Input=5"
+                class="url-param input input-xs input-bordered w-[500px]" />
+            </div>
+            <div class="mx-auto w-fit">
+              <button id="execute-btn" class="btn btn-outline btn-secondary btn-sm mt-1">Raw Request</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="logs fixed bottom-1 right-1 mx-auto hidden h-[280px] w-[685px] w-[700px] overflow-y-scroll rounded-lg border border-secondary bg-base-300 p-1 opacity-80"></div>
+
+    <div class="fixed bottom-2 right-9 rounded bg-neutral px-3">
+      <label class="swap m-1">
+        <input id="show-logs" type="checkbox" class="show-toggle url-param" />
+        <div class="badge swap-on badge-secondary rounded py-3">logs</div>
+        <div class="badge swap-off badge-secondary badge-outline rounded py-3">logs</div>
+      </label>
+
+      <label class="swap m-1">
+        <input id="show-vmix-web" type="checkbox" class="show-toggle url-param" checked />
+        <div class="badge swap-on badge-secondary rounded py-3">vMix Web</div>
+        <div class="badge swap-off badge-secondary badge-outline rounded py-3">vMix Web</div>
+      </label>
+
+      <label class="swap m-1">
+        <input id="show-vmix-mixer" type="checkbox" class="show-toggle url-param" checked />
+        <div class="badge swap-on badge-secondary rounded py-3">mixer</div>
+        <div class="badge swap-off badge-secondary badge-outline rounded py-3">mixer</div>
+      </label>
+
+      <label class="swap m-1">
+        <input id="show-custom-functions" type="checkbox" class="show-toggle url-param" />
+        <div class="badge swap-on badge-secondary rounded py-3">custom</div>
+        <div class="badge swap-off badge-secondary badge-outline rounded py-3">custom</div>
+      </label>
+
+      <label class="swap m-1">
+        <input id="view-mode" type="checkbox" class="url-param" checked />
+        <div class="badge swap-on badge-secondary rounded py-3">control</div>
+        <div class="badge swap-off badge-secondary badge-outline rounded py-3">control</div>
+      </label>
+
+      <label class="swap m-1">
+        <input id="show-focus" type="checkbox" class="show-toggle url-param" checked />
+        <div class="badge swap-on badge-secondary badge-outline rounded py-3">focus</div>
+        <div class="badge swap-off badge-secondary rounded py-3">focus</div>
+      </label>
+    </div>
+
+    <div class="divider focus mt-5">Documentation</div>
+    <div class="prose focus mx-auto max-w-3xl px-5">
+      You can read official vMix API documentation here:
+      <a target="_blank" href="https://www.vmix.com/help25/index.htm?DeveloperAPI.html">vmix.com/help25/index.htm?DeveloperAPI.html</a>
+
+      <h3>How to Use</h3>
+      You won't be able to access the vMix API over HTTPS, so you'll need to download the source code from GitHub. You can either clone the repository
+      if you have Git installed, or click <b>Code</b> → <b>Download ZIP</b>. You then have two options:
+      <ul>
+        <li>You can host LSM locally if you have Node installed. You can follow the instructions in the <code>README.md</code> file on GitHub.</li>
+        <li>
+          Or you can open this page as a local file. Go to the <code>lsm/vmix-master/</code> folder and open the <code>index.html</code> file in the
+          Chrome browser.
+        </li>
+      </ul>
+    </div>
+
+    <footer class="footer footer-center focus mt-10 bg-base-300 p-4 text-base-content">
+      <aside>
+        <p>Copyright © 2024 - All right reserved by LSM</p>
+      </aside>
+    </footer>
+  </body>
+</html>

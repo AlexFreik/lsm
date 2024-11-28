@@ -1,0 +1,210 @@
+{
+    "vmix": {
+        "version": {
+            "#text": "27.0.0.81"
+        },
+        "edition": {
+            "#text": "4K"
+        },
+        "preset": {
+            "#text": "C:\\Users\\VMix M2\\Documents\\Test.vmix"
+        },
+        "inputs": {
+            "input": [
+                {
+                    "@attributes": {
+                        "key": "13e54f55-880f-4769-8c36-e7b7d4b28243",
+                        "number": "1",
+                        "type": "Capture",
+                        "title": "AJA Input 1",
+                        "shortTitle": "AJA Input 1",
+                        "state": "Running",
+                        "position": "0",
+                        "duration": "0",
+                        "loop": "False",
+                        "muted": "False",
+                        "volume": "100",
+                        "balance": "0",
+                        "solo": "False",
+                        "soloPFL": "False",
+                        "audiobusses": "M",
+                        "meterF1": "0.02243042",
+                        "meterF2": "0.02249146",
+                        "gainDb": "0"
+                    },
+                    "#text": "AJA Input 1"
+                },
+                {
+                    "@attributes": {
+                        "key": "fe380174-3cb2-4e4c-a300-f2a7e19ebab2",
+                        "number": "2",
+                        "type": "Video",
+                        "title": "videoplayback.mp4",
+                        "shortTitle": "videoplayback.mp4",
+                        "state": "Paused",
+                        "position": "374840",
+                        "duration": "420908",
+                        "loop": "True",
+                        "muted": "True",
+                        "volume": "100",
+                        "balance": "0",
+                        "solo": "False",
+                        "soloPFL": "False",
+                        "audiobusses": "M",
+                        "meterF1": "0",
+                        "meterF2": "0",
+                        "gainDb": "0"
+                    },
+                    "#text": "videoplayback.mp4"
+                },
+                {
+                    "@attributes": {
+                        "key": "d9b6ea77-cef4-4fa9-9682-2c2585653b63",
+                        "number": "3",
+                        "type": "GT",
+                        "title": "Text Middle Centre Left Right Sharp.gtzip",
+                        "shortTitle": "Text Middle Centre Left Right Sharp.gtzip",
+                        "state": "Running",
+                        "position": "0",
+                        "duration": "0",
+                        "loop": "False",
+                        "selectedIndex": "0"
+                    },
+                    "#text": "Text Middle Centre Left Right Sharp.gtzip",
+                    "text": {
+                        "@attributes": {
+                            "index": "0",
+                            "name": "Message.Text"
+                        },
+                        "#text": "Studio2 Main vMix"
+                    }
+                }
+            ]
+        },
+        "overlays": {
+            "overlay": [
+                {
+                    "@attributes": {
+                        "number": "1"
+                    },
+                    "#text": "3"
+                },
+                {
+                    "@attributes": {
+                        "number": "2"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "3"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "4"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "5"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "6"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "7"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "8"
+                    }
+                }
+            ]
+        },
+        "preview": {
+            "#text": "2"
+        },
+        "active": {
+            "#text": "1"
+        },
+        "fadeToBlack": {
+            "#text": "False"
+        },
+        "transitions": {
+            "transition": [
+                {
+                    "@attributes": {
+                        "number": "1",
+                        "effect": "Fade",
+                        "duration": "500"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "2",
+                        "effect": "Merge",
+                        "duration": "1000"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "3",
+                        "effect": "Wipe",
+                        "duration": "1000"
+                    }
+                },
+                {
+                    "@attributes": {
+                        "number": "4",
+                        "effect": "CubeZoom",
+                        "duration": "1000"
+                    }
+                }
+            ]
+        },
+        "recording": {
+            "#text": "False"
+        },
+        "external": {
+            "#text": "True"
+        },
+        "streaming": {
+            "#text": "False"
+        },
+        "playList": {
+            "#text": "False"
+        },
+        "multiCorder": {
+            "#text": "False"
+        },
+        "fullscreen": {
+            "#text": "False"
+        },
+        "audio": {
+            "master": {
+                "@attributes": {
+                    "volume": "100",
+                    "muted": "False",
+                    "meterF1": "0.0244751",
+                    "meterF2": "0.02462769",
+                    "headphonesVolume": "100"
+                }
+            }
+        },
+        "dynamic": {
+            "input1": {},
+            "input2": {},
+            "input3": {},
+            "input4": {},
+            "value1": {},
+            "value2": {},
+            "value3": {},
+            "value4": {}
+        }
+    }
+}

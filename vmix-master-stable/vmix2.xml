@@ -1,0 +1,154 @@
+<vmix>
+<version>27.0.0.83</version>
+<edition>4K</edition>
+<preset>D:\Livestream\German November Online Satsang 2024\German Satsang.vmix</preset>
+<inputs>
+<input key="5f48a922-b58b-41a7-8fd9-07b588614f2d" number="1" type="VideoCall" title="Call 8185982086" shortTitle="Call 8185982086" state="Running" position="0" duration="0" loop="False" muted="False" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M" meterF1="0" meterF2="0" gainDb="0" callPassword="8185982086" callConnected="False" callVideoSource="Output2" callAudioSource="BusB">Call 8185982086</input>
+<input key="b682dfb4-0e6b-4bba-957a-5c1f780c6461" number="2" type="Image" title="CloseYourEyes.png" shortTitle="CloseYourEyes.png" state="Paused" position="0" duration="0" loop="False">CloseYourEyes.png</input>
+<input key="352617bc-7787-42c3-b689-68d421191fd6" number="3" type="AudioFile" title="YogaPadhi_Single_Track.mp3" shortTitle="YogaPadhi_Single_Track.mp3" state="Paused" position="0" duration="1792131" loop="False" muted="True" volume="68.57497" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">
+YogaPadhi_Single_Track.mp3
+<overlay index="0" key="7ef9dbf7-e490-41c9-b1f3-0222cf9dd5cd"/>
+</input>
+<input key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3" number="4" type="SRT" title="Cam" shortTitle="Cam" state="Running" position="0" duration="0" loop="False" muted="False" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="A,B" meterF1="0" meterF2="0" gainDb="0">
+Cam
+<overlay index="0" key="5f48a922-b58b-41a7-8fd9-07b588614f2d"/>
+</input>
+<input key="b0d4300c-f99b-4e0e-ac94-27dae5cf34d5" number="5" type="Colour" title="Invocation" shortTitle="Invocation" state="Paused" position="0" duration="0" loop="False">
+Invocation
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="70fd5c88-906e-4b1f-9145-6224668c9b4a" number="6" type="AudioFile" title="Crash Course - German - 3_21.wav" shortTitle="Crash Course - German - 3_21.wav" state="Paused" position="0" duration="201015" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">
+Crash Course - German - 3_21.wav
+<overlay index="0" key="b682dfb4-0e6b-4bba-957a-5c1f780c6461"/>
+</input>
+<input key="01d48d77-71bd-4205-a733-7b0e9a097307" number="7" type="AudioFile" title="P. Asanas + Guided Shambavi + BS Chant - German.wav" shortTitle="P. Asanas + Guided Shambavi + BS Chant - German.wav" state="Paused" position="0" duration="2752112" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">
+P. Asanas + Guided Shambavi + BS Chant - German.wav
+<overlay index="0" key="82c3391f-ec04-42bb-9afc-ea074916d735"/>
+</input>
+<input key="206f536a-969a-4304-b1f6-644b4d0bc6ec" number="8" type="AudioFile" title="Madhyamavathi-Normalized.MP3" shortTitle="Madhyamavathi-Normalized.MP3" state="Paused" position="0" duration="318603" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">
+Madhyamavathi-Normalized.MP3
+<overlay index="0" key="b682dfb4-0e6b-4bba-957a-5c1f780c6461"/>
+</input>
+<input key="d9f16b20-1755-46d0-afb7-dadd6e282c7d" number="9" type="Image" title="1-DE.jpg" shortTitle="1-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+1-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="60baf2cb-56dc-427b-b0e4-dbe7e550aeaa" number="10" type="Image" title="2-DE.jpg" shortTitle="2-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+2-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="11d6bb12-59d9-4042-b2b9-0abde1748b94" number="11" type="Image" title="3-DE.jpg" shortTitle="3-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+3-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="f8d2ecf3-292c-4846-9281-7254b17e91f3" number="12" type="Image" title="4-DE.jpg" shortTitle="4-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+4-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="ec853f26-928f-44fe-92de-39ce8ac0ca64" number="13" type="Image" title="5-DE.jpg" shortTitle="5-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+5-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="c01e5fda-70fb-40f1-a4ee-bea5da28dbd1" number="14" type="Image" title="6-DE.jpg" shortTitle="6-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+6-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="25927089-011e-4085-b301-e45f88402065" number="15" type="Image" title="7-DE.jpg" shortTitle="7-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+7-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="7beac7a3-b43d-4c06-8783-ed6bd1abbbb1" number="16" type="Image" title="10-DE.jpg" shortTitle="10-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+10-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="5ecb813e-49bd-40c8-8fc5-7a948069c65d" number="17" type="Image" title="11-DE.jpg" shortTitle="11-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+11-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="9320cf35-82ee-41e3-b407-b982545740a3" number="18" type="Image" title="12-DE.jpg" shortTitle="12-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+12-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="2f4f2cb0-5058-43d1-9b13-71d2643b3fe9" number="19" type="Image" title="14-DE.jpg" shortTitle="14-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+14-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="dd690b07-aea6-44e5-9c3e-4a96930dc3b3" number="20" type="Image" title="15-DE.jpg" shortTitle="15-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+15-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="46065233-f56e-41af-a4c0-fd5015b09b43" number="21" type="Image" title="16-EN.jpg" shortTitle="16-EN.jpg" state="Paused" position="0" duration="0" loop="False">
+16-EN.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="98030225-0466-4b41-a07c-3d914f286fff" number="22" type="Image" title="17-DE.jpg" shortTitle="17-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+17-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="4d73e95c-58a3-4d48-85ca-a2bd7de2720d" number="23" type="Image" title="18-DE.jpg" shortTitle="18-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+18-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="8f7b0770-0ad2-496d-aa19-030420e82145" number="24" type="Image" title="20-DE.jpg" shortTitle="20-DE.jpg" state="Paused" position="0" duration="0" loop="False">
+20-DE.jpg
+<overlay index="0" key="c9f5f011-31d9-4b0a-a78b-ac7f7eda39c3"/>
+</input>
+<input key="7471c430-615e-4032-8843-39c3ee7df35d" number="25" type="Video" title="Life, a celebration-001.mp4" shortTitle="Life, a celebration-001.mp4" state="Paused" position="0" duration="790958" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">Life, a celebration-001.mp4</input>
+<input key="e68bbe2e-3892-45f6-be17-d90a3d886e63" number="26" type="Video" title="Chit Shakti - Health Meditation, 21.42 mins, no intro.mp4" shortTitle="Chit Shakti - Health Meditation, 21.42 mins, no intro.mp4" state="Paused" position="0" duration="1302125" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">Chit Shakti - Health Meditation, 21.42 mins, no intro.mp4</input>
+<input key="446211a4-0f45-4e67-90a2-414f9f74becd" number="27" type="AudioFile" title="Yoga Padhi Closing.mp3" shortTitle="Yoga Padhi Closing.mp3" state="Paused" position="0" duration="422555" loop="False" muted="True" volume="68.57497" balance="0" solo="False" soloPFL="False" audiobusses="M,B" meterF1="0" meterF2="0" gainDb="0">
+Yoga Padhi Closing.mp3
+<overlay index="0" key="7ef9dbf7-e490-41c9-b1f3-0222cf9dd5cd"/>
+</input>
+<input key="dcb9c7a6-ad51-40eb-9ea8-dd60bd8330d2" number="28" type="Image" title="DE 28_Technical issues.jpg" shortTitle="DE 28_Technical issues.jpg" state="Paused" position="0" duration="0" loop="False">DE 28_Technical issues.jpg</input>
+<input key="c7a58618-1658-4656-bfec-29719c0ccc78" number="29" type="GT" title="Text Middle Centre Outline.gtzip" shortTitle="Text Middle Centre Outline.gtzip" state="Paused" position="0" duration="0" loop="False" selectedIndex="0">
+Text Middle Centre Outline.gtzip
+<position zoomX="5" zoomY="5"/>
+<text index="0" name="Message.Text">0</text>
+</input>
+<input key="c7cc7798-da8a-4da9-9e9f-7498ca319acf" number="30" type="Image" title="CloseYourEyes.png" shortTitle="CloseYourEyes.png" state="Paused" position="0" duration="0" loop="False">CloseYourEyes.png</input>
+<input key="82c3391f-ec04-42bb-9afc-ea074916d735" number="31" type="Image" title="Shambhavi Mahamudra - German.jpg" shortTitle="Shambhavi Mahamudra - German.jpg" state="Paused" position="0" duration="0" loop="False">Shambhavi Mahamudra - German.jpg</input>
+<input key="5533a379-6b49-4a04-9bda-d92b314b82d6" number="32" type="Colour" title="Colour" shortTitle="Colour" state="Paused" position="0" duration="0" loop="False">Colour</input>
+<input key="46f5ec98-11aa-4af2-a26a-be9a90d19dd7" number="33" type="Image" title="End slide - Netra Darshan.jpg" shortTitle="End slide - Netra Darshan.jpg" state="Paused" position="0" duration="0" loop="False">End slide - Netra Darshan.jpg</input>
+<input key="7ef9dbf7-e490-41c9-b1f3-0222cf9dd5cd" number="34" type="Photos" title="German Announcement Slides - 1-DE.jpg" shortTitle="German Announcement Slides" state="Paused" position="0" duration="14" loop="True" selectedIndex="1">German Announcement Slides - 1-DE.jpg</input>
+</inputs>
+<overlays>
+<overlay number="1"/>
+<overlay number="2"/>
+<overlay number="3"/>
+<overlay number="4"/>
+<overlay number="5"/>
+<overlay number="6"/>
+<overlay number="7"/>
+<overlay number="8"/>
+</overlays>
+<preview>14</preview>
+<active>15</active>
+<fadeToBlack>False</fadeToBlack>
+<transitions>
+<transition number="1" effect="Stinger1" duration="1200"/>
+<transition number="2" effect="Merge" duration="1000"/>
+<transition number="3" effect="Wipe" duration="1000"/>
+<transition number="4" effect="CubeZoom" duration="1000"/>
+</transitions>
+<recording>False</recording>
+<external>False</external>
+<streaming>False</streaming>
+<playList>False</playList>
+<multiCorder>False</multiCorder>
+<fullscreen>False</fullscreen>
+<audio>
+<master volume="100" muted="False" meterF1="0" meterF2="0" headphonesVolume="100"/>
+<busA volume="17.85062" muted="False" meterF1="0" meterF2="0" solo="False" sendToMaster="True"/>
+<busB volume="100" muted="False" meterF1="0" meterF2="0" solo="False" sendToMaster="False"/>
+</audio>
+<dynamic>
+<input1/>
+<input2/>
+<input3/>
+<input4/>
+<value1/>
+<value2/>
+<value3/>
+<value4/>
+</dynamic>
+</vmix>

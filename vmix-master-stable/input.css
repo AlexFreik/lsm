@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.wrap {
+    overflow-wrap: break-word;
+}
+
+.box {
+    animation: fadeInRight 1s ease-out;
+}
+
+.btn-error:disabled {
+    background-color: oklch(var(--er) / var(--tw-bg-opacity));
+}
+
+.btn-warning:disabled {
+    background-color: oklch(var(--wa) / var(--tw-bg-opacity));
+}
+
+.btn-success:disabled {
+    background-color: oklch(var(--su) / var(--tw-bg-opacity));
+}
+
+.mixer-header.bg-success {
+    @apply font-semibold text-primary-content;
+}

@@ -1,0 +1,56 @@
+' Checking time left of active running video and display this as an title. 
+' and do some stuff at certain time remaining
+
+dim position as string = ""
+dim duration as string = ""
+dim activeinput as string = ""
+dim Timeleft as double = 0
+dim triggertime as integer = 10      '10 seconds before end
+dim triggerduration as integer = 2000   'fade duration, could be different than trigger
+
+do while true
+
+   dim xml as string = API.XML()
+   dim x as new system.xml.xmldocument
+   x.loadxml(xml)
+
+activeinput = (x.SelectSingleNode("//active").InnerText)
+duration = (x.SelectSingleNode("//input[@number='"& activeinput &"']/@duration").Value)
+position = (x.SelectSingleNode("//input[@number='"& activeinput &"']/@position").Value)
+
+Timeleft= Double.Parse(duration)-Double.Parse(position)
+
+Timeleft = Timeleft / 100
+
+dim Timingleft as integer = CInt(Timeleft)
+Timingleft = Timingleft / 10
+
+dim Minutes as integer = Timingleft \ 60
+dim Seconds as integer = Timingleft Mod 60
+
+'used at debugging stage
+  ' console.writeline(Timingleft)
+  ' console.writeline(Seconds)
+
+dim ThisTime as string 
+ThisTime = Minutes.ToString("00") + ":" + Seconds.ToString("00")
+
+
+if Timingleft < 60
+   'put a response in a title and change color accordingly
+  
+    API.Function("SetText",Input:="Text Middle Centre Outline.gtzip",SelectedIndex:="0" ,Value:=Timingleft) ' Value:=":", Value:=Seconds)
+   
+    if Timingleft < 11 
+       API.Function("SetTextColour",Input:="Text Middle Centre Outline.gtzip",Value:="red")
+    else
+       API.Function("SetTextColour",Input:="Text Middle Centre Outline.gtzip",Value:="orange")
+    end if  
+else
+    API.Function("SetText",Input:="Text Middle Centre Outline.gtzip",SelectedIndex:="0" ,Value:=ThisTime)
+    API.Function("SetTextColour",Input:="Text Middle Centre Outline.gtzip",Value:="green")
+ end if
+
+
+sleep(300)
+Loop
