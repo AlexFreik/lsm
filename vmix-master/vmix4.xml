@@ -1,0 +1,165 @@
+<vmix>
+<version>27.0.0.83</version>
+<edition>4K</edition>
+<preset>D:\Livestream\IE Step7 Russian\1 Saturday\IE Step7 Saturday Russian.vmix</preset>
+<inputs>
+<input key="e9f251cc-be02-4096-b83f-307ca25abd3a" number="1" type="VideoCall" title="Call 1138364713" shortTitle="Call 1138364713" state="Running" position="0" duration="0" loop="False" muted="False" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M" meterF1="0" meterF2="0" gainDb="0" callPassword="1138364713" callConnected="False" callVideoSource="Output1" callAudioSource="BusA">Call 1138364713</input>
+<input key="4116468a-3bf5-43de-a37e-8189e78c38c3" number="2" type="Capture" title="AJA Input 1" shortTitle="AJA Input 1" state="Running" position="0" duration="0" loop="False" muted="False" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="A,B" meterF1="0.1699829" meterF2="0.1699829" gainDb="0">
+AJA Input 1
+<overlay index="0" key="e9f251cc-be02-4096-b83f-307ca25abd3a"/>
+<overlay index="1" key="0fe93899-753a-46f8-b6de-bb2bd0548c98"/>
+</input>
+<input key="53a435e0-f63d-4a49-8b61-2da42a9fe4d3" number="3" type="Image" title="Close_Eyes_Updated copy RU.jpg" shortTitle="Close_Eyes_Updated copy RU.jpg" state="Paused" position="0" duration="0" loop="False">
+Close_Eyes_Updated copy RU.jpg
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="6626f754-0dff-47e2-97a2-ed64135384b0" number="4" type="Video" title="01_RUS_Opening YP 1 _ 2 with countdown.mp4" shortTitle="01_RUS_Opening YP 1 _ 2 with countdown.mp4" state="Paused" position="0" duration="1800000" loop="False" muted="True" volume="68.57497" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">01_RUS_Opening YP 1 _ 2 with countdown.mp4</input>
+<input key="97d34091-49b4-48b0-8daa-8c7857f2b709" number="5" type="Video" title="02_Saturday waiting RU.mp4" shortTitle="02_Saturday waiting RU.mp4" state="Paused" position="0" duration="600000" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">02_Saturday waiting RU.mp4</input>
+<input key="b5405a4f-3b5e-4ce8-82d4-58f73bd9755f" number="6" type="Image" title="03_1_Tech Issues Slide - For Sadhguru App (Russian).png" shortTitle="03_1_Tech Issues Slide - For Sadhguru App (Russian).png" state="Paused" position="0" duration="0" loop="False">
+03_1_Tech Issues Slide - For Sadhguru App (Russian).png
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="99e3d3eb-a85f-4cde-abfd-d5eca146db9c" number="7" type="Image" title="03_2_Tech Issues Slide - Web (Russian).png" shortTitle="03_2_Tech Issues Slide - Web (Russian).png" state="Paused" position="0" duration="0" loop="False">
+03_2_Tech Issues Slide - Web (Russian).png
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="ab4fd418-be0d-4121-93c0-aa8db4985b72" number="8" type="Image" title="03_3_Important Message slide - Russian.png" shortTitle="03_3_Important Message slide - Russian.png" state="Paused" position="0" duration="0" loop="False">
+03_3_Important Message slide - Russian.png
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="7fcd7035-b61c-4888-9968-5e72b27a05b4" number="9" type="Image" title="03_4_Resolution RU.jpg" shortTitle="03_4_Resolution RU.jpg" state="Paused" position="0" duration="0" loop="False">
+03_4_Resolution RU.jpg
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="7a8ea16f-7da6-4fcf-a314-a35081b0ce4c" number="10" type="Image" title="04_Invocation RU.jpg" shortTitle="04_Invocation RU.jpg" state="Paused" position="0" duration="0" loop="False">
+04_Invocation RU.jpg
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="aae8c090-5240-457d-9bce-06ac38671d4a" number="11" type="Video" title="05_201123_Telefilm.mp4" shortTitle="05_201123_Telefilm.mp4" state="Paused" position="0" duration="564480" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">05_201123_Telefilm.mp4</input>
+<input key="aae1ba37-8f1e-4c09-8891-b88ba2afc3b4" number="12" type="Video" title="06_IE49 - Intro to Patangasana - Russian.mp4" shortTitle="06_IE49 - Intro to Patangasana - Russian.mp4" state="Paused" position="0" duration="447250" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">06_IE49 - Intro to Patangasana - Russian.mp4</input>
+<input key="358ee3e1-fd41-437a-9325-0dc8c8d82807" number="13" type="Video" title="07_Patangasana_Demo.mp4" shortTitle="07_Patangasana_Demo.mp4" state="Paused" position="0" duration="98840" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+07_Patangasana_Demo.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="1a280979-af77-4697-93fa-8f3ec785de2a" number="14" type="Video" title="08_Shishupalasana Demo.mp4" shortTitle="08_Shishupalasana Demo.mp4" state="Paused" position="0" duration="88160" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+08_Shishupalasana Demo.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="6139d189-1e3e-43e4-aaa7-b33f78259254" number="15" type="Video" title="09_Ardhasiddhasana Demo.mp4" shortTitle="09_Ardhasiddhasana Demo.mp4" state="Paused" position="0" duration="63840" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+09_Ardhasiddhasana Demo.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="e6e1a8ae-5945-4514-967b-3280e6a95819" number="16" type="Video" title="10_Ardhasiddhasana_Corrections.mp4" shortTitle="10_Ardhasiddhasana_Corrections.mp4" state="Paused" position="0" duration="88480" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+10_Ardhasiddhasana_Corrections.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="fc554cc6-f5ab-4f3d-bd62-e93006066fa9" number="17" type="Video" title="11_Ardhasiddhasana_Modifications.mp4" shortTitle="11_Ardhasiddhasana_Modifications.mp4" state="Paused" position="0" duration="51280" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+11_Ardhasiddhasana_Modifications.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="26e33ca4-85a9-489c-b0e1-2d5e18e00f00" number="18" type="Video" title="12_IE42 - Intro to Nadi Vibhajan - Russian.mp4" shortTitle="12_IE42 - Intro to Nadi Vibhajan - Russian.mp4" state="Paused" position="0" duration="1241480" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">12_IE42 - Intro to Nadi Vibhajan - Russian.mp4</input>
+<input key="228703a8-cf42-46a5-ad00-83931268b294" number="19" type="Video" title="13_NadiVibhajan Demo.mp4" shortTitle="13_NadiVibhajan Demo.mp4" state="Paused" position="0" duration="233040" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+13_NadiVibhajan Demo.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="82f16c00-552e-4a1d-bf2d-a62ff8f0bbef" number="20" type="Image" title="14_Visualize - isha font RU.jpg" shortTitle="14_Visualize - isha font RU.jpg" state="Paused" position="0" duration="0" loop="False">
+14_Visualize - isha font RU.jpg
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="9ba4c991-6071-4ad3-a38e-9e791a42d3d7" number="21" type="Image" title="15_NV starting position.png" shortTitle="15_NV starting position.png" state="Paused" position="0" duration="0" loop="False">
+15_NV starting position.png
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="089bf0f3-93cf-49bf-a092-93d0af09cbd3" number="22" type="Video" title="16_Saturday 10 minute break RU.mp4" shortTitle="16_Saturday 10 minute break RU.mp4" state="Paused" position="0" duration="600000" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">16_Saturday 10 minute break RU.mp4</input>
+<input key="79bc4212-80b3-4cca-a268-0bf985c52623" number="23" type="Video" title="17_IE17C - Sukha Kriya Intro - Russian.mp4" shortTitle="17_IE17C - Sukha Kriya Intro - Russian.mp4" state="Paused" position="0" duration="555958" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">17_IE17C - Sukha Kriya Intro - Russian.mp4</input>
+<input key="4fc26859-d166-40a6-abdf-83eb7004df11" number="24" type="Video" title="18_Jogging.mp4" shortTitle="18_Jogging.mp4" state="Paused" position="0" duration="54320" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+18_Jogging.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="6c996cf5-9f92-4ad2-a0cf-f3f89d9b831e" number="25" type="Video" title="19_IE17D - Sukha Kriya Instructions - Russian.mp4" shortTitle="19_IE17D - Sukha Kriya Instructions - Russian.mp4" state="Paused" position="0" duration="195560" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">19_IE17D - Sukha Kriya Instructions - Russian.mp4</input>
+<input key="57b6b3a8-6703-4c8e-8d4e-803358b63464" number="26" type="Virtual" title="Virtual - AJA Input 1" shortTitle="AJA Input 1" state="Paused" position="0" duration="0" loop="False">
+Virtual - AJA Input 1
+<overlay index="0" key="e9f251cc-be02-4096-b83f-307ca25abd3a"/>
+<overlay index="1" key="179be98b-047e-4cbf-a022-3104ee4cfd47"/>
+</input>
+<input key="01f65b6e-4908-49bc-89fa-5423c65b542e" number="27" type="Video" title="21_YogaMudra.mp4" shortTitle="21_YogaMudra.mp4" state="Paused" position="0" duration="64120" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+21_YogaMudra.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="57fce633-56f4-4014-8451-8506d925a861" number="28" type="Video" title="22_AUM Chanting RU.mp4" shortTitle="22_AUM Chanting RU.mp4" state="Paused" position="0" duration="288240" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">22_AUM Chanting RU.mp4</input>
+<input key="bd69051e-1e37-4d60-9f06-62e2e3925cac" number="29" type="Video" title="23_AumChanting_Corrections.mp4" shortTitle="23_AumChanting_Corrections.mp4" state="Paused" position="0" duration="42200" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+23_AumChanting_Corrections.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="b0f560c8-99ce-4299-9bb0-272ed58f6ec1" number="30" type="Video" title="24_IE17F - Bandhas Intro - Russian.mp4" shortTitle="24_IE17F - Bandhas Intro - Russian.mp4" state="Paused" position="0" duration="894360" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">24_IE17F - Bandhas Intro - Russian.mp4</input>
+<input key="d1be3da8-3dc3-4967-8239-484e2df04a59" number="31" type="Video" title="25_Bandhas Demo.mp4" shortTitle="25_Bandhas Demo.mp4" state="Paused" position="0" duration="157360" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+25_Bandhas Demo.mp4
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="ba1a7c08-39d8-4815-8240-6d463c987235" number="32" type="Video" title="26_IE20 - Benefits - Russian.mp4" shortTitle="26_IE20 - Benefits - Russian.mp4" state="Paused" position="0" duration="1806958" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">26_IE20 - Benefits - Russian.mp4</input>
+<input key="dbc80b3e-9eb1-4c40-a423-81ed79e6550c" number="33" type="Image" title="27_Sunday session timing.jpg" shortTitle="27_Sunday session timing.jpg" state="Paused" position="0" duration="0" loop="False">
+27_Sunday session timing.jpg
+<overlay index="0" key="4116468a-3bf5-43de-a37e-8189e78c38c3"/>
+</input>
+<input key="e08d8035-7de3-49c4-a3b8-89cca5161722" number="34" type="Video" title="28_IE17G - New If You Create Openness- Russian.mp4" shortTitle="28_IE17G - New If You Create Openness- Russian.mp4" state="Paused" position="0" duration="161933" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">28_IE17G - New If You Create Openness- Russian.mp4</input>
+<input key="00e5c459-f4f9-4c71-bc25-8b2fca6184bc" number="35" type="AudioFile" title="29_Yoga Padhi Closing.mp3" shortTitle="29_Yoga Padhi Closing.mp3" state="Paused" position="0" duration="422555" loop="False" muted="True" volume="100" balance="0" solo="False" soloPFL="False" audiobusses="M,A" meterF1="0" meterF2="0" gainDb="0">
+29_Yoga Padhi Closing.mp3
+<overlay index="0" key="691f35cc-5a67-4ea7-8eaa-ce46e1b97c8c"/>
+</input>
+<input key="0294795e-e8fc-422c-81fa-0a0b850a8053" number="36" type="Image" title="30_Session has ended RU.jpg" shortTitle="30_Session has ended RU.jpg" state="Paused" position="0" duration="0" loop="False">30_Session has ended RU.jpg</input>
+<input key="289cfd18-506b-4170-877a-b33d7eb76f37" number="37" type="Image" title="Technical issues RU.jpg" shortTitle="Technical issues RU.jpg" state="Paused" position="0" duration="0" loop="False">Technical issues RU.jpg</input>
+<input key="802ccca6-317e-44f1-a54c-e716a53f4b0f" number="38" type="Colour" title="Colour" shortTitle="Colour" state="Paused" position="0" duration="0" loop="False">Colour</input>
+<input key="6fd55762-0b64-404b-9d9f-d981bea002c9" number="39" type="Virtual" title="Virtual - Close_Eyes_Updated copy RU.jpg" shortTitle="Close_Eyes_Updated copy RU.jpg" state="Paused" position="0" duration="0" loop="False">Virtual - Close_Eyes_Updated copy RU.jpg</input>
+<input key="0fe93899-753a-46f8-b6de-bb2bd0548c98" number="40" type="Image" title="Isha Logo - 1280x720.png" shortTitle="Isha Logo - 1280x720.png" state="Paused" position="0" duration="0" loop="False">Isha Logo - 1280x720.png</input>
+<input key="179be98b-047e-4cbf-a022-3104ee4cfd47" number="41" type="Image" title="20_Sukha Kriya lower third - isha font RU.jpg" shortTitle="20_Sukha Kriya lower third - isha font RU.jpg" state="Paused" position="0" duration="0" loop="False">
+20_Sukha Kriya lower third - isha font RU.jpg
+<position panY="-0.82"/>
+</input>
+<input key="691f35cc-5a67-4ea7-8eaa-ce46e1b97c8c" number="42" type="Virtual" title="Virtual - 27_Sunday session timing.jpg" shortTitle="27_Sunday session timing.jpg" state="Paused" position="0" duration="0" loop="False">Virtual - 27_Sunday session timing.jpg</input>
+<input key="cfbca096-8cb8-4008-9f03-1b4d153cedf2" number="43" type="GT" title="Text Middle Centre Outline.gtzip" shortTitle="Text Middle Centre Outline.gtzip" state="Paused" position="0" duration="0" loop="False" selectedIndex="0">
+Text Middle Centre Outline.gtzip
+<position zoomX="5" zoomY="5"/>
+<text index="0" name="Message.Text">02:30</text>
+</input>
+</inputs>
+<overlays>
+<overlay number="1"/>
+<overlay number="2"/>
+<overlay number="3"/>
+<overlay number="4"/>
+<overlay number="5"/>
+<overlay number="6"/>
+<overlay number="7"/>
+<overlay number="8"/>
+</overlays>
+<preview>21</preview>
+<active>20</active>
+<fadeToBlack>False</fadeToBlack>
+<transitions>
+<transition number="1" effect="Fade" duration="500"/>
+<transition number="2" effect="Merge" duration="1000"/>
+<transition number="3" effect="Wipe" duration="1000"/>
+<transition number="4" effect="CubeZoom" duration="1000"/>
+</transitions>
+<recording>False</recording>
+<external>False</external>
+<streaming>False</streaming>
+<playList>False</playList>
+<multiCorder>False</multiCorder>
+<fullscreen>False</fullscreen>
+<audio>
+<master volume="100" muted="False" meterF1="0.02202979" meterF2="0.02202979" headphonesVolume="100"/>
+<busA volume="100" muted="False" meterF1="0.1699829" meterF2="0.1699829" solo="False" sendToMaster="False"/>
+<busB volume="12.96" muted="False" meterF1="0.02202979" meterF2="0.02202979" solo="False" sendToMaster="True"/>
+</audio>
+<dynamic>
+<input1/>
+<input2/>
+<input3/>
+<input4/>
+<value1/>
+<value2/>
+<value3/>
+<value4/>
+</dynamic>
+</vmix>

@@ -210,6 +210,15 @@ function parseNumbers(str) {
         .map((num) => parseInt(num));
 }
 
+function ensureArray(element) {
+    if (element === undefined) return [];
+    if (Array.isArray(element)) {
+        return element;
+    } else {
+        return [element];
+    }
+}
+
 function xml2json(xml) {
     // Create the return object
     var obj = {};
