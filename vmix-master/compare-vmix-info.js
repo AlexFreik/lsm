@@ -162,6 +162,10 @@ function compareSlaves() {
                     errors.push(getError('layer mismatch', msg));
                 }
             });
+            if (input1.overlays.length < input2.overlays.length) {
+                msg = `vMix #${num2} input ${i} has ${input2.overlays.length} layer(s) while master has ${input1.overlays.length} layer(s).`;
+                errors.push(getError('additional layers', msg));
+            }
         }
     });
 
