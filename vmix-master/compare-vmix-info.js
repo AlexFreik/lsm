@@ -86,7 +86,7 @@ function compareSlaves() {
                 errors.push(getError('bus muted', msg));
             }
             if (v1.sendToMaster !== v2.sendToMaster) {
-                msg = `vMix #${num2} bus ${k} sendToMaster is ${v2.muted === 'True' ? '' : 'not '}enabled.`;
+                msg = `vMix #${num2} bus ${k} sendToMaster is ${v2.sendToMaster === 'True' ? '' : 'not '}enabled.`;
                 errors.push(getError('bus sendToMaster', msg));
             }
         }
@@ -158,7 +158,7 @@ function compareSlaves() {
                     errors.push(getError('missing layer', msg));
                 } else if (over1.index !== over2.index || over1.number !== over2.number) {
                     msg = `vMix #${num2} input ${i} layer ${over2.index + 1} <${over2.number}> 
-                      do not match master layer ${over1.index} <${over1.number}>.`;
+                      do not match master layer ${over1.index + 1} <${over1.number}>.`;
                     errors.push(getError('layer mismatch', msg));
                 }
             });
@@ -174,9 +174,10 @@ function compareSlaves() {
         compareReport.className = className + 'border-success';
         innerHtml += 'Looks good 👍';
     }
-    if (warnings.length > 0) {
-        innerHtml += '<div class="divider"></div>' + warnings.join('');
+    if (errors.length > 0 && warnings.length > 0) {
+        innerHtml += '<div class="divider"></div>';
     }
+    innerHtml += warnings.join('');
     compareReport.innerHTML = innerHtml;
 }
 
