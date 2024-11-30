@@ -18,9 +18,11 @@ do while true
     position = Double.Parse(x.SelectSingleNode("//input[@number='"& activeinput &"']/@position").Value)
 
     if duration = 0
-        API.Function("SetText",Input:="Text Middle Centre Outline.gtzip",SelectedIndex:="0", Value:="-")
-        API.Function("SetTextColour",Input:="Text Middle Centre Outline.gtzip",Value:="white")
+        API.Function("SetText",Input:="Text Middle Centre Outline.gtzip", SelectedIndex:="0", Value:="-")
+        API.Function("SetTextColour",Input:="Text Middle Centre Outline.gtzip", Value:="white")
         continue do
+    else
+        API.Function("StopCountdown",Input:="Text Middle Centre Outline.gtzip")
     end if
 
     Timeleft = duration - position
