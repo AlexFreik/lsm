@@ -126,40 +126,6 @@ function showError(header, msg) {
     show(header, msg, true);
 }
 
-// ===== vMix API Utils =====
-function getApiUrl(host, request = '') {
-    const fullHost = host.includes(':') ? host : host + ':8088';
-    return 'http://' + fullHost + '/api/?' + request;
-}
-
-async function fetchUrl(url) {
-    try {
-        const response = await fetch(url, { signal: AbortSignal.timeout(2000) });
-        const data = await response.text();
-        return {
-            status: response.status,
-            value: data,
-            error: null,
-        };
-    } catch (error) {
-        return {
-            status: null,
-            value: null,
-            error: error,
-        };
-    }
-}
-
-async function execute(url, isShow = true) {
-    const res = await fetchUrl(url);
-    const timestamp = new Date().toLocaleTimeString();
-    storeLog(url, res.status, res.value, res.error, timestamp);
-    if (isShow) {
-        showLog(url, res.status, res.value, res.error, timestamp);
-    }
-}
-
-// ===== Logging =====
 function showLog(url, status, value, error, time) {
     const message = `[${time}]: ` + (value ? getShortText(value, 300) : 'Error');
     if (status === 200) {
@@ -183,6 +149,10 @@ function showStoredLogs() {
 // ===== General Purpose Utils =====
 function sleep(ms) {
     return new Promise((r) => setTimeout(r, ms));
+}
+
+function removeDuplicates(arr) {
+    return arr.filter((val, i) => arr.indexOf(val) === i);
 }
 
 function getShortText(str, len) {

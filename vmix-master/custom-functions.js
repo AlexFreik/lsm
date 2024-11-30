@@ -15,6 +15,15 @@ function renderCustomFunctions() {
         min: '1',
         max: '100',
     };
+    const gain = {
+        name: 'gain',
+        type: 'number',
+        placeholder: '0-24',
+        value: '',
+        width: 'w-14',
+        min: '0',
+        max: '24',
+    };
     const volume = {
         name: 'volume',
         type: 'number',
@@ -59,12 +68,19 @@ function renderCustomFunctions() {
         { func: 'Stinger1', inputs: [input] },
         { func: 'Fade', inputs: [input] },
         { func: 'Cut', inputs: [input] },
+        { func: 'SetGain', inputs: [gain, input] },
         { func: 'SetVolumeFade', inputs: [volume, ms, input] },
         { func: 'SetMasterVolume', inputs: [volume] },
         { func: 'SetBusAVolume', inputs: [volume] },
         { func: 'SetBusBVolume', inputs: [volume] },
         { func: 'AudioOn', inputs: [input] },
         { func: 'AudioOff', inputs: [input] },
+        { func: 'MasterAudioOn', inputs: [] },
+        { func: 'MasterAudioOff', inputs: [] },
+        { func: 'BusAAudioOn', inputs: [] },
+        { func: 'BusAAudioOff', inputs: [] },
+        { func: 'BusBAudioOn', inputs: [] },
+        { func: 'BusBAudioOff', inputs: [] },
         { func: 'SetPosition', inputs: [min, sec, input] },
         { func: 'StartCountdown', inputs: [input] },
         { func: 'StopCountdown', inputs: [input] },
@@ -108,7 +124,7 @@ function renderCustomFunctions() {
         btn.onclick = () => {
             const container = btn.parentElement.parentElement;
             const inputParam = container.querySelector('.input-param');
-            const valueParam = container.querySelector('.value-param');
+            const gainParam = container.querySelector('.gain-param');
             const volumeParam = container.querySelector('.volume-param');
             const minParam = container.querySelector('.min-param');
             const secParam = container.querySelector('.sec-param');
@@ -118,8 +134,8 @@ function renderCustomFunctions() {
             if (inputParam?.value) {
                 request += '&Input=' + inputParam.value;
             }
-            if (valueParam?.value) {
-                request += '&Value=' + valueParam.value;
+            if (gainParam?.value) {
+                request += '&Value=' + gainParam.value;
             }
             if (volumeParam?.value && msParam?.value) {
                 request += '&Value=' + volumeParam.value + ',' + msParam.value;

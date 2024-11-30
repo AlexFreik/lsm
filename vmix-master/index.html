@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="./output.css" />
     <script src="./Sortable.min.js" defer></script>
     <script src="./tools.js" defer></script>
+    <script src="./vmix-api.js" defer></script>
     <script src="./box.js" defer></script>
     <script src="./vmix-info.js" defer></script>
     <script src="./vmix-web.js" defer></script>
+    <script src="./compare-vmix-info.js" defer></script>
     <script src="./custom-functions.js" defer></script>
     <script src="./script.js" defer></script>
   </head>
@@ -53,7 +55,11 @@
         <input id="master" type="number" min="1" name="master" placeholder="e.g. 1" class="url-param input input-xs input-bordered w-16" />
         <span class="text-md ms-3">Slaves:</span>
         <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
+        <button class="btn btn-secondary btn-xs ms-3" onclick="compareSlaves()">Compare</button>
+        <button class="btn btn-secondary btn-xs" onclick="hideCompareReport()">Hide</button>
       </div>
+
+      <div id="compare-report"></div>
 
       <div id="vmix-container" class="vmix-web pb-5">
         <div
@@ -137,12 +143,6 @@
         <input id="show-custom-functions" type="checkbox" class="show-toggle url-param" />
         <div class="badge swap-on badge-secondary rounded py-3">custom</div>
         <div class="badge swap-off badge-secondary badge-outline rounded py-3">custom</div>
-      </label>
-
-      <label class="swap m-1">
-        <input id="view-mode" type="checkbox" class="url-param" checked />
-        <div class="badge swap-on badge-secondary rounded py-3">control</div>
-        <div class="badge swap-off badge-secondary badge-outline rounded py-3">control</div>
       </label>
 
       <label class="swap m-1">

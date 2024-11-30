@@ -21,7 +21,7 @@ class VmixInfo {
             ensureArray(i.overlay).forEach((overlay) => {
                 const overlayNumber = keyMap[overlay['@attributes'].key];
                 this.inputs[number].overlays.push({
-                    index: overlay['@attributes'].index,
+                    index: parseInt(overlay['@attributes'].index),
                     number: overlayNumber,
                 });
             });

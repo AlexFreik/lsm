@@ -96,7 +96,6 @@ function prerenderVmixWeb() {
 async function renderVmixWeb() {
     const vmixContainer = document.getElementById('vmix-container');
     const masterInput = document.getElementById('master');
-    const disabled = document.getElementById('view-mode').checked;
 
     const master = getMaster();
     if (master === null) {
@@ -231,6 +230,11 @@ function getMasterInfo() {
     return info;
 }
 
+function getSlaves() {
+    const slaves = document.getElementById('slaves').value;
+    return parseNumbers(slaves);
+}
+
 function hideVmixWeb() {
     const vmixContainer = document.getElementById('vmix-container');
     if (!vmixContainer.classList.contains('hidden')) {
@@ -243,11 +247,6 @@ function showVmixWeb() {
     if (vmixContainer.classList.contains('hidden')) {
         vmixContainer.classList.remove('hidden');
     }
-}
-
-function getSlaves() {
-    const slaves = document.getElementById('slaves').value;
-    return parseNumbers(slaves);
 }
 
 function formatTime(ms) {
@@ -305,98 +304,4 @@ function drawAudioLevels(canvas, input) {
     ctx.fillStyle = input.muted === 'True' ? '#0ca5e9' : '#2dd4bf';
     ctx.fillRect(0, 100 - left * 100, 48, 100);
     ctx.fillRect(52, 100 - right * 100, 100, 100);
-}
-
-// ===== vMix Web Commands =====
-function previewInput(inputNum) {
-    masterSlaveExecute('Function=PreviewInput&Input=' + inputNum);
-}
-
-function transition(type) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const inputNum = info.preview;
-    const inputParam = type === 'FadeToBlack' ? '' : '&Input=' + inputNum;
-    masterSlaveExecute('Function=' + type + inputParam);
-}
-
-function fadeInputAudio(inputNum) {
-    const volume = document.getElementById('volume-' + inputNum).value;
-    masterSlaveExecute('Function=SetVolumeFade&Value=' + volume + ',3000&Input=' + inputNum);
-}
-
-function setInputGain(inputNum) {
-    const value = document.getElementById('gain-' + inputNum).value;
-    masterSlaveExecute('Function=SetGain&Value=' + value + '&Input=' + inputNum);
-}
-
-function toggleAudioBus(inputNum, bus) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const on = info.inputs[inputNum].audiobusses.includes(bus);
-    masterSlaveExecute(`Function=AudioBus${on ? 'Off' : 'On'}&Value=${bus}&Input=${inputNum}`);
-}
-
-function toggleSendToMaster(bus) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const on = info.audio[getBusName(bus)].sendToMaster === 'True';
-    masterSlaveExecute(`Function=BusXSendToMaster${on ? 'Off' : 'On'}&Value=${bus}`);
-}
-
-function toggleBusAudio(bus) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const fullName = { M: 'master', A: 'busA', B: 'busB' };
-    const on = info.audio[fullName[bus]].muted === 'False';
-    masterSlaveExecute(`Function=${getBusName(bus, true)}Audio${on ? 'Off' : 'On'}`);
-}
-
-function setBusVolume(bus) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const value = document.getElementById('volume-' + bus).value;
-    masterSlaveExecute(`Function=Set${getBusName(bus, true)}Volume&Value=${value}`);
-}
-
-function overlayInput(inputNum, overlayNum) {
-    masterSlaveExecute('Function=OverlayInput' + overlayNum + '&Input=' + inputNum);
-}
-
-function muteInput(inputNum) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const on = info.inputs[inputNum].muted === 'False';
-    masterSlaveExecute(`Function=${on ? 'AudioOff' : 'AudioOn'}&Input=${inputNum}`);
-}
-
-function loopInput(inputNum) {
-    const info = getMasterInfo();
-    if (info === null) {
-        return;
-    }
-    const on = info.inputs[inputNum].loop === 'True';
-    masterSlaveExecute(`Function=${on ? 'LoopOff' : 'LoopOn'}&Input=${inputNum}`);
-}
-
-function masterSlaveExecute(command) {
-    const master = getMaster();
-    const slaves = getSlaves();
-    slaves.unshift(master);
-    slaves
-        .filter((val, i, arr) => arr.indexOf(val) === i)
-        .map((num) => getBoxHost(getBox(num)))
-        .forEach((host) => execute(getApiUrl(host, command)));
 }
