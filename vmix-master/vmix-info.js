@@ -1,6 +1,8 @@
 class VmixInfo {
     constructor(jsonData) {
-        this.preset = jsonData.vmix.preset['#text'].split('\\').pop().slice(0, -5);
+        this.preset = jsonData.vmix.preset
+            ? jsonData.vmix.preset['#text'].split('\\').pop().slice(0, -5)
+            : '';
         this.preview = Number(jsonData.vmix.preview['#text']);
         this.active = Number(jsonData.vmix.active['#text']);
         this.recording = jsonData.vmix.recording['#text'] === 'True';
