@@ -14,12 +14,26 @@ do while true
     x.loadxml(xml)
 
     activeinput = (x.SelectSingleNode("//active").InnerText)
-    duration = Double.Parse(x.SelectSingleNode("//input[@number='"& activeinput &"']/@duration").Value)
-    position = Double.Parse(x.SelectSingleNode("//input[@number='"& activeinput &"']/@position").Value)
+    Dim durationNode As XmlNode = x.SelectSingleNode("//input[@number='" & activeinput & "']/@duration")
+    If durationNode IsNot Nothing Then
+        duration = Double.Parse(durationNode.Value)
+    Else
+        console.writeline("Node not found for activeinput: " & activeinput)
+        duration = 0
+    End If
+
+    Dim positionNode As XmlNode = x.SelectSingleNode("//input[@number='"& activeinput &"']/@position")
+    If positionNode IsNot Nothing Then
+        position = Double.Parse(positionNode.Value)
+    Else
+        console.writeline("Node not found for activeinput: " & activeinput)
+        position = 0
+    End If
+
 
     if duration = 0
-        API.Function("SetText",Input:="Text Middle Centre Outline.gtzip", SelectedIndex:="0", Value:="-")
         API.Function("SetTextColour",Input:="Text Middle Centre Outline.gtzip", Value:="white")
+        API.Function("StartCountdown",Input:="Text Middle Centre Outline.gtzip")
         continue do
     else
         API.Function("StopCountdown",Input:="Text Middle Centre Outline.gtzip")
