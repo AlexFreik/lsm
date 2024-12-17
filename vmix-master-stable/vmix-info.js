@@ -1,5 +1,8 @@
 class VmixInfo {
     constructor(jsonData) {
+        this.preset = jsonData.vmix.preset
+            ? jsonData.vmix.preset['#text'].split('\\').pop().slice(0, -5)
+            : '';
         this.preview = Number(jsonData.vmix.preview['#text']);
         this.active = Number(jsonData.vmix.active['#text']);
         this.recording = jsonData.vmix.recording['#text'] === 'True';
@@ -7,11 +10,24 @@ class VmixInfo {
         this.streaming = jsonData.vmix.streaming['#text'] === 'True';
         this.fadeToBlack = jsonData.vmix.fadeToBlack['#text'] === 'True';
 
-        this.inputs = [];
+        const keyMap = {};
         jsonData.vmix.inputs.input.forEach(
-            (i) => (this.inputs[Number(i['@attributes'].number)] = i['@attributes']),
+            (i) => (keyMap[i['@attributes'].key] = Number(i['@attributes'].number)),
         );
 
+        this.inputs = [];
+        jsonData.vmix.inputs.input.forEach((i) => {
+            const number = Number(i['@attributes'].number);
+            this.inputs[number] = i['@attributes'];
+            this.inputs[number].overlays = [];
+            ensureArray(i.overlay).forEach((overlay) => {
+                const overlayNumber = keyMap[overlay['@attributes'].key];
+                this.inputs[number].overlays.push({
+                    index: parseInt(overlay['@attributes'].index),
+                    number: overlayNumber,
+                });
+            });
+        });
         this.overlays = [];
         jsonData.vmix.overlays.overlay
             .filter((o) => o['#text'] !== undefined)
@@ -72,6 +88,7 @@ function renderVmixInfo(box) {
     const preview = info.inputs[info.preview];
     box.querySelector('.vmixInfo').innerHTML = `
       <div class="mb-1">
+        <span class="badge font-semibold px-1 rounded">${info.preset}</span>
         ${info.recording ? '<span class="badge badge-error badge-outline px-1 rounded">REC</span>' : ''}
         ${info.external ? '<span class="badge badge-error badge-outline px-1 rounded">EXT</span>' : ''}
         ${info.stream ? '<span class="badge badge-error badge-outline px-1 rounded">STREAM</span>' : ''}
@@ -86,7 +103,7 @@ function renderVmixInfo(box) {
       </div>
       <div class="flex gap-1 items-center">
         <span class="badge badge-success w-[24px] h-[16px]">${active.number}</span>
-        ${active.duration !== '0' ? `<div class="text-xs w-[80px] inline-block text-center">${getShortInputProgress(active)}</div>` : ''}
+        ${active.duration !== '0' ? `<div class="text-xs min-w-[77px] inline-block text-center">${getShortInputProgress(active)}</div>` : ''}
         <span class="whitespace-nowrap overflow-hidden inline-flex flex-1">${getResponsiveTitle(active.title)}</span>
       </div>
       <div class="flex gap-1 items-center">
@@ -103,7 +120,7 @@ function renderVmixInfo(box) {
               }
               return `
             <div class="gap-1 inline-block w-fit">
-                <span class="${busInfo.sendToMaster === 'True' ? 'text-error' : 'text-secondary'}">${bus}:</span>
+                <span class="${bus === 'M' || busInfo.sendToMaster === 'True' ? 'text-error' : 'text-secondary'}">${bus}:</span>
                 <span>${getVolumeInfo(busInfo)}</span>
               </div>`;
           })
@@ -126,10 +143,20 @@ function renderVmixInfo(box) {
       <div class="divider my-0">Inputs</div>
       <ol>
         ${info.inputs
-            .map(
-                (input, i) =>
-                    `<li><span class="text-secondary">${i}.</span>&nbsp;${input.title}</li>`,
-            )
+            .map((input, i) => {
+                const layers = input.overlays
+                    .map((over) => `<span>&lt;${over.number}></span>`)
+                    .join('');
+                const duration = getInputDuration(input);
+                return (
+                    `<li>` +
+                    `<span class="text-secondary">${i}.</span>&nbsp;` +
+                    `${layers}${layers ? '&nbsp;|&nbsp;' : ''}` +
+                    `<span class="italic">${duration}</span>${duration ? '&nbsp;|&nbsp;' : ''}` +
+                    `${input.title}` +
+                    `</li>`
+                );
+            })
             .join('')}
       </ol>`;
 }
@@ -162,6 +189,18 @@ function getShortInputProgress(input) {
         return `${position} / ${duration} / ${remaining}`;
     }
     return `${formatTimeMMSS(duration)} | ${formatTimeMMSS(remaining)}`;
+}
+
+function getInputDuration(input) {
+    if (input.duration === '0') return '';
+
+    console.assert(['Video', 'AudioFile', 'Photos'].includes(input.type), input.type);
+    const duration = parseInt(input.duration);
+    if (input.type === 'Photos') {
+        return duration;
+    }
+
+    return formatTimeMMSS(duration);
 }
 
 function getVolumeInfo(input) {

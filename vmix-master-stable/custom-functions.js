@@ -8,37 +8,82 @@ function customExecution(request) {
 function renderCustomFunctions() {
     const input = {
         name: 'input',
-        type: 'text',
+        type: 'number',
         placeholder: 'Input',
         value: '',
         width: 'w-14',
+        min: '1',
+        max: '100',
+    };
+    const gain = {
+        name: 'gain',
+        type: 'number',
+        placeholder: '0-24',
+        value: '',
+        width: 'w-14',
+        min: '0',
+        max: '24',
     };
     const volume = {
         name: 'volume',
         type: 'number',
         placeholder: '0-100',
         value: '100',
-        width: 'w-16',
+        width: 'w-14',
         min: '0',
         max: '100',
     };
+    const min = {
+        name: 'min',
+        type: 'number',
+        placeholder: 'min',
+        value: '',
+        width: 'w-14',
+        min: '0',
+        max: '10000',
+    };
+    const sec = {
+        name: 'sec',
+        type: 'number',
+        placeholder: 'sec',
+        value: '',
+        width: 'w-14',
+        min: '0',
+        max: '10000',
+    };
     const ms = {
         name: 'ms',
-        type: 'text',
+        type: 'number',
         placeholder: 'ms',
         value: '3000',
         width: 'w-14',
+        min: '0',
+        max: '60000',
     };
 
     const buttons = [
         { func: 'StartExternal', inputs: [] },
         { func: 'StopExternal', inputs: [] },
         { func: 'FadeToBlack', inputs: [] },
-        { func: 'SetVolumeFade', inputs: [volume, ms, input] },
-        { func: 'Fade', inputs: [input] },
         { func: 'Stinger1', inputs: [input] },
+        { func: 'Fade', inputs: [input] },
+        { func: 'Cut', inputs: [input] },
+        { func: 'SetGain', inputs: [gain, input] },
+        { func: 'SetVolumeFade', inputs: [volume, ms, input] },
+        { func: 'SetMasterVolume', inputs: [volume] },
+        { func: 'SetBusAVolume', inputs: [volume] },
+        { func: 'SetBusBVolume', inputs: [volume] },
         { func: 'AudioOn', inputs: [input] },
         { func: 'AudioOff', inputs: [input] },
+        { func: 'MasterAudioOn', inputs: [] },
+        { func: 'MasterAudioOff', inputs: [] },
+        { func: 'BusAAudioOn', inputs: [] },
+        { func: 'BusAAudioOff', inputs: [] },
+        { func: 'BusBAudioOn', inputs: [] },
+        { func: 'BusBAudioOff', inputs: [] },
+        { func: 'SetPosition', inputs: [min, sec, input] },
+        { func: 'StartCountdown', inputs: [input] },
+        { func: 'StopCountdown', inputs: [input] },
     ];
 
     let innerHTML = '';
@@ -79,19 +124,27 @@ function renderCustomFunctions() {
         btn.onclick = () => {
             const container = btn.parentElement.parentElement;
             const inputParam = container.querySelector('.input-param');
-            const valueParam = container.querySelector('.value-param');
+            const gainParam = container.querySelector('.gain-param');
             const volumeParam = container.querySelector('.volume-param');
+            const minParam = container.querySelector('.min-param');
+            const secParam = container.querySelector('.sec-param');
             const msParam = container.querySelector('.ms-param');
 
             let request = 'Function=' + btn.innerHTML;
             if (inputParam?.value) {
                 request += '&Input=' + inputParam.value;
             }
-            if (valueParam?.value) {
-                request += '&Value=' + valueParam.value;
+            if (gainParam?.value) {
+                request += '&Value=' + gainParam.value;
             }
             if (volumeParam?.value && msParam?.value) {
                 request += '&Value=' + volumeParam.value + ',' + msParam.value;
+            } else if (volumeParam?.value) {
+                request += '&Value=' + volumeParam.value;
+            }
+            if (minParam?.value && secParam?.value) {
+                request +=
+                    '&Value=' + (parseInt(minParam.value) * 60 + parseInt(secParam.value)) + '000';
             }
             customExecution(request);
         };

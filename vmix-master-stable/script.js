@@ -43,30 +43,6 @@ async function refreshInstances(cnt = 0) {
     requestAnimationFrame(() => refreshInstances((cnt + 1) % refreshRate));
 }
 
-function setVmixButtons() {
-    const disabled = !document.getElementById('view-mode').checked;
-    document
-        .querySelector('.custom-functions-container')
-        .querySelectorAll('button')
-        .forEach((btn) => {
-            if (disabled) {
-                btn.disabled = true;
-            } else {
-                btn.removeAttribute('disabled');
-            }
-        });
-    document
-        .getElementById('vmix-container')
-        .querySelectorAll('button')
-        .forEach((btn) => {
-            if (disabled) {
-                btn.disabled = true;
-            } else {
-                btn.removeAttribute('disabled');
-            }
-        });
-}
-
 function showElements() {
     document.querySelectorAll('.show-toggle').forEach((elem) => {
         const name = elem.id.slice('show-'.length);
@@ -95,7 +71,6 @@ const vmixInfos = [];
     renderCustomFunctions();
     prerenderVmixWeb();
     showStoredLogs();
-    setVmixButtons();
     showElements();
 
     document
@@ -114,8 +89,6 @@ const vmixInfos = [];
     updateRefreshRates();
     document.getElementById('refresh-rate').addEventListener('change', updateRefreshRates);
     refreshInstances();
-
-    document.getElementById('view-mode').addEventListener('click', setVmixButtons);
 
     new Sortable(document.getElementById('boxes'), {
         animation: 150,

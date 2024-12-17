@@ -4750,12 +4750,16 @@ html:has(.drawer-toggle:checked) {
   height: 16px;
 }
 
-.h-\[200px\] {
-  height: 200px;
+.h-\[180px\] {
+  height: 180px;
 }
 
 .h-\[20px\] {
   height: 20px;
+}
+
+.h-\[220px\] {
+  height: 220px;
 }
 
 .h-\[22px\] {
@@ -5288,6 +5292,11 @@ html:has(.drawer-toggle:checked) {
   border-color: var(--fallback-er,oklch(var(--er)/var(--tw-border-opacity)));
 }
 
+.border-info {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-in,oklch(var(--in)/var(--tw-border-opacity)));
+}
+
 .border-neutral {
   --tw-border-opacity: 1;
   border-color: var(--fallback-n,oklch(var(--n)/var(--tw-border-opacity)));
@@ -5301,6 +5310,16 @@ html:has(.drawer-toggle:checked) {
 .border-secondary {
   --tw-border-opacity: 1;
   border-color: var(--fallback-s,oklch(var(--s)/var(--tw-border-opacity)));
+}
+
+.border-success {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-su,oklch(var(--su)/var(--tw-border-opacity)));
+}
+
+.border-warning {
+  --tw-border-opacity: 1;
+  border-color: var(--fallback-wa,oklch(var(--wa)/var(--tw-border-opacity)));
 }
 
 .bg-base-100 {
@@ -5517,6 +5536,10 @@ html:has(.drawer-toggle:checked) {
   font-weight: 100;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .text-base-300 {
   --tw-text-opacity: 1;
   color: var(--fallback-b3,oklch(var(--b3)/var(--tw-text-opacity)));
@@ -5550,6 +5573,11 @@ html:has(.drawer-toggle:checked) {
 .text-secondary {
   --tw-text-opacity: 1;
   color: var(--fallback-s,oklch(var(--s)/var(--tw-text-opacity)));
+}
+
+.text-warning {
+  --tw-text-opacity: 1;
+  color: var(--fallback-wa,oklch(var(--wa)/var(--tw-text-opacity)));
 }
 
 .opacity-100 {

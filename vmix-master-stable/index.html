@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="./output.css" />
     <script src="./Sortable.min.js" defer></script>
     <script src="./tools.js" defer></script>
+    <script src="./vmix-api.js" defer></script>
     <script src="./box.js" defer></script>
     <script src="./vmix-info.js" defer></script>
     <script src="./vmix-web.js" defer></script>
+    <script src="./compare-vmix-info.js" defer></script>
     <script src="./custom-functions.js" defer></script>
     <script src="./script.js" defer></script>
   </head>
@@ -29,7 +31,7 @@
       </div>
     </div>
 
-    <div class="focus flex flex-col items-center">
+    <div class="focus flex hidden flex-col items-center">
       <div class="flex w-full flex-wrap p-2">
         <div class="flex min-w-full items-center justify-center">
           <button id="add-box" class="btn btn-outline btn-secondary flex">Add Instance</button>
@@ -46,14 +48,18 @@
       <div class="flex w-full flex-wrap p-1" id="boxes"></div>
     </div>
 
-    <div class="vmix-web divider focus">vMix Web</div>
-    <div class="vmix-web">
+    <div class="vmix-web divider focus hidden">vMix Web</div>
+    <div class="vmix-web hidden">
       <div class="mx-auto mb-5 flex w-[500px] items-center gap-1 px-5">
         <span class="text-md">Master:</span>
         <input id="master" type="number" min="1" name="master" placeholder="e.g. 1" class="url-param input input-xs input-bordered w-16" />
         <span class="text-md ms-3">Slaves:</span>
         <input id="slaves" type="text" name="slaves" placeholder="e.g. 2 3" class="url-param input input-xs input-bordered flex-1" />
+        <button class="btn btn-secondary btn-xs ms-3" onclick="compareSlaves()">Compare</button>
+        <button class="btn btn-secondary btn-xs" onclick="hideCompareReport()">Hide</button>
       </div>
+
+      <div id="compare-report"></div>
 
       <div id="vmix-container" class="vmix-web pb-5">
         <div
@@ -85,8 +91,8 @@
       </div>
     </div>
 
-    <div class="custom-functions divider focus mt-5">Custom Functions</div>
-    <div class="custom-functions px-5">
+    <div class="custom-functions divider focus mt-5 hidden">Custom Functions</div>
+    <div class="custom-functions hidden px-5">
       <div class="mx-auto my-1 flex w-fit items-center gap-1">
         <span class="text-md">Include: </span>
         <input id="include" type="text" name="include" placeholder="e.g. 1 2 3" class="url-param input input-xs input-bordered w-[300px]" />
@@ -140,20 +146,14 @@
       </label>
 
       <label class="swap m-1">
-        <input id="view-mode" type="checkbox" class="url-param" checked />
-        <div class="badge swap-on badge-secondary rounded py-3">control</div>
-        <div class="badge swap-off badge-secondary badge-outline rounded py-3">control</div>
-      </label>
-
-      <label class="swap m-1">
         <input id="show-focus" type="checkbox" class="show-toggle url-param" checked />
         <div class="badge swap-on badge-secondary badge-outline rounded py-3">focus</div>
         <div class="badge swap-off badge-secondary rounded py-3">focus</div>
       </label>
     </div>
 
-    <div class="divider focus mt-5">Documentation</div>
-    <div class="prose focus mx-auto max-w-3xl px-5">
+    <div class="divider focus mt-5 hidden">Documentation</div>
+    <div class="prose focus mx-auto hidden max-w-3xl px-5">
       You can read official vMix API documentation here:
       <a target="_blank" href="https://www.vmix.com/help25/index.htm?DeveloperAPI.html">vmix.com/help25/index.htm?DeveloperAPI.html</a>
 
@@ -169,7 +169,8 @@
       </ul>
     </div>
 
-    <footer class="footer footer-center focus mt-10 bg-base-300 p-4 text-base-content">
+    <div class="h-10"></div>
+    <footer class="footer footer-center focus hidden bg-base-300 p-4 text-base-content">
       <aside>
         <p>Copyright © 2024 - All right reserved by LSM</p>
       </aside>
