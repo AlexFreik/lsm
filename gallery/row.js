@@ -5,6 +5,7 @@ import {
     getRowName,
     getRowType,
     getRowValue,
+    getAvailableMics,
 } from './tools.js';
 import { createBox, addBox, getBoxes } from './box.js';
 
@@ -55,14 +56,25 @@ function createRow(name, type, value) {
         </button>
     `;
 
+    const rowNameInput = div.querySelector('.row-name');
     const rowTypeInput = div.querySelector('.row-type');
     const rowValueInput = div.querySelector('.row-value');
     const closeBtn = div.querySelector('.close-btn');
     const resetBtn = div.querySelector('.reset-btn');
 
     rowTypeInput.onchange = (e) => {
-        div.parentElement.replaceChild(createRow(name, rowTypeInput.value, value), div);
+        div.parentElement.replaceChild(createRow(rowNameInput.value, rowTypeInput.value, ''), div);
     };
+
+    if (type === 'SS' && window.mics.length === 0) {
+        (async () => {
+            window.mics = await getAvailableMics();
+            div.parentElement.replaceChild(
+                createRow(rowNameInput.value, rowTypeInput.value, rowValueInput.value),
+                div,
+            );
+        })();
+    }
 
     rowValueInput.onpaste = (e) => {
         if (type === 'YT') {

@@ -10,6 +10,14 @@
     <script src="./Sortable.min.js"></script>
   </head>
   <body class="bg-base-100 text-base-content">
+    <div class="fixed bottom-2 right-9 rounded bg-neutral px-3">
+      <label class="swap m-1">
+        <input id="show-focus" type="checkbox" class="show-toggle url-param" checked />
+        <div class="badge swap-on badge-secondary badge-outline rounded py-3">focus</div>
+        <div class="badge swap-off badge-secondary rounded py-3">focus</div>
+      </label>
+    </div>
+
     <div class="flex flex-col items-center">
       <div class="flex w-full flex-wrap" id="gallery"></div>
     </div>
@@ -20,7 +28,7 @@
       might not work properly.
     </div>
 
-    <div class="navbar bg-base-100">
+    <div class="navbar focus bg-base-100">
       <div class="flex-1">
         <a class="btn btn-ghost text-xl" href="/lsm/">Live Streaming Gallery</a>
       </div>
@@ -36,9 +44,9 @@
       </div>
     </div>
 
-    <div class="divider mx-auto my-10 w-[750px]">Controls</div>
+    <div class="divider focus mx-auto mt-10 w-[750px]">Controls</div>
 
-    <div class="m-auto hidden w-[750px] px-1" id="controls">
+    <div class="m-auto mt-10 hidden w-[750px] px-1" id="controls">
       <div class="mb-4 flex items-center gap-1">
         <input id="gallery-url" type="text" placeholder="URL" class="input input-xs input-bordered ml-0 flex-1" />
 
@@ -76,22 +84,18 @@
       </div>
     </div>
 
-    <div class="divider mx-auto my-10 w-[750px]">Data Rows</div>
+    <div class="divider focus mx-auto my-10 w-[750px]">Data Rows</div>
 
-    <div id="data-rows" class="m-auto w-[750px] px-1"></div>
+    <div id="data-rows" class="focus m-auto w-[750px] px-1"></div>
 
-    <div class="m-auto w-[750px] px-1">
+    <div class="focus m-auto w-[750px] px-1">
       <button id="add-data-row" class="btn btn-outline btn-secondary btn-xs mt-3">Add</button>
       <button id="update-rows" class="btn btn-outline btn-secondary btn-xs mt-3">Update</button>
     </div>
 
-    <div id="docs" class="divider mx-auto my-10 w-[750px]">Documentation</div>
+    <div id="docs" class="divider focus mx-auto my-10 w-[750px]">Documentation</div>
 
-    <!-- <div class="my-8 px-5">
-      <textarea class="textarea textarea-bordered mx-auto w-full" placeholder=""></textarea>
-    </div> -->
-
-    <div class="prose m-auto w-[760px] max-w-[750px] px-1">
+    <div class="prose focus m-auto w-[760px] max-w-[750px] px-1">
       <p>Please use the latest Chrome browser and install the extension.</p>
 
       <h3>
@@ -137,7 +141,7 @@
       </ul>
     </div>
 
-    <footer class="footer footer-center mt-10 bg-base-300 p-4 text-base-content">
+    <footer class="footer footer-center focus mt-10 bg-base-300 p-4 text-base-content">
       <aside>
         <p>Copyright © 2024 - All right reserved by LSM</p>
       </aside>
