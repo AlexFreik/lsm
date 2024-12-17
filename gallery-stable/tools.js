@@ -1,3 +1,4 @@
+// ===== Row Utils =====
 function getRowName(row) {
     return row.querySelector('.row-name').value;
 }
@@ -10,8 +11,22 @@ function getRowValue(row) {
     return row.querySelector('.row-value').value;
 }
 
-function updateGalleryUrlInput() {
-    document.getElementById('gallery-url').value = window.location.href;
+// ===== Document Config & URL Utils =====
+function setInputValue(id, value) {
+    const input = document.getElementById(id, value);
+    console.assert(input !== null, 'Can\'t find element with ID "' + id + '"');
+    if (input === null) {
+        return;
+    }
+
+    if (input.type === 'checkbox') {
+        console.assert(['0', '1'].includes(value));
+        input.checked = value === '1';
+    } else if (input.type === 'text' || input.type === 'number') {
+        input.value = value;
+    } else {
+        console.error('Unknown input type: ' + input.type);
+    }
 }
 
 function getBoxUrlParams() {
@@ -64,6 +79,19 @@ function updateUrlParams() {
     updateGalleryUrlInput();
 }
 
+function updateGalleryUrlInput() {
+    document.getElementById('gallery-url').value = window.location.href;
+}
+
+// ===== General Purpose Utils =====
+function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function generateUUID() {
+    return (Math.random() + 1).toString(36).substring(2);
+}
+
 function extractYouTubeId(str) {
     try {
         const url = new URL(str);
@@ -85,14 +113,6 @@ function extractYouTubeId(str) {
     }
 }
 
-function capitalizeFirst(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
-}
-
-function generateUUID() {
-    return (Math.random() + 1).toString(36).substring(2);
-}
-
 async function getAvailableMics() {
     try {
         await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -107,7 +127,11 @@ async function getAvailableMics() {
 }
 
 export {
+    getRowName,
+    getRowType,
+    getRowValue,
     getBoxUrlParams,
+    setInputValue,
     getConfigUrlParams,
     parseDocumentConfig,
     updateUrlParams,

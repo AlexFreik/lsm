@@ -1,17 +1,13 @@
 import {
     getBoxUrlParams,
     getConfigUrlParams,
+    setInputValue,
     updateUrlParams,
     updateGalleryUrlInput,
     getAvailableMics,
 } from './tools.js';
-import { createBox } from './box.js';
-import { createRow } from './row.js';
-
-function addRow(name = '', type = 'YT', value = '') {
-    const dataRows = document.getElementById('data-rows');
-    dataRows.appendChild(createRow(name, type, value));
-}
+import { addBox } from './box.js';
+import { addRow } from './row.js';
 
 function initRows() {
     document.getElementById('data-rows').innerHTML = '';
@@ -29,11 +25,6 @@ function updateRows() {
     updateBoxes();
 }
 
-function addBox(name = '', type = 'YT', value = '') {
-    const gallery = document.getElementById('gallery');
-    gallery.appendChild(createBox(name, type, value));
-}
-
 function updateBoxes() {
     document.getElementById('gallery').innerHTML = '';
     const urlParams = getBoxUrlParams();
@@ -42,25 +33,14 @@ function updateBoxes() {
     });
 }
 
-function initConfig() {
+function setInputElements() {
     const urlParams = getConfigUrlParams();
-    urlParams.forEach((param) => {
-        const input = document.getElementById(param.key);
-        console.assert(input);
-        if (input.type === 'checkbox') {
-            console.assert(['0', '1'].includes(param.value));
-            input.checked = param.value === '1';
-        } else if (input.type === 'text') {
-            input.value = param.value;
-        } else {
-            console.error('Unknown input type: ' + input.type);
-        }
-    });
+    urlParams.forEach((param) => setInputValue(param.key, param.value));
 }
 
 (() => {
     updateGalleryUrlInput();
-    initConfig(); // take all config params from URL and apply to config elements
+    setInputElements();
     window.mics = [];
     initRows();
     updateBoxes();

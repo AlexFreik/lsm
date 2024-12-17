@@ -53,4 +53,13 @@ function createBox(name, type, value) {
     return box;
 }
 
-export { createBox };
+function addBox(name = '', type = 'YT', value = '') {
+    const gallery = document.getElementById('gallery');
+    gallery.appendChild(createBox(name, type, value));
+}
+
+function getBoxes() {
+    return document.getElementById('gallery').querySelectorAll('.box');
+}
+
+export { createBox, addBox, getBoxes };
