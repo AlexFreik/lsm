@@ -161,15 +161,24 @@ function getRunningInstances() {
     return runningInstances;
 }
 
-function sendReminderEmail() {
-    const running = getRunningInstances();
-
-    const subject = 'GCP Instance Reminder: ' + running.map((_) => _.name).join(', ');
+function getSummeryEmail(running) {
+    const subject = 'GCP Reminder: ' + running.map((_) => _.name).join(', ');
     const body =
         'Namaskaram,\n\n' +
         running.map((_) => _.reminderMessage).join('\n\n') +
         '\n\nPranam,\nGCP Monitoring Script';
+    return {
+        subject: subject,
+        body: body,
+    };
+}
 
+function sendReminderEmail() {
+    const running = getRunningInstances();
+    if (running.length === 0) {
+        return;
+    }
+    const { subject, body } = getSummeryEmail(running);
     MailApp.sendEmail(RECIPIENT, subject, body);
     MailApp.sendEmail(TEST_RECIPIENT, subject, body);
 }
