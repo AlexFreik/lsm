@@ -1,0 +1,29 @@
+{
+    "timeZone": "Asia/Kolkata",
+    "dependencies": {
+        "enabledAdvancedServices": [
+            {
+                "userSymbol": "YouTube",
+                "version": "v3",
+                "serviceId": "youtube"
+            }
+        ],
+        "libraries": [
+            {
+                "userSymbol": "OAuth2",
+                "version": "43",
+                "libraryId": "1B7FSrk5Zi6L1rSxxTDgDEUsPzlukDsi4KGuTMorsTQHhGBzBkMun4iDF"
+            }
+        ]
+    },
+    "oauthScopes": [
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/script.external_request",
+        "https://www.googleapis.com/auth/script.container.ui",
+        "https://www.googleapis.com/auth/spreadsheets",
+        "https://www.googleapis.com/auth/youtube",
+        "https://www.googleapis.com/auth/youtube.force-ssl"
+    ],
+    "exceptionLogging": "STACKDRIVER",
+    "runtimeVersion": "V8"
+}

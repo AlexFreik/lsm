@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+  <head>
+    <base target="_top" />
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css" />
+    <style>
+      .hidden {
+        display: none;
+      }
+      .m-1 {
+        margin: 0.25rem;
+      }
+      .m-2 {
+        margin: 0.5rem;
+      }
+      .m-3 {
+        margin: 0.75rem;
+      }
+    </style>
+  </head>
+  <body class="m-3">
+    <div id="loading">Loading...</div>
+
+    <div id="not-signed-in" class="hidden">
+      <p>Please authorize your YouTube account to continue.</p>
+      <button id="sign-in-btn" class="action">Sign In</button>
+    </div>
+
+    <div id="signed-in" class="hidden">
+      <div>
+        <p>
+          Hello <b><span id="user-email">...</span></b
+          >,
+        </p>
+        <button id="sign-out-btn">Sign Out</button>
+        <hr />
+        <br />
+        <p>If some of the stream keys were changed please update them.</p>
+        <button id="update-keys-btn" class="action">Update Keys</button>
+        <br />
+        <p>
+          To schedule new live broadcasts please fill the details and select those rows. If you leave year, month, day, or hour empty it will use the
+          current date.
+        </p>
+        <button id="schedule-broadcasts-btn" class="action">Schedule Broadcasts</button>
+        <br />
+        <p class="grey" id="message"></p>
+        <p class="error" id="error"></p>
+      </div>
+    </div>
+
+    <script>
+      const authorizationUrl = '<?= authorizationUrl ?>';
+      const notSignedInDiv = document.getElementById('not-signed-in');
+      const signedInDiv = document.getElementById('signed-in');
+      const loadingDiv = document.getElementById('loading');
+      const userEmailSpan = document.getElementById('user-email');
+      const messageElem = document.getElementById('message');
+      const errorElem = document.getElementById('error');
+
+      function signIn() {
+        window.open(authorizationUrl);
+      }
+      document.getElementById('sign-in-btn').addEventListener('click', signIn);
+
+      function signOut() {
+        google.script.run
+          .withSuccessHandler(() => {
+            updateUI();
+          })
+          .signOut();
+      }
+      document.getElementById('sign-out-btn').addEventListener('click', signOut);
+
+      function updateStreamKeys() {
+        messageElem.textContent = 'Loading...';
+        messageElem.classList.remove('hidden');
+        errorElem.classList.add('hidden');
+        google.script.run
+          .withSuccessHandler((message) => {
+            messageElem.textContent = message;
+          })
+          .withFailureHandler((e) => {
+            errorElem.textContent = e.message;
+            messageElem.classList.add('hidden');
+            errorElem.classList.remove('hidden');
+          })
+          .updateStreamKeys();
+      }
+      document.getElementById('update-keys-btn').addEventListener('click', updateStreamKeys);
+
+      function scheduleBroadcasts() {
+        messageElem.textContent = 'Loading...';
+        messageElem.classList.remove('hidden');
+        errorElem.classList.add('hidden');
+        google.script.run
+          .withSuccessHandler((message) => {
+            messageElem.textContent = message;
+          })
+          .withFailureHandler((e) => {
+            errorElem.textContent = e.message;
+            messageElem.classList.add('hidden');
+            errorElem.classList.remove('hidden');
+          })
+          .scheduleBroadcasts();
+      }
+      document.getElementById('schedule-broadcasts-btn').addEventListener('click', scheduleBroadcasts);
+
+      function updateUI() {
+        loadingDiv.classList.remove('hidden');
+        notSignedInDiv.classList.add('hidden');
+        signedInDiv.classList.add('hidden');
+
+        google.script.run
+          .withSuccessHandler((hasAccess) => {
+            loadingDiv.classList.add('hidden');
+            if (hasAccess) {
+              google.script.run
+                .withSuccessHandler((email) => {
+                  userEmailSpan.textContent = email;
+                })
+                .getUserEmail();
+              notSignedInDiv.classList.add('hidden');
+              signedInDiv.classList.remove('hidden');
+            } else {
+              notSignedInDiv.classList.remove('hidden');
+              signedInDiv.classList.add('hidden');
+            }
+          })
+          .hasAccess();
+      }
+
+      updateUI();
+    </script>
+  </body>
+</html>
