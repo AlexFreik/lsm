@@ -145,8 +145,8 @@ function formatBroadcastData(data) {
         row.Day = pad(row.Day === '' ? now.getDate() : row.Day);
         row.Hour = pad(row.Hour === '' ? now.getHours() : row.Hour);
         row.Minute = pad(row.Minute === '' ? 0 : row.Minute);
-        row.DVR = Boolean(row.DVR);
-        row['Auto Start'] = Boolean(row['Auto Start']);
-        row['Auto Stop'] = Boolean(row['Auto Stop']);
+        row.DVR = JSON.parse(row.DVR);
+        row['Auto Start'] = JSON.parse(row['Auto Start']);
+        row['Auto Stop'] = JSON.parse(row['Auto Stop']);
     }
 }

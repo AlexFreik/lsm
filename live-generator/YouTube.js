@@ -139,6 +139,8 @@ function insertBroadcast(data) {
             enableDvr: data.DVR,
             enableAutoStart: data['Auto Start'],
             enableAutoStop: data['Auto Stop'],
+            latencyPreference: data['Latency'],
+            boundStreamId: data['Key ID'],
         },
     };
     const path = buildUrl('liveBroadcasts', { part: 'snippet,contentDetails,status' });
