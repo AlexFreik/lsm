@@ -152,10 +152,12 @@ function adjustDelay(val) {
 function renderStats(duration, delay) {
     const durationElem = document.getElementById('duration-stat');
     const delayElem = document.getElementById('delay-stat');
+    const delayInfo = document.getElementById('delay-info');
 
     if (duration === null || delay === null) {
         durationElem.innerHTML = '...';
         delayElem.innerHTML = '...';
+        delayInfo.innerHTML = '...';
         return;
     }
     const dur = duration | 0;
@@ -168,6 +170,7 @@ function renderStats(duration, delay) {
     const delayMinutes = (del / 60) | 0;
     const delaySeconds = del % 60;
     delayElem.innerHTML = `${delayMinutes}m:${delaySeconds}s (${del} s)`;
+    delayInfo.innerHTML = `${del}`;
 }
 
 function getNewBroadcastChannel() {
@@ -203,6 +206,16 @@ document.getElementById('videoId').onpaste = (e) => {
     const paste = e.clipboardData.getData('text');
     e.target.value = extractYouTubeId(paste);
 };
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'd' || event.key === 'D') {
+        const delayDiv = document.getElementById('delay-info');
+        delayDiv.classList.remove('hidden');
+        setTimeout(() => {
+            delayDiv.classList.add('hidden');
+        }, 2000);
+    }
+});
 
 setInterval(() => {
     // First 30min after stream started player.getDuration() will always return 3600
