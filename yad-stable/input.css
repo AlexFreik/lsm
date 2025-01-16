@@ -5,3 +5,7 @@
 .card-container {
     @apply card static mx-2 my-5 inline-block min-h-44 w-[500px] bg-base-200 shadow-xl;
 }
+
+.scrollbar-none::-webkit-scrollbar {
+    display: none;
+}
