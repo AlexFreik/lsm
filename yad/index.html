@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>YAD: YouTube Auto Delay</title>
+    <script src="./tools.js" defer></script>
     <script src="./script.js" defer></script>
     <link rel="stylesheet" href="./output.css" />
     <link rel="icon" type="image/png" href="./isha-logo.png" />
@@ -29,15 +30,15 @@
       <strong>Delay:</strong> <span id="delay-stat">...</span>
       <span class="mx-1">||</span>
       New Delay
-      <input type="number" class="input input-xs input-bordered w-14 text-secondary" placeholder="Delay" value="900" id="new-delay" />
+      <input type="number" class="input input-xs input-bordered w-14 text-secondary" placeholder="Delay" value="900" min="0" id="new-delay" />
       <button class="btn btn-outline btn-secondary btn-xs" onclick="updateDelay()">Update</button>
       <span class="mx-1">||</span>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-60)">-60s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-30)">-30s</button>
-      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(-10)">-10s</button>
-      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(10)">+10s</button>
-      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(30)">+30s</button>
-      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(60)">+60s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(60)">-60s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(30)">-30s</button>
+      <button class="btn btn-outline btn-secondary btn-xs" onclick="adjustDelay(10)">-10s</button>
+      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(-10)">+10s</button>
+      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(-30)">+30s</button>
+      <button class="btn btn-secondary btn-xs" onclick="adjustDelay(-60)">+60s</button>
       <span class="mx-1">||</span>
     </div>
 
@@ -57,24 +58,24 @@
 
     <div class="prose mx-auto">
       <p>
-        This website fixes the
+        This website addresses the
         <strong>skipping issue</strong> in YouTube for delayed streams.<br /><br />
 
-        <strong>What is the skipping issue?</strong> If you are currently watching a stream 20min behind LIVE and you face some network fluctuations
-        YouTube might jump to LIVE (i.e. 0sec delay), and these 20min will be lost.<br /><br />
+        <strong>What is the skip issue?</strong> If you are currently watching a stream that is 15min behind LIVE and you face some network
+        fluctuations, YouTube may jump to LIVE (i.e. 0sec delay) and those 15min will be lost.<br /><br />
 
-        But if you are using YAD and YouTube tries to skip to LIVE <b>the script will automatically bring you back</b>, so you will not miss
+        But if you are using YAD and YouTube tries to jump to LIVE, <b>the script will automatically bring you back</b>, so you will not miss
         anything!<br /><br />
 
-        <strong>Note 1:</strong> Due to YouTube limitations the script works only for streams that started at least 30min ago. For newly started
-        streams the script will not be correcting skipping.<br /><br />
+        <strong>Note 1:</strong> Due to YouTube limitations, the script only works for streams that started at least 30min ago. For newly started
+        streams, the script will not correct the skipping.<br /><br />
 
-        <strong>Note 2:</strong> You can't go to LIVE because the minimal possible delay is set to 60s. When you click the <b>LIVE</b> button the
-        script will think that YouTube skipped and transition you back.<br /><br />
+        <strong>Note 2:</strong> You can't go to LIVE because the minimum delay is set to 600s (10min). If you click the <b>LIVE</b> button, the
+        script will think that YouTube skipped and will take you back.<br /><br />
       </p>
     </div>
 
-    <div class="mx-auto my-5 w-96">
+    <div class="mx-auto my-5 w-[400px]">
       <div class="flex items-center justify-between border-b p-4">
         YouTube Video ID
         <input
@@ -86,14 +87,14 @@
       </div>
 
       <div class="flex items-center justify-between border-b p-4">
-        Delay (seconds)
+        Starting Delay (sec)
         <label class="ml-4 inline-flex cursor-pointer items-center">
           <input
             type="number"
             class="input input-bordered float-right w-52 text-secondary"
             placeholder="Enter Delay"
             value="900"
-            min="60"
+            min="600"
             id="delay" />
         </label>
       </div>

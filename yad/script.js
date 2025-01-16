@@ -5,7 +5,7 @@ const DELAY_PARAM = 'd';
 const VIDEO_ID_PARAM = 'v';
 const PRIVACY_PARAM = 'p';
 
-const SKIP_MARGIN = 30;
+const SKIP_MARGIN = 600;
 const START_MARGIN = 30;
 const SKIP_CORRECTION = 5;
 const STREAM_DURATION_CORRECTION = 3600;
@@ -13,7 +13,7 @@ const STREAM_DURATION_CORRECTION = 3600;
 const DEFAULT_VIDEO_ID = 'jfKfPfyJRdk';
 const DEFAULT_DELAY = 900;
 const DEFAULT_PRIVACY = '0';
-const MINIMAL_DELAY = 60;
+const MINIMAL_DELAY = 660;
 
 const player = {
     ytPlayer: null,
@@ -22,6 +22,7 @@ const player = {
     startingDate: -100,
     videoId: '',
     connection: null,
+    startingDelay: -100,
     delay: -100,
     savedDelay: -100,
     privacy: false,
@@ -35,7 +36,7 @@ function getDelay() {
     const delay = parseInt(document.getElementById('delay').value);
     console.assert(delay >= MINIMAL_DELAY);
     if (delay < MINIMAL_DELAY) {
-        console.error("Delay shouldn't be less then minimal delay: " + MINIMAL_DELAY);
+        console.error(`Delay shouldn't be less than ${MINIMAL_DELAY}s`);
         return MINIMAL_DELAY;
     }
     return delay;
@@ -43,22 +44,6 @@ function getDelay() {
 
 function getPrivacy() {
     return document.getElementById('privacy').checked;
-}
-
-function getUrlParam(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-}
-
-function setInputsFromUrlParams() {
-    const videoIdParam = getUrlParam(VIDEO_ID_PARAM) || DEFAULT_VIDEO_ID;
-    document.getElementById('videoId').value = videoIdParam;
-
-    const delayParam = getUrlParam(DELAY_PARAM) || DEFAULT_DELAY;
-    document.getElementById('delay').value = delayParam;
-
-    const privacyParam = getUrlParam(PRIVACY_PARAM) || DEFAULT_PRIVACY;
-    document.getElementById('privacy').checked = privacyParam === '1';
 }
 
 function loadPlayer() {
@@ -71,7 +56,8 @@ async function loadNewVideo() {
     player.isReady = false;
 
     player.videoId = getVideoId();
-    player.delay = getDelay() - SKIP_CORRECTION;
+    player.startingDelay = getDelay();
+    player.delay = player.startingDelay - SKIP_CORRECTION;
     player.savedDelay = player.delay;
 
     if (player.connection) player.connection.close();
@@ -101,10 +87,6 @@ function onYouTubeIframeAPIReady() {
             onStateChange: onPlayerStateChange,
         },
     });
-}
-
-function getCurrentDate() {
-    return new Date().getTime() / 1000;
 }
 
 function onPlayerStateChange(event) {
@@ -171,6 +153,11 @@ function renderStats(duration, delay) {
     const durationElem = document.getElementById('duration-stat');
     const delayElem = document.getElementById('delay-stat');
 
+    if (duration === null || delay === null) {
+        durationElem.innerHTML = '...';
+        delayElem.innerHTML = '...';
+        return;
+    }
     const dur = duration | 0;
     const durationHours = (dur / 3600) | 0;
     const durationMinutes = ((dur / 60) | 0) % 60;
@@ -211,9 +198,16 @@ player.savedDelay = player.delay;
 loadPlayer();
 loadPlayerAPI();
 
+document.getElementById('videoId').onpaste = (e) => {
+    e.preventDefault();
+    const paste = e.clipboardData.getData('text');
+    e.target.value = extractYouTubeId(paste);
+};
+
 setInterval(() => {
     // First 30min after stream started player.getDuration() will always return 3600
     if (!player.isReady || player.startingDuration === 0) {
+        renderStats(null, null);
         return;
     }
 
@@ -222,9 +216,14 @@ setInterval(() => {
     const currentTime = player.ytPlayer.getCurrentTime();
     console.assert(!isNaN(actualDuration));
 
-    if (isNaN(currentTime) || currentTime < START_MARGIN || actualDuration < player.delay) {
+    if (isNaN(currentTime)) {
+        renderStats(null, null);
         return;
     }
+    if (currentTime < START_MARGIN || actualDuration < player.delay) {
+        return;
+    }
+
     const currentDelay = actualDuration - currentTime;
     console.assert(currentDelay > -10, 'Invalid current delay: ' + currentDelay);
 
@@ -246,7 +245,10 @@ setInterval(() => {
         player.savedDelay = MINIMAL_DELAY;
         console.log('New saved delay:', MINIMAL_DELAY);
     } else {
-        console.log('Current delay was: ' + currentDelay + ', saved delay: ' + player.savedDelay);
-        seekDelay(player.savedDelay + SKIP_CORRECTION);
+        const newDelay = Math.max(player.savedDelay + SKIP_CORRECTION, player.startingDelay);
+        console.log(
+            `Current delay was: ${currentDelay}, saved delay: ${player.savedDelay}, seeking delay: ${newDelay}`,
+        );
+        seekDelay(newDelay);
     }
 }, 1000);
