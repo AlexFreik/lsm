@@ -1,4 +1,6 @@
-# LSM: Live Streaming Miracles
+> This repository has been moved to a different account: https://github.com/isha-live/
+> 
+---
 
 ## [YAD: YouTube Auto Delay](https://alexfreik.github.io/lsm/yad/)
 
